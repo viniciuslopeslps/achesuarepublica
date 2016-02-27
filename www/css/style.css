@@ -1,1 +1,6 @@
-/* Empty. Add your own CSS if you like */
+.bluedark-color{
+  background-color: #35478C !important;
+}
+.bar-stable .button.button-clear , .bar.bar-stable .title {
+    color: #FFF;
+}
