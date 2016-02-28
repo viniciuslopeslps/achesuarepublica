@@ -8,5 +8,8 @@ id_usu int primary key auto_increment,
 name_usu varchar(50) not null,
 email_usu varchar(40) not null unique,
 password_usu varchar(40) not null,
-phone_user varchar(15) not null
+phone_user varchar(15) not null,
+admin_user bool not null
 );
+
+insert into users values (0,'vinicius lopes','viniciuslopeslps@gmail.com','lopes123','12981437625',1);

@@ -18,15 +18,20 @@ app.config['MYSQL_DATABASE_DB'] = 'acheSuaRepublica'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
 
+
+conn = mysql.connect()
+cursor = conn.cursor()
+
 @app.route('/')
-@app.route('/createUser/<email>/<password>', methods =["GET","POST"])
-def new_user(email ,password):
+@app.route('/createUser/<email>/<password>/<name>/<phone>', methods =["GET","POST"])
+def new_user(email ,password, name, phone):
     print('to aqui')
     if request.method == "POST":
-        print(email, password)
-        #cursor.execute("insert into user values (0,'{0}','{1}','{2}');".format(dados['name'],dados['email'],dados['password']))
-        #conn.commit()
-        return 'DEU CERTO'
+        print(email, password, name, phone)
+        cursor.execute("insert into users values (0,'{0}','{1}','{2}','{3}', 0);"
+        .format(name, email, password, phone))
+        conn.commit()
+        return 'Usuário cadastrado com sucesso, Bem vindo ao ache sua república'
     return 'ERRO'
 
 if __name__ == "__main__":
