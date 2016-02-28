@@ -19,8 +19,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   .state('app', {
     url: '/app',
     abstract: true,
-    templateUrl: 'templates/menu.html',
-    controller: 'AppCtrl'
+    templateUrl: 'templates/menu.html'
   })
 
   .state('app.createUser', {
@@ -31,8 +30,22 @@ angular.module('starter', ['ionic', 'starter.controllers'])
           controller: 'createUserCtrl'
         }
       }
-})
+    })
+    .state('app.login', {
+        url: '/login',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/login.html',
+            controller: 'loginCtrl'
+          }
+        }
+      })
+      .state('home', {
+        url: '/home',
+        templateUrl: 'templates/home.html',
+        controller: 'homeCtrl'
+      })
 
-  $urlRouterProvider.otherwise('/app/createUser');
+  $urlRouterProvider.otherwise('/app/login');
 })
 ;
