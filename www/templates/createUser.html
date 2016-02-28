@@ -1,29 +1,33 @@
 <ion-view view-title="Login" align-title="left">
     <ion-content class="back-color padding"  ng-app="login">
-      <br />
-      <h1 class="text-center">Cadastro de usuário</h1>
-      <br />
-      <div class="list padding">
-      <label class="item item-input">
-        <span class="input-label">Nome:</span>
-        <input type="text">
-      </label>
-      <label class="item item-input">
-        <span class="input-label">Email:</span>
-        <input type="email">
-      </label>
-      <label class="item item-input">
-        <span class="input-label">Senha:</span>
-        <input type="password">
-      </label>
-      <label class="item item-input">
-        <span class="input-label">Telefone:</span>
-        <input type="tel">
-      </label>
-      <br /><br />
-      <button class="bluedark-color button button-block button-positive">
-        Salvar <i class="ion-android-checkbox-outline"></i>
-      </button>
-</div>
+      <div ng-controller="createUserCtrl">
+        <form name="createUserForm" novalidate="novalidate">
+          <br />
+          <h1 class="text-center">Cadastro de usuário</h1>
+          <br />
+          <div class="list padding">
+            <label class="item item-input">
+              <span class="input-label">Nome:</span>
+              <input name="name" ng-model="data.name" type="text">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Email:</span>
+              <input name="email" ng-model="data.email" type="email">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Senha:</span>
+              <input name="password" ng-model="data.password" type="password">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Telefone:</span>
+              <input name="phone" ng-model="data.phone" type="tel">
+            </label>
+            <br /><br />
+            <button ng-click="createUser(data)" class="bluedark-color button button-block button-positive">
+              Salvar <i class="ion-android-checkbox-outline"></i>
+            </button>
+        </div>
+      </form>
+      </div>
     </ion-content>
 </ion-view>
