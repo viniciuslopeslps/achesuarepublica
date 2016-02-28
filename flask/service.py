@@ -34,5 +34,6 @@ def new_user(email ,password, name, phone):
         return 'Usuário cadastrado com sucesso, Bem vindo ao ache sua república'
     return 'ERRO'
 
+#mudar o ip para testar
 if __name__ == "__main__":
-    app.run(debug=True, use_reloader=True)
+    app.run(host="192.168.1.106",debug=True, use_reloader=True)
