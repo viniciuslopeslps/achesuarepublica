@@ -16,13 +16,13 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
-  .state('app', {
-    url: '/app',
+  .state('nav', {
+    url: '/nav',
     abstract: true,
-    templateUrl: 'templates/menu.html'
+    templateUrl: 'templates/unkwonUserMenu.html'
   })
 
-  .state('app.createUser', {
+  .state('nav.createUser', {
       url: '/createUser',
       views: {
         'menuContent': {
@@ -31,7 +31,8 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         }
       }
     })
-    .state('app.login', {
+
+    .state('nav.login', {
         url: '/login',
         views: {
           'menuContent': {
@@ -40,12 +41,23 @@ angular.module('starter', ['ionic', 'starter.controllers'])
           }
         }
       })
-      .state('home', {
-        url: '/home',
-        templateUrl: 'templates/home.html',
-        controller: 'homeCtrl'
+
+      .state('navUser', {
+        url: '/navUser',
+        abstract: true,
+        templateUrl: 'templates/kwonUserMenu.html'
       })
 
-  $urlRouterProvider.otherwise('/app/login');
+      .state('navUser.home', {
+          url: '/home',
+          views: {
+            'menuContent': {
+              templateUrl: 'templates/home.html',
+              controller: 'loginCtrl'
+            }
+          }
+      })
+
+  $urlRouterProvider.otherwise('/nav/login');
 })
 ;

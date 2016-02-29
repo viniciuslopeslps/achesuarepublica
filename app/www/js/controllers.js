@@ -2,7 +2,7 @@ angular.module('starter.controllers', [])
 
 .controller('createUserCtrl', function($scope, $state, $ionicPopup, $http, $ionicLoading) {
     //mudar o ip para testar
-    var ip = 'http://192.168.0.12:5000';
+    var ip = 'http://192.168.1.106:5000';
 
     $scope.createUser = function(data) {
       var email = $scope.data.email;
@@ -48,7 +48,7 @@ angular.module('starter.controllers', [])
       else {
         var email = $scope.data.email;
         var password = $scope.data.password;
-        var ip = 'http://192.168.0.12:5000';
+        var ip = 'http://192.168.1.106:5000';
 
         $http.get(ip + '/login/'+ email + '/'+ password).
         success(function(response) {
@@ -62,7 +62,7 @@ angular.module('starter.controllers', [])
           }
           else {
             saveData(obj.user.id, obj.user.name, obj.user.email, obj.user.phone, obj.user.password, obj.user.admin);
-            $state.go('home');
+            $state.go('navUser.home');
           }
         }).
         error(function() {

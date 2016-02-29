@@ -47,4 +47,4 @@ def login(email, password):
 
 #mudar o ip para testar
 if __name__ == "__main__":
-    app.run(host="192.168.0.12",debug=True, use_reloader=True)
+    app.run(host="192.168.1.106",debug=True, use_reloader=True)
