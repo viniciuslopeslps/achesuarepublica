@@ -57,6 +57,25 @@ angular.module('starter', ['ionic', 'starter.controllers'])
             }
           }
       })
+      .state('navUser.profile', {
+          url: '/profile',
+          views: {
+            'menuContent': {
+              templateUrl: 'templates/profile.html',
+              controller: 'profileCtrl'
+            }
+          }
+      })
+      .state('navUser.passwordUpdate', {
+          url: '/passwordUpdate',
+          views: {
+            'menuContent': {
+              templateUrl: 'templates/passwordUpdate.html',
+              controller: 'passwordUpdateCtrl'
+            }
+          }
+      })
+
 
   $urlRouterProvider.otherwise('/nav/login');
 })

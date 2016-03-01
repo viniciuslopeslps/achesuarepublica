@@ -45,6 +45,15 @@ def login(email, password):
 
     return jsonify(user = dic)
 
+@app.route('/updateUser/<email>/<name>/<phone>/<int:id_usu>', methods =["POST"])
+def update_user(name, email, phone, id_usu):
+    if request.method == "POST":
+        print(name, email, phone, id_usu)
+        cursor.execute("update users set email_usu='{0}', name_usu='{1}', phone_user='{2}' where id_usu='{3}';"
+        .format(email, name, phone, id_usu))
+        conn.commit()
+        return 'SUCCESS'
+    return 'ERROR'
 #mudar o ip para testar
 if __name__ == "__main__":
     app.run(host="192.168.1.106",debug=True, use_reloader=True)
