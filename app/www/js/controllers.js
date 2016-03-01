@@ -11,7 +11,6 @@ angular.module('starter.controllers', [])
       var name = $scope.data.name;
       var phone = $scope.data.phone;
 
-      console.log(email, password, name, confirmPassword, phone);
       if(data === undefined || email === undefined || password === undefined
       || confirmPassword === undefined || name === undefined || phone === undefined
       || password != confirmPassword){
@@ -35,19 +34,28 @@ angular.module('starter.controllers', [])
             title: 'ERRO',
             template: 'Por favor, confira suas credenciais'
           });
-          $state.go('nav.login');
         });
+        $state.go('nav.login');
       }
     };
 })
 .controller('loginCtrl', function($scope, $state, $ionicPopup, $http, $ionicLoading){
+  function logout() {
+    window.localStorage['id'] = " ";
+    window.localStorage['name'] = " ";
+    window.localStorage['email'] = " ";
+    window.localStorage['phone'] = " ";
+    window.localStorage['password'] = " ";
+    window.localStorage['admin'] = " ";
+  }
+
     function saveData(id, name, email, phone, password, admin) {
-      window.localStorage['id'] = id;
-      window.localStorage['name'] = name;
-      window.localStorage['email'] = email;
-      window.localStorage['phone'] = phone;
-      window.localStorage['password'] = password;
-      window.localStorage['admin'] = admin;
+      window.localStorage['id'] = id===undefined?window.localStorage['id']:id;
+      window.localStorage['name'] = name===undefined?window.localStorage['name']:name;
+      window.localStorage['email'] = email===undefined?window.localStorage['email']:email;
+      window.localStorage['phone'] = phone===undefined?window.localStorage['phone']:phone;
+      window.localStorage['password'] = password===undefined?window.localStorage['password']:password;
+      window.localStorage['admin'] = admin===undefined?window.localStorage['admin']:admin;
     }
     $scope.login = function(data) {
       if(data === undefined || data['email'] === undefined || data['password'] ===undefined){
@@ -92,11 +100,6 @@ angular.module('starter.controllers', [])
   $scope.name = window.localStorage['name'];
 })
 .controller('profileCtrl', function($scope, $state, $ionicPopup, $http, $ionicLoading) {
-    function saveData(name, email, phone) {
-      window.localStorage['name'] = name;
-      window.localStorage['email'] = email;
-      window.localStorage['phone'] = phone;
-    }
 
     $scope.email = window.localStorage['email'];
     $scope.name = window.localStorage['name'];
@@ -109,7 +112,6 @@ angular.module('starter.controllers', [])
       var name = $scope.data.name;
       var phone = $scope.data.phone;
       var id = window.localStorage['id'];
-
 
       if(email==undefined){
         var email = window.localStorage['email'];
@@ -125,7 +127,11 @@ angular.module('starter.controllers', [])
       success(function(response) {
         var dado =  angular.toJson(response);
         var obj = jQuery.parseJSON(dado);
-        saveData(name, email, phone);
+        $scope.saveData = function(){
+          saveData(undefined, name, email, phone);
+        };
+
+
         var alertPopup = $ionicPopup.alert({
           title: 'Atualizado com sucesso!',
           template: 'Registro de atualizado com sucesso!'
@@ -139,13 +145,46 @@ angular.module('starter.controllers', [])
           });
       });
     };
+    $scope.deleteUser = function(data){
+      var id = window.localStorage['id'];
 
+      var confirmPopup = $ionicPopup.confirm({
+        title: 'Confirmação',
+        template: 'Você tem certeza que deseja deletar sua conta?'
+      });
+      confirmPopup.then(function(res) {
+        if(res) {
+          $http.post(ip + '/deleteUser/'+ id).
+          success(function(response) {
+            var dado =  angular.toJson(response);
+            var obj = jQuery.parseJSON(dado);
+            var alertPopup = $ionicPopup.alert({
+              title: 'Deletado com sucesso!',
+              template: 'Registro deletado com sucesso!'
+            });
+            $state.go('nav.login');
+          }).
+          error(function() {
+            var alertPopup = $ionicPopup.alert({
+              title: 'ERRO',
+              template: 'Aconteceu um erro, por favor tente novamente'
+            });
+          });
+        }
+      });
+    };
 })
-.controller('passwordUpdate', function($scope, $state, $ionicPopup, $http, $ionicLoading) {
+.controller('passwordUpdate', function($scope, $state, $ionicPopup, $http) {
     $scope.email = window.localStorage['email'];
     $scope.name = window.localStorage['name'];
     $scope.phone = window.localStorage['phone'];
-
-
 })
+
+.controller('logoutCtrl', function($scope, $state){
+  $scope.logout = function(){
+    logout();
+    $state.go('nav.login');
+  };
+})
+
 ;

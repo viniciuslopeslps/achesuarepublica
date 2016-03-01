@@ -75,7 +75,10 @@ angular.module('starter', ['ionic', 'starter.controllers'])
             }
           }
       })
-
+      .state('logout', {
+        url: '/logout',
+        controller:'logoutCtrl'
+      })
 
   $urlRouterProvider.otherwise('/nav/login');
 })

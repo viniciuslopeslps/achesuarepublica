@@ -54,6 +54,15 @@ def update_user(name, email, phone, id_usu):
         conn.commit()
         return 'SUCCESS'
     return 'ERROR'
+    
+@app.route('/deleteUser/<int:id_usu>', methods =["POST"])
+def delete_user(id_usu):
+    if request.method == "POST":
+        cursor.execute("delete from users where id_usu = '{0}'"
+        .format(id_usu))
+        conn.commit()
+        return 'SUCCESS'
+    return 'ERROR'
 #mudar o ip para testar
 if __name__ == "__main__":
     app.run(host="192.168.1.106",debug=True, use_reloader=True)
