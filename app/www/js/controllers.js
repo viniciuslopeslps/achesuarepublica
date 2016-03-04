@@ -1,44 +1,5 @@
 angular.module('starter.controllers', [])
 
-.controller('createUserCtrl', function($scope, $state, $ionicPopup, $http, $ionicLoading) {
-    //mudar o ip para testar
-    var ip = 'http://192.168.1.106:5000';
-
-    $scope.createUser = function(data) {
-      var email = $scope.data.email;
-      var password = $scope.data.password;
-      var confirmPassword = $scope.data.confirmPassword;
-      var name = $scope.data.name;
-      var phone = $scope.data.phone;
-
-      if(data === undefined || email === undefined || password === undefined
-      || confirmPassword === undefined || name === undefined || phone === undefined
-      || password != confirmPassword){
-        var alertPopup = $ionicPopup.alert({
-          title: 'ERRO',
-          template: 'Complete as informações corretamente'
-        });
-      }
-      else {
-        $http.post(ip + '/createUser/'+ email + '/'+ password + '/' + name + '/' + phone).
-        success(function(response) {
-          var dado =  angular.toJson(response);
-          var obj = jQuery.parseJSON(dado);
-          var alertPopup = $ionicPopup.alert({
-            title: 'Bem vindo ao ache sua república!',
-            template: 'Registro de usuário inserido com sucesso!'
-            });
-        }).
-        error(function() {
-          var alertPopup = $ionicPopup.alert({
-            title: 'ERRO',
-            template: 'Por favor, confira suas credenciais'
-          });
-        });
-        $state.go('nav.login');
-      }
-    };
-})
 .controller('loginCtrl', function($scope, $state, $ionicPopup, $http, $ionicLoading){
   function logout() {
     window.localStorage['id'] = " ";
@@ -106,7 +67,40 @@ angular.module('starter.controllers', [])
     $scope.phone = window.localStorage['phone'];
 
     var ip = 'http://192.168.1.106:5000';
+    $scope.createUser = function(data) {
+      var email = $scope.data.email;
+      var password = $scope.data.password;
+      var confirmPassword = $scope.data.confirmPassword;
+      var name = $scope.data.name;
+      var phone = $scope.data.phone;
 
+      if(data === undefined || email === undefined || password === undefined
+      || confirmPassword === undefined || name === undefined || phone === undefined
+      || password != confirmPassword){
+        var alertPopup = $ionicPopup.alert({
+          title: 'ERRO',
+          template: 'Complete as informações corretamente'
+        });
+      }
+      else {
+        $http.post(ip + '/createUser/'+ email + '/'+ password + '/' + name + '/' + phone).
+        success(function(response) {
+          var dado =  angular.toJson(response);
+          var obj = jQuery.parseJSON(dado);
+          var alertPopup = $ionicPopup.alert({
+            title: 'Bem vindo ao ache sua república!',
+            template: 'Registro de usuário inserido com sucesso!'
+            });
+        }).
+        error(function() {
+          var alertPopup = $ionicPopup.alert({
+            title: 'ERRO',
+            template: 'Por favor, confira suas credenciais'
+          });
+        });
+        $state.go('nav.login');
+      }
+    };
     $scope.updateUser = function(data) {
       var email = $scope.data.email;
       var name = $scope.data.name;

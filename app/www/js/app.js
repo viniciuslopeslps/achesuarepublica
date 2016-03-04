@@ -19,15 +19,15 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   .state('nav', {
     url: '/nav',
     abstract: true,
-    templateUrl: 'templates/unkwonUserMenu.html'
+    templateUrl: 'templates/users/unkwonUserMenu.html'
   })
 
   .state('nav.createUser', {
       url: '/createUser',
       views: {
         'menuContent': {
-          templateUrl: 'templates/createUser.html',
-          controller: 'createUserCtrl'
+          templateUrl: 'templates/users/createUser.html',
+          controller: 'profileCtrl'
         }
       }
     })
@@ -36,7 +36,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         url: '/login',
         views: {
           'menuContent': {
-            templateUrl: 'templates/login.html',
+            templateUrl: 'templates/users/login.html',
             controller: 'loginCtrl'
           }
         }
@@ -45,14 +45,14 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       .state('navUser', {
         url: '/navUser',
         abstract: true,
-        templateUrl: 'templates/kwonUserMenu.html'
+        templateUrl: 'templates/users/kwonUserMenu.html'
       })
 
       .state('navUser.home', {
           url: '/home',
           views: {
             'menuContent': {
-              templateUrl: 'templates/home.html',
+              templateUrl: 'templates/users/home.html',
               controller: 'loginCtrl'
             }
           }
@@ -61,7 +61,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
           url: '/profile',
           views: {
             'menuContent': {
-              templateUrl: 'templates/profile.html',
+              templateUrl: 'templates/users/profile.html',
               controller: 'profileCtrl'
             }
           }
@@ -70,7 +70,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
           url: '/passwordUpdate',
           views: {
             'menuContent': {
-              templateUrl: 'templates/passwordUpdate.html',
+              templateUrl: 'templates/users/passwordUpdate.html',
               controller: 'passwordUpdateCtrl'
             }
           }

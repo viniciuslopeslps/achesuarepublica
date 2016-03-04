@@ -1,0 +1,25 @@
+<ion-view view-title="Login" align-title="left">
+  <ion-content class="back-color padding">
+    <div ng-controller="loginCtrl">
+      <form name="createUserForm" novalidate="novalidate">
+        <br />
+        <h1 class="text-center">Login</h1>
+        <br />
+        <div class="list padding">
+          <label class="item item-input">
+            <span class="input-label">Email:</span>
+            <input name="email" ng-model="data.email" type="email">
+          </label>
+          <label class="item item-input">
+            <span class="input-label">Senha:</span>
+            <input name="password" ng-model="data.password" type="password">
+          </label>
+          <br /><br />
+          <button ng-click="login(data)" class="bluedark-color button button-block button-positive">
+            Logar <i class="ion-android-checkbox-outline"></i>
+          </button>
+      </div>
+    </form>
+    </div>
+  </ion-content>
+</ion-view>
