@@ -1,6 +1,6 @@
 angular.module('starter.controllers',['starter.services'])
 
-.controller('loginCtrl', function($scope, $state, $ionicPopup, $http, $ionicLoading, alertService, session){
+.controller('loginCtrl', function($scope, $state, $http, alertService, session, ip){
 
     $scope.login = function(data) {
       if(data === undefined || data['email'] === undefined || data['password'] ===undefined){
@@ -9,7 +9,6 @@ angular.module('starter.controllers',['starter.services'])
       else {
         var email = $scope.data.email;
         var password = $scope.data.password;
-        var ip = 'http://192.168.1.106:5000';
 
         $http.get(ip + '/login/'+ email + '/'+ password).
         success(function(response) {
@@ -32,17 +31,16 @@ angular.module('starter.controllers',['starter.services'])
 
 })
 
-.controller('homeCtrl', function($scope, $state, $ionicPopup, $http, $ionicLoading, alertService) {
+.controller('homeCtrl', function($scope, $state, $http, alertService, ip) {
   $scope.name = window.localStorage['name'];
 })
 
-.controller('profileCtrl', function($scope, $state, $ionicPopup, $http, $ionicLoading,alertService) {
+.controller('profileCtrl', function($scope, $state, $ionicPopup, $http,alertService, ip) {
 
     $scope.email = window.localStorage['email'];
     $scope.name = window.localStorage['name'];
     $scope.phone = window.localStorage['phone'];
 
-    var ip = 'http://192.168.1.106:5000';
     $scope.createUser = function(data) {
       var email = $scope.data.email;
       var password = $scope.data.password;
@@ -123,7 +121,7 @@ angular.module('starter.controllers',['starter.services'])
     };
 })
 
-.controller('passwordUpdateCtrl', function($scope, $state, $ionicPopup, $http, alertService, ip) {
+.controller('passwordUpdateCtrl', function($scope, $state, $http, alertService, ip) {
     $scope.passwordUpdate = function(data){
       if(data === undefined || data['password'] === undefined || data['passwordConfirm'] === undefined
       || data['password'] !== data['passwordConfirm']){
