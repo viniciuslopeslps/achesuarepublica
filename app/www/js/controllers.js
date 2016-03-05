@@ -123,12 +123,29 @@ angular.module('starter.controllers',['starter.services'])
     };
 })
 
-.controller('passwordUpdateCtrl', function($scope, $state, $ionicPopup, $http, alertService) {
+.controller('passwordUpdateCtrl', function($scope, $state, $ionicPopup, $http, alertService, ip) {
     $scope.passwordUpdate = function(data){
-      if(data===undefined){
+      if(data === undefined || data['password'] === undefined || data['passwordConfirm'] === undefined
+      || data['password'] !== data['passwordConfirm']){
         alertService.alertPopup('ERRO','Por favor complete os campos corretamente');
       }
-      var id = window.localStorage['id'];
+      else {
+        var id = window.localStorage['id'];
+        var password = $scope.data.password;
+        var password = $scope.data.passwordConfirm;
+
+        $http.post(ip + '/updatePassword/'+ password +"/" + id).
+        success(function(response) {
+          var dado =  angular.toJson(response);
+          var obj = jQuery.parseJSON(dado);
+          alertService.alertPopup('Atualizado!',
+          'Senha atualizada com sucesso!');
+        }).
+        error(function() {
+          alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
+        });
+        $state.go('nav.login');
+      }
     };
 })
 

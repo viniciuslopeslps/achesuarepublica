@@ -80,6 +80,6 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
         controller:'logoutCtrl'
       })
 
-  $urlRouterProvider.otherwise('/nav/login');
+  $urlRouterProvider.otherwise('/navUser/passwordUpdate');
 })
 ;

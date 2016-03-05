@@ -54,7 +54,7 @@ def update_user(name, email, phone, id_usu):
         conn.commit()
         return 'SUCCESS'
     return 'ERROR'
-    
+
 @app.route('/deleteUser/<int:id_usu>', methods =["POST"])
 def delete_user(id_usu):
     if request.method == "POST":
@@ -63,6 +63,16 @@ def delete_user(id_usu):
         conn.commit()
         return 'SUCCESS'
     return 'ERROR'
+
+@app.route('/updatePassword/<password>/<int:id_usu>', methods =["POST"])
+def update_password_user(password, id_usu):
+    try:
+        cursor.execute("update users set password_usu='{0}';".format(password))
+        conn.commit()
+        return 'SUCCESS'
+    except Exception:
+        return 'ERROR'
+
 #mudar o ip para testar
 if __name__ == "__main__":
     app.run(host="192.168.1.106",debug=True, use_reloader=True)
