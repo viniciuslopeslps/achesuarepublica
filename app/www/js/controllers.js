@@ -36,24 +36,25 @@ angular.module('starter.controllers',['starter.services'])
 })
 
 .controller('profileCtrl', function($scope, $state, $ionicPopup, $http,alertService, ip) {
-
     $scope.email = window.localStorage['email'];
     $scope.name = window.localStorage['name'];
     $scope.phone = window.localStorage['phone'];
 
     $scope.createUser = function(data) {
-      var email = $scope.data.email;
-      var password = $scope.data.password;
-      var confirmPassword = $scope.data.confirmPassword;
-      var name = $scope.data.name;
-      var phone = $scope.data.phone;
+      if (data === undefined || data['email'] === undefined || data['password'] === undefined
+        || data['confirmPassword'] === undefined || data['name'] === undefined ||
+        data['phone'] === undefined || data['password'] !== data['confirmPassword']){
 
-      if(data === undefined || email === undefined || password === undefined
-      || confirmPassword === undefined || name === undefined || phone === undefined
-      || password != confirmPassword){
         alertService.alertPopup('ERRO','Por favor complete os campos corretamente');
-      }
-      else {
+
+      } else {
+
+        var email = $scope.data.email;
+        var password = $scope.data.password;
+        var confirmPassword = $scope.data.confirmPassword;
+        var name = $scope.data.name;
+        var phone = $scope.data.phone;
+
         $http.post(ip + '/createUser/'+ email + '/'+ password + '/' + name + '/' + phone).
         success(function(response) {
           var dado =  angular.toJson(response);
@@ -99,13 +100,13 @@ angular.module('starter.controllers',['starter.services'])
       });
     };
     $scope.deleteUser = function(data){
-      var id = window.localStorage['id'];
       var confirmPopup = $ionicPopup.confirm({
         title: 'Confirmação',
         template: 'Você tem certeza que deseja deletar sua conta?'
       });
       confirmPopup.then(function(res) {
         if(res) {
+          var id = window.localStorage['id'];
           $http.post(ip + '/deleteUser/'+ id).
           success(function(response) {
             var dado =  angular.toJson(response);
