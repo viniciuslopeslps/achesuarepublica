@@ -1,23 +1,7 @@
 angular.module('starter.controllers',['starter.services'])
 
-.controller('loginCtrl', function($scope, $state, $ionicPopup, $http, $ionicLoading, alertService){
-  function logout() {
-    window.localStorage['id'] = " ";
-    window.localStorage['name'] = " ";
-    window.localStorage['email'] = " ";
-    window.localStorage['phone'] = " ";
-    window.localStorage['password'] = " ";
-    window.localStorage['admin'] = " ";
-  }
+.controller('loginCtrl', function($scope, $state, $ionicPopup, $http, $ionicLoading, alertService, session){
 
-    function saveData(id, name, email, phone, password, admin) {
-      window.localStorage['id'] = id===undefined?window.localStorage['id']:id;
-      window.localStorage['name'] = name===undefined?window.localStorage['name']:name;
-      window.localStorage['email'] = email===undefined?window.localStorage['email']:email;
-      window.localStorage['phone'] = phone===undefined?window.localStorage['phone']:phone;
-      window.localStorage['password'] = password===undefined?window.localStorage['password']:password;
-      window.localStorage['admin'] = admin===undefined?window.localStorage['admin']:admin;
-    }
     $scope.login = function(data) {
       if(data === undefined || data['email'] === undefined || data['password'] ===undefined){
         alertService.alertPopup('ERRO','Por favor complete os campos corretamente');
@@ -32,20 +16,17 @@ angular.module('starter.controllers',['starter.services'])
           var dado =  angular.toJson(response);
           var obj = jQuery.parseJSON(dado);
           if(obj.user==null){
-            var alertPopup = $ionicPopup.alert({
-              title: 'ERRO',
-              template: 'Por favor, confira suas credenciais'
-            });
+            alertService.alertPopup('ERRO','Por favor complete os campos corretamente');
           }
           else {
-            saveData(obj.user.id, obj.user.name, obj.user.email, obj.user.phone, obj.user.password, obj.user.admin);
+            session.saveData(obj.user.id, obj.user.name, obj.user.email,
+              obj.user.phone, obj.user.password, obj.user.admin);
             $state.go('navUser.home');
           }
         }).
         error(function() {
           alertService.alertPopup('ERRO','Por favor complete os campos corretamente');
         });
-
       }
     };
 
@@ -117,11 +98,10 @@ angular.module('starter.controllers',['starter.services'])
       }).
       error(function() {
           alertService.alertPopup('ERRO','Por favor confira suas credenciais');
-          });
+      });
     };
     $scope.deleteUser = function(data){
       var id = window.localStorage['id'];
-
       var confirmPopup = $ionicPopup.confirm({
         title: 'Confirmação',
         template: 'Você tem certeza que deseja deletar sua conta?'
@@ -132,10 +112,7 @@ angular.module('starter.controllers',['starter.services'])
           success(function(response) {
             var dado =  angular.toJson(response);
             var obj = jQuery.parseJSON(dado);
-            var alertPopup = $ionicPopup.alert({
-              title: 'Deletado com sucesso!',
-              template: 'Registro deletado com sucesso!'
-            });
+            alertService.alertPopup('Deletado com sucesso!','Registro deletado com sucesso!');
             $state.go('nav.login');
           }).
           error(function() {
@@ -155,9 +132,9 @@ angular.module('starter.controllers',['starter.services'])
     };
 })
 
-.controller('logoutCtrl', function($scope, $state){
+.controller('logoutCtrl', function($scope, $state, session){
   $scope.logout = function(){
-    logout();
+    session.logout();
     $state.go('nav.login');
   };
 })
