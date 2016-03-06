@@ -29,6 +29,31 @@ angular.module('starter.controllers',['starter.services'])
       }
     };
 
+    $scope.resetPassword = function(data){
+      if(data === undefined || data['email'] === undefined){
+        alertService.alertPopup('ERRO','Por favor complete com o email que você cadastrou');
+      }
+      else {
+        var email = $scope.data.email;
+
+        $http.post(ip + '/resetPassword/'+ email).
+        success(function(response) {
+          var dado =  angular.toJson(response);
+          var obj = jQuery.parseJSON(dado);
+          if(obj.answer==null){
+            alertService.alertPopup('ERRO','Usuário inexistente');
+          }
+          else{
+            alertService.alertPopup('Senha redefinida',
+            'Confira seu email e logue com a nova senha');
+          }
+        }).
+        error(function() {
+          alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
+        });
+        $state.go('nav.login');
+      }
+    };
 })
 
 .controller('homeCtrl', function($scope, $state, $http, alertService, ip) {
