@@ -145,9 +145,6 @@ angular.module('starter.controllers',['starter.services'])
         }
       });
     };
-})
-
-.controller('passwordUpdateCtrl', function($scope, $state, $http, alertService, ip) {
     $scope.passwordUpdate = function(data){
       if(data === undefined || data['password'] === undefined || data['passwordConfirm'] === undefined
       || data['password'] !== data['passwordConfirm']){
@@ -180,4 +177,16 @@ angular.module('starter.controllers',['starter.services'])
   };
 })
 
+.controller('locationCtrl', function($scope, $state,alertService, session){
+
+  $scope.locations = ["AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG",
+  "PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"];
+
+  $scope.a= 'oi';
+
+  $scope.createNewLocation = function(data){
+
+    alertService.alertPopup('Salvo', 'Salvo');
+  };
+})
 ;

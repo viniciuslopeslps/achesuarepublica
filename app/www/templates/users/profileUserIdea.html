@@ -1,0 +1,90 @@
+<ion-view view-title="Profile" align-title="left">
+</ion-view>
+
+<ion-tabs class="tabs-striped tabs-top tabs-background-positive tabs-color-light">
+
+  <ion-tab title="Home" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-filing-outline">
+    <ion-view>
+       <ion-content>
+         <div class="back-color padding" ng-controller="profileCtrl">
+           <form name="updateUserForm" novalidate="novalidate">
+             <br />
+             <h2 class="text-center">Alteração de usuário</h2>
+             <br />
+             <div class="list padding">
+               <label class="item item-input">
+                 <span class="input-label">Nome:</span>
+                 <input name="name" ng-model="data.name" placeholder={{name}} type="text">
+               </label>
+               <label class="item item-input">
+                 <span class="input-label">Email:</span>
+                 <input name="email" ng-model="data.email" placeholder={{email}} type="email">
+               </label>
+               <label class="item item-input">
+                 <span class="input-label">Telefone:</span>
+                 <input name="phone" ng-model="data.phone" placeholder={{phone}} type="tel">
+               </label>
+               <br />
+               <h7>Para os campos em branco serão mantidos as informações.</h7>
+               <br /><br />
+               <button ng-click="updateUser(data)" class="bluedark-color button button-block button-positive">
+                 Atualizar <i class="ion-android-checkbox-outline"></i>
+               </button>
+           </div>
+         </form>
+         </div>
+       </ion-content>
+     </ion-view>
+  </ion-tab>
+
+  <ion-tab title="Settings" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-gear-outline">
+    <ion-view>
+       <ion-content>
+         <div class="back-color padding" ng-controller="profileCtrl">
+           <form name="passwordForm">
+             <br />
+             <h2 class="text-center">Atualizar Senha</h2>
+             <br />
+             <div class="list padding">
+               <label class="item item-input">
+                 <span class="input-label">Senha:</span>
+                 <input name="password" ng-model="data.password" type="password">
+               </label>
+               <label class="item item-input">
+                 <span class="input-label">Confirmação de senha:</span>
+                 <input name="passwordConfirm" ng-model="data.passwordConfirm" type="password">
+               </label>
+               <br /><br />
+               <button ng-click="passwordUpdate(data)" class="bluedark-color button button-block button-positive">
+                 Atualizar <i class="ion-android-checkbox-outline"></i>
+               </button>
+           </div>
+         </form>
+         </div>
+       </ion-content>
+     </ion-view>
+  </ion-tab>
+
+  <ion-tab title="Home" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-filing-outline">
+    <ion-view>
+       <ion-content>
+         <div class="back-color padding" ng-controller="profileCtrl">
+           <form name="updateUserForm" novalidate="novalidate">
+             <br />
+             <h2 class="text-center">Excluir conta</h2>
+             <br />
+             <div class="list padding">
+               <div class="row">
+                <div class="col text-center">
+                  <button ng-click="deleteUser()" class="button button-outline icon-right button-assertive">
+                    Deletar Conta <i class="ion-close-round"></i>
+                  </button>
+                </div>
+             </div>
+           </div>
+         </form>
+         </div>
+       </ion-content>
+     </ion-view>
+  </ion-tab>
+</ion-tabs>

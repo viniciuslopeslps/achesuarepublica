@@ -19,7 +19,7 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
   .state('nav', {
     url: '/nav',
     abstract: true,
-    templateUrl: 'templates/users/unkwonUserMenu.html'
+    templateUrl: 'templates/base/unkwonUserMenu.html'
   })
 
   .state('nav.createUser', {
@@ -45,14 +45,14 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
       .state('navUser', {
         url: '/navUser',
         abstract: true,
-        templateUrl: 'templates/users/kwonUserMenu.html'
+        templateUrl: 'templates/base/kwonUserMenu.html'
       })
 
       .state('navUser.home', {
           url: '/home',
           views: {
             'menuContent': {
-              templateUrl: 'templates/users/home.html',
+              templateUrl: 'templates/base/home.html',
               controller: 'loginCtrl'
             }
           }
@@ -61,7 +61,7 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
           url: '/profile',
           views: {
             'menuContent': {
-              templateUrl: 'templates/users/profile.html',
+              templateUrl: 'templates/users/profileUserIdea.html',
               controller: 'profileCtrl'
             }
           }
@@ -72,6 +72,15 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
             'menuContent': {
               templateUrl: 'templates/users/passwordUpdate.html',
               controller: 'passwordUpdateCtrl'
+            }
+          }
+      })
+      .state('navUser.createLocation', {
+          url: '/createLocation',
+          views: {
+            'menuContent': {
+              templateUrl: 'templates/location/location.html',
+              controller: 'locationCtrl'
             }
           }
       })

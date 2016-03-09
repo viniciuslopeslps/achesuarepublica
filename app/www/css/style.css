@@ -4,3 +4,11 @@
 .bar-stable .button.button-clear , .bar.bar-stable .title {
     color: #FFF;
 }
+
+.tabs-striped.tabs-background-positive .tabs {
+    background-color: #7f8c8d;
+    background-image: none;
+}
+.tabs-background-positive .tabs, .tabs-background-positive > .tabs{
+  border-color: transparent;
+}

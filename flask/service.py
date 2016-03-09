@@ -74,7 +74,6 @@ def update_password_user(password, id_usu):
 
 
 def send_email(email, assunto, mensagem):
-    print(email, assunto, mensagem)
     #cria um cliente smtp que conectará em smtp.gmail.com na porta 587
     gm = smtplib.SMTP("smtp.gmail.com", 587)
     #nos identificamos no servidor
@@ -114,7 +113,7 @@ def reset_password(email_usu):
         mensagem = 'Olá senhor(a), foi solicitado uma redefinição de senha no ache sua república, sua nova senha é: ' + token
         send_email(email_usu, assunto, mensagem)
 
-        dic = {"answer":"SUCCESS"}
+        dic = {"answer": "SUCCESS"}
         return jsonify(answer = dic)
     except Exception:
         return 'ERROR'
@@ -122,4 +121,4 @@ def reset_password(email_usu):
 
 #mudar o ip para testar
 if __name__ == "__main__":
-    app.run(host="192.168.0.12", debug=True, use_reloader=True)
+    app.run(host="192.168.1.105", debug=True, use_reloader=True)
