@@ -66,15 +66,6 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
             }
           }
       })
-      .state('navUser.passwordUpdate', {
-          url: '/passwordUpdate',
-          views: {
-            'menuContent': {
-              templateUrl: 'templates/users/passwordUpdate.html',
-              controller: 'passwordUpdateCtrl'
-            }
-          }
-      })
       .state('navUser.createLocation', {
           url: '/createLocation',
           views: {
