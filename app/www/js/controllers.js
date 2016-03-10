@@ -97,7 +97,7 @@ angular.module('starter.controllers',['starter.services'])
       var email = $scope.data.email;
       var name = $scope.data.name;
       var phone = $scope.data.phone;
-      var id = window.localStorage['id'];
+      var id = window.localStorage['id_usu'];
 
       if(email==undefined){
         var email = window.localStorage['email'];
@@ -177,16 +177,35 @@ angular.module('starter.controllers',['starter.services'])
   };
 })
 
-.controller('locationCtrl', function($scope, $state,alertService, session){
+.controller('locationCtrl', function($scope, $state, $http,alertService, ip, session){
 
   $scope.locations = ["AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG",
   "PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"];
 
-  $scope.a= 'oi';
-
   $scope.createNewLocation = function(data){
+    if(data === undefined || data['city'] === undefined || data['state'] ===undefined
+        || data['address'] ===undefined || data['number'] ===undefined){
+        alertService.alertPopup('ERRO','Por favor complete os campos corretamente');
+    }
+    else{
+        var city = $scope.data.city;
+        var state = $scope.data.state;
+        var address = $scope.data.address;
+        var number = $scope.data.number;
+        var id_usu = window.localStorage['id_usu'];
 
-    alertService.alertPopup('Salvo', 'Salvo');
+        $http.post(ip + '/createLocation/'+ city + '/'+ state + '/' + address + '/' + number + '/' + id_usu).
+        success(function(response) {
+          var dado =  angular.toJson(response);
+          var obj = jQuery.parseJSON(dado);
+          alertService.alertPopup('Nova localização!',
+          'Registro de localização inserida com sucesso!');
+        }).
+        error(function() {
+          alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
+        });
+        alertService.alertPopup('Salvo', 'Salvo');
+    }
   };
 })
 ;

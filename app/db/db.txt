@@ -12,4 +12,15 @@ phone_user varchar(15) not null,
 admin_user bool not null
 );
 
+create table location
+(
+id_locat int primary key auto_increment,
+city_locat varchar(40) not null unique,
+state_locat varchar(2) not null,
+adress_locat varchar(60) not null,
+number_locat int,
+id_usu int references users(id_usu)
+);
+
+
 insert into users values (0,'vinicius lopes','viniciuslopeslps@gmail.com','lopes123','12981437625',1);

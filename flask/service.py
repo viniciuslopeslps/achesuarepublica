@@ -118,6 +118,16 @@ def reset_password(email_usu):
     except Exception:
         return 'ERROR'
 
+@app.route('/createLocation/<city_locat>/<state_locat>/<adress_locat>/<int:number_locat>/<int:id_usu>', methods = ["POST"])
+def createLocation(city_locat, state_locat, adress_locat, number_locat, id_usu):
+    try:
+        cursor.execute("insert into location values (0,'{0}','{1}','{2}','{3}','{4}');"
+        .format(city_locat, state_locat, adress_locat, number_locat, id_usu))
+        conn.commit()
+        print(city_locat, state_locat, adress_locat, number_locat, id_usu)
+        return 'SUCCESS'
+    except Exception:
+        return 'ERROR'
 
 #mudar o ip para testar
 if __name__ == "__main__":

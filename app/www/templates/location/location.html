@@ -1,39 +1,63 @@
 <ion-view view-title="Localização" align-title="left">
-  <ion-content class="back-color padding">
-    <div ng-controller="locationCtrl">
-      <form name="createLocation" novalidate="novalidate">
-        <br />
-        <h1 class="text-center">Novo Endereço</h1>
-        <br />
-        <div class="list padding">
-          <label class="item item-input">
-            <span class="input-label">Cidade:</span>
-            <input name="city" ng-model="data.city" type="text">
-          </label>
-
-          <label class="item item-input item-select">
-            <div class="input-label">
-              Estado:
-            </div>
-            <select>
-                 <option ng-repeat="item in locations" >{{item}}</option>
-            </select>
-          </label>
-          <label class="item item-input">
-            <span class="input-label">Enredeço:</span>
-            <input name="adress" ng-model="data.adress" type="text">
-          </label>
-          <label class="item item-input">
-            <span class="input-label">Número:</span>
-            <input name="number" ng-model="data.number" type="tel">
-          </label>
-          <br /><br />
-          <button ng-click="createNewLocation(data)" class="bluedark-color button button-block button-positive">
-            Cadastrar <i class="ion-android-checkbox-outline"></i>
-          </button>
-          <br />
-      </div>
-    </form>
-    </div>
-  </ion-content>
 </ion-view>
+
+<ion-tabs class="tabs-striped tabs-top tabs-background-positive tabs-color-light">
+
+  <ion-tab title="Home" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-filing-outline">
+    <ion-view>
+       <ion-content>
+         <div ng-controller="locationCtrl">
+           <form name="createLocation" novalidate="novalidate">
+             <br />
+             <h1 class="text-center">Novo Endereço</h1>
+             <br />
+             <div class="list padding">
+               <label class="item item-input">
+                 <span class="input-label">Cidade:</span>
+                 <input name="city" ng-model="data.city" type="text">
+               </label>
+
+               <label class="item item-input item-select">
+                 <div class="input-label">
+                   Estado:
+                 </div>
+                 <select name="state" ng-model="data.state">
+                      <option ng-repeat="item in locations" >{{item}}</option>
+                 </select>
+               </label>
+               <label class="item item-input">
+                 <span class="input-label">Enredeço:</span>
+                 <input name="address" ng-model="data.address" type="text">
+               </label>
+               <label class="item item-input">
+                 <span class="input-label">Número:</span>
+                 <input name="number" ng-model="data.number" type="tel">
+               </label>
+               <br /><br />
+               <button ng-click="createNewLocation(data)" class="bluedark-color button button-block button-positive">
+                 Cadastrar <i class="ion-android-checkbox-outline"></i>
+               </button>
+               <br />
+           </div>
+         </form>
+         </div>
+       </ion-content>
+     </ion-view>
+  </ion-tab>
+
+  <ion-tab title="Settings" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-gear-outline">
+    <ion-view>
+       <ion-content>
+         alterar
+       </ion-content>
+     </ion-view>
+  </ion-tab>
+
+  <ion-tab title="Home" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-filing-outline">
+    <ion-view>
+       <ion-content>
+         excluir
+       </ion-content>
+     </ion-view>
+  </ion-tab>
+</ion-tabs>

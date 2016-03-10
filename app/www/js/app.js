@@ -66,8 +66,8 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
             }
           }
       })
-      .state('navUser.createLocation', {
-          url: '/createLocation',
+      .state('navUser.location', {
+          url: '/location',
           views: {
             'menuContent': {
               templateUrl: 'templates/location/location.html',

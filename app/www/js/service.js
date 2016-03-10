@@ -12,7 +12,7 @@ angular.module('starter.services', [])
 .factory('session', function() {
   return {
     saveData : function(id, name, email, phone, password, admin) {
-      window.localStorage['id'] = id===undefined?window.localStorage['id']:id;
+      window.localStorage['id_usu'] = id===undefined?window.localStorage['id_usu']:id;
       window.localStorage['name'] = name===undefined?window.localStorage['name']:name;
       window.localStorage['email'] = email===undefined?window.localStorage['email']:email;
       window.localStorage['phone'] = phone===undefined?window.localStorage['phone']:phone;
@@ -20,7 +20,7 @@ angular.module('starter.services', [])
       window.localStorage['admin'] = admin===undefined?window.localStorage['admin']:admin;
     },
     logout : function() {
-      window.localStorage['id'] = " ";
+      window.localStorage['id_usu'] = " ";
       window.localStorage['name'] = " ";
       window.localStorage['email'] = " ";
       window.localStorage['phone'] = " ";
