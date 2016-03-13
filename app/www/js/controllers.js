@@ -204,7 +204,6 @@ angular.module('starter.controllers',['starter.services'])
         error(function() {
           alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
         });
-        alertService.alertPopup('Salvo', 'Salvo');
     }
   };
 })
