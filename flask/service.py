@@ -121,10 +121,38 @@ def reset_password(email_usu):
 @app.route('/createLocation/<city_locat>/<state_locat>/<adress_locat>/<int:number_locat>/<int:id_usu>', methods = ["POST"])
 def createLocation(city_locat, state_locat, adress_locat, number_locat, id_usu):
     try:
-        cursor.execute("insert into location values (0,'{0}','{1}','{2}','{3}','{4}');"
-        .format(city_locat, state_locat, adress_locat, number_locat, id_usu))
+        key_locat = city_locat.lower() + ' - ' + state_locat.lower()
+        cursor.execute("insert into location values (0,'{0}','{1}','{2}','{3}','{4}','{5}' ); "
+        .format(city_locat, state_locat, adress_locat, key_locat, number_locat, id_usu))
         conn.commit()
-        print(city_locat, state_locat, adress_locat, number_locat, id_usu)
+        return 'SUCCESS'
+    except Exception:
+        return 'ERROR'
+
+@app.route('/getLocations/<int:id_usu>')
+def get_locations(id_usu):
+    cursor = conn.cursor()
+    cursor.execute("select * from location where id_usu = '{0}' ; ".format(id_usu))
+    locations = cursor.fetchall()
+
+    if(len(locations)==0):
+        return jsonify(locations = None)
+
+    array = []
+    for x in locations:
+        dic = {'id_locat':x[0],'city_locat':x[1],'state_locat':x[2],
+        'address_locat':x[3],'key_locat':x[4],'number_locat':x[5],'id_usu': x[6]}
+        array.append(dic)
+    return jsonify(locations = array)
+
+@app.route('/updateLocation/<city_locat>/<state_locat>/<address_locat>/<int:number_locat>/<int:id_locat>/<int:id_usu>', methods = ["POST"])
+def updateLocation(city_locat, state_locat, address_locat, number_locat, id_locat, id_usu):
+    try:
+        key_locat = city_locat.lower() + ' - ' + state_locat.lower()
+        query = "update location set city_locat = '{0}', state_locat = '{1}', address_locat = '{2}', key_locat = '{3}', number_locat = {4} where id_locat = {5} and id_usu = {6} ; ".format(city_locat, state_locat,
+        address_locat, key_locat, number_locat, id_locat, id_usu)
+        cursor.execute(query)
+        conn.commit()
         return 'SUCCESS'
     except Exception:
         return 'ERROR'

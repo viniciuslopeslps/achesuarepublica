@@ -17,7 +17,8 @@ create table location
 id_locat int primary key auto_increment,
 city_locat varchar(40) not null unique,
 state_locat varchar(2) not null,
-adress_locat varchar(60) not null,
+address_locat varchar(60) not null,
+key_locat varchar(60) not null,
 number_locat int,
 id_usu int references users(id_usu)
 );

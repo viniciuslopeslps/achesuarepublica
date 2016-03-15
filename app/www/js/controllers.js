@@ -179,7 +179,7 @@ angular.module('starter.controllers',['starter.services'])
 
 .controller('locationCtrl', function($scope, $state, $http,alertService, ip, session){
 
-  $scope.locations = ["AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG",
+  $scope.states = ["AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG",
   "PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"];
 
   $scope.createNewLocation = function(data){
@@ -188,16 +188,23 @@ angular.module('starter.controllers',['starter.services'])
         alertService.alertPopup('ERRO','Por favor complete os campos corretamente');
     }
     else{
-        var city = $scope.data.city;
-        var state = $scope.data.state;
-        var address = $scope.data.address;
-        var number = $scope.data.number;
+        var city_locat = $scope.data.city;
+        var state_locat = $scope.data.state;
+        var address_locat = $scope.data.address;
+        var number_locat = $scope.data.number;
         var id_usu = window.localStorage['id_usu'];
 
-        $http.post(ip + '/createLocation/'+ city + '/'+ state + '/' + address + '/' + number + '/' + id_usu).
+        $http.post(ip + '/createLocation/'+ city_locat + '/'+ state_locat + '/'
+        + address_locat + '/' + number_locat + '/' + id_usu).
         success(function(response) {
           var dado =  angular.toJson(response);
           var obj = jQuery.parseJSON(dado);
+
+          window.localStorage['city_locat'] = city_locat;
+          window.localStorage['number_locat'] = number_locat;
+          window.localStorage['address_locat'] = address_locat;
+          window.localStorage['state_locat'] = state_locat;
+
           alertService.alertPopup('Nova localização!',
           'Registro de localização inserida com sucesso!');
         }).
@@ -205,6 +212,87 @@ angular.module('starter.controllers',['starter.services'])
           alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
         });
     }
+  };
+  $scope.states = ["AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG",
+  "PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"];
+
+  var locationsArray = $scope.locationsArray = [];
+  var locationsObjs = $scope.locationsObjs = [];
+
+  $scope.getLocations = function(){
+    var locationsArray = $scope.locationsArray = [];
+    var locationsObjs = $scope.locationsObjs = [];
+    var id_usu = window.localStorage['id_usu'];
+
+    $http.get(ip + '/getLocations/' + id_usu).
+    success(function(response) {
+      var dado =  angular.toJson(response);
+      var obj = jQuery.parseJSON(dado);
+      var locations = obj["locations"];
+      for (i = 0; i < locations.length; i++) {
+        var objctKey = {};
+        $scope.locationsArray.push(locations[i]["key_locat"]);
+      }
+      $scope.locationsObjs.push(locations);
+    }).
+    error(function() {
+      alertService.alertPopup('ERRO', 'Algo inesperado');
+    });
+  };
+
+  $scope.locationSelected = function(data){
+    var objRespose = data["key_locat"];
+    var locationsAnswer = $scope.locationsObjs;
+    for(i=0; i < locationsAnswer.length;i++){
+        for(a=0; a <= locationsAnswer.length;a++){
+            if(locationsAnswer[i][a]["key_locat"]==objRespose){
+              $scope.city = locationsAnswer[i][a]["city_locat"];
+              $scope.number = locationsAnswer[i][a]["number_locat"];
+              $scope.address = locationsAnswer[i][a]["address_locat"];
+              $scope.state = locationsAnswer[i][a]["state_locat"];
+
+              window.localStorage['city_locat'] = $scope.city;
+              window.localStorage['number_locat'] = $scope.number;
+              window.localStorage['address_locat'] = $scope.address;
+              window.localStorage['state_locat'] = $scope.state;
+              window.localStorage['id_locat'] = locationsAnswer[i][a]["id_locat"];
+            }
+          };
+      };
+  };
+
+  $scope.updateLocalization = function(data){
+    var city_locat =  $scope.data.city_locat;
+    var state_locat =   $scope.data.state_locat;
+    var address_locat =   $scope.data.address_locat;
+    var number_locat =  $scope.data.number_locat;
+
+    if (city_locat===undefined){
+        var city_locat = window.localStorage['city_locat'];
+    }
+    if (state_locat===undefined){
+        var state_locat = window.localStorage['state_locat'];
+    }
+    if (address_locat===undefined){
+        var address_locat = window.localStorage['address_locat'];
+    }
+    if (number_locat===undefined){
+        var number_locat = window.localStorage['number_locat'];
+    }
+    var id_usu =   window.localStorage['id_usu'];
+    var id_locat =   window.localStorage['id_locat'];
+
+    $http.post(ip + '/updateLocation/'+ city_locat + '/'+ state_locat + '/' + address_locat + '/' + number_locat
+    + '/' + id_locat + '/' + id_usu).
+    success(function(response) {
+      var dado =  angular.toJson(response);
+      var obj = jQuery.parseJSON(dado);
+      alertService.alertPopup('Nova localização!',
+      'Registro de localização inserida com sucesso!');
+    }).
+    error(function() {
+      alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
+    });
   };
 })
 ;

@@ -16,13 +16,12 @@
                  <span class="input-label">Cidade:</span>
                  <input name="city" ng-model="data.city" type="text">
                </label>
-
                <label class="item item-input item-select">
                  <div class="input-label">
                    Estado:
                  </div>
                  <select name="state" ng-model="data.state">
-                      <option ng-repeat="item in locations" >{{item}}</option>
+                      <option ng-repeat="item in states" >{{item}}</option>
                  </select>
                </label>
                <label class="item item-input">
@@ -48,7 +47,55 @@
   <ion-tab title="Settings" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-gear-outline">
     <ion-view>
        <ion-content>
-         alterar
+         <div ng-controller="locationCtrl">
+           <form name="updateLocation" novalidate="novalidate">
+             <br />
+             <h1 class="text-center">Alterar Endereços</h1>
+             <br />
+              <div class="col text-center">
+               <button ng-click="getLocations()" class="button icon ion-refresh">
+                  Carregar Localizações
+                </button>
+              </div>
+              <br />
+              <div class="list padding" ng-show="locationsArray.length > 0">
+                <label  class="item item-input item-select">
+                  <div class="input-label">
+                    Localização:
+                  </div>
+                  <select name="key_locat" ng-model="data.key_locat" ng-change="locationSelected(data)">
+                       <option ng-repeat="item in locationsArray">{{item}}</option>
+                  </select>
+                </label>
+                <label class="item item-input">
+                  <span class="input-label">Cidade:</span>
+                  <input name="address" ng-model="data.city_locat" placeholder="{{city}}" type="text">
+                </label>
+                <label class="item item-input item-select">
+                  <div class="input-label">
+                    Estado:
+                  </div>
+                  <select name="state" ng-model="data.state_locat" placeholder="{{state}}">
+                       <option ng-repeat="item in states" >{{item}}</option>
+                  </select>
+                </label>
+                <label class="item item-input">
+                  <span class="input-label">Endereço:</span>
+                  <input name="address" ng-model="data.address_locat" placeholder="{{address}}" type="text">
+                </label>
+                <label class="item item-input">
+                  <span class="input-label">Número:</span>
+                  <input name="address" ng-model="data.number_locat" placeholder="{{number}}" type="text">
+                </label>
+                <br /><br />
+                <button ng-click="updateLocalization(data)" class="bluedark-color button button-block button-positive">
+                  Cadastrar <i class="ion-android-checkbox-outline"></i>
+                </button>
+                <br />
+              </div>
+           </div>
+         </form>
+         </div>
        </ion-content>
      </ion-view>
   </ion-tab>
