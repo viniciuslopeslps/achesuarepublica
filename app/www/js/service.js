@@ -32,4 +32,22 @@ angular.module('starter.services', [])
 .factory('ip', function() {
   return 'http://192.168.1.105:5000';
 })
+.factory('location', function() {
+  return {
+    saveData : function(id, city, number, address, state) {
+      window.localStorage['city_locat'] = city===undefined?window.localStorage['city_locat']:city;
+      window.localStorage['number_locat'] = number===undefined?window.localStorage['number_locat']:number;
+      window.localStorage['address_locat'] = address===undefined?window.localStorage['address_locat']:address;
+      window.localStorage['state_locat'] = state===undefined?window.localStorage['state_locat']:state;
+      window.localStorage['id_locat'] = id===undefined? window.localStorage['id_locat']:id;
+    },
+    clearAll : function() {
+      window.localStorage['city_locat'] = " ";
+      window.localStorage['number_locat'] = " ";
+      window.localStorage['address_locat'] = " ";
+      window.localStorage['state_locat'] = " ";
+      window.localStorage['id_locat'] = " ";
+    }
+  }
+})
 ;
