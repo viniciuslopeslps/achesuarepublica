@@ -131,7 +131,7 @@ angular.module('starter.controllers',['starter.services'])
       });
       confirmPopup.then(function(res) {
         if(res) {
-          var id = window.localStorage['id'];
+          var id = window.localStorage['id_usu'];
           $http.post(ip + '/deleteUser/'+ id).
           success(function(response) {
             var dado =  angular.toJson(response);
@@ -151,7 +151,7 @@ angular.module('starter.controllers',['starter.services'])
         alertService.alertPopup('ERRO','Por favor complete os campos corretamente');
       }
       else {
-        var id = window.localStorage['id'];
+        var id = window.localStorage['id_usu'];
         var password = $scope.data.password;
         var password = $scope.data.passwordConfirm;
 
@@ -240,7 +240,7 @@ angular.module('starter.controllers',['starter.services'])
               $scope.number = locationsAnswer[i][a]["number_locat"];
               $scope.address = locationsAnswer[i][a]["address_locat"];
               $scope.state = locationsAnswer[i][a]["state_locat"];
-              location.clearAll();
+
               location.saveData(locationsAnswer[i][a]["id_locat"],$scope.city,
               $scope.number,$scope.address, $scope.state);
             }
@@ -272,6 +272,7 @@ angular.module('starter.controllers',['starter.services'])
     $http.post(ip + '/updateLocation/'+ city_locat + '/'+ state_locat + '/' + address_locat + '/' + number_locat
     + '/' + id_locat + '/' + id_usu).
     success(function(response) {
+
       alertService.alertPopup('Alterado!', 'Registro de localização alterado com sucesso!');
     }).
     error(function() {
