@@ -50,3 +50,13 @@ class Location():
             return 'SUCCESS'
         except Exception:
             return 'ERROR'
+
+    def delete_location(self, id_locat):
+        try:
+            cursor = self.base.get_cursor()
+            conn = self.base.get_conn()
+            cursor.execute("delete from location where id_locat = '{0}'".format(id_locat))
+            conn.commit()
+            return 'SUCCESS'
+        except Exception:
+            return 'ERROR'

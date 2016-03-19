@@ -94,7 +94,7 @@
                 <br />
               </div>
            </div>
-         </form>
+          </form>
          </div>
        </ion-content>
      </ion-view>
@@ -103,7 +103,39 @@
   <ion-tab title="Home" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-filing-outline">
     <ion-view>
        <ion-content>
-         excluir
+         <div ng-controller="locationCtrl">
+           <form name="updateLocation" novalidate="novalidate">
+             <br />
+             <h1 class="text-center">Alterar Endereços</h1>
+             <br />
+              <div class="col text-center">
+               <button ng-click="getLocations()" class="button icon ion-refresh">
+                  Carregar Localizações
+                </button>
+              </div>
+              <br />
+              <div class="list padding" ng-show="locationsArray.length > 0">
+                <label  class="item item-input item-select">
+                  <div class="input-label">
+                    Localização:
+                  </div>
+                  <select name="key_locat" ng-model="data.key_locat" ng-change="locationSelected(data)">
+                       <option ng-repeat="item in locationsArray">{{item}}</option>
+                  </select>
+                </label>
+                <br /><br />
+                <div class="row">
+                 <div class="col text-center">
+                   <button ng-click="deleteLocation(data)" class="button button-outline icon-right button-assertive">
+                     Deletar Conta <i class="ion-close-round"></i>
+                   </button>
+                 </div>
+                </div>
+                <br />
+              </div>
+           </div>
+          </form>
+         </div>
        </ion-content>
      </ion-view>
   </ion-tab>

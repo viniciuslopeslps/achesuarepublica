@@ -47,6 +47,9 @@ def get_locations(id_usu):
 def update_location(city_locat, state_locat, address_locat, number_locat, id_locat, id_usu):
     return location.update_location(city_locat, state_locat, address_locat, number_locat, id_locat, id_usu)
 
+@app.route('/deleteLocation/<int:id_locat>', methods=["POST"])
+def delete_location(id_locat):
+    return location.delete_location(id_locat)
 
 #mudar o ip para testar
 if __name__ == "__main__":

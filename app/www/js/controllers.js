@@ -177,7 +177,7 @@ angular.module('starter.controllers',['starter.services'])
   };
 })
 
-.controller('locationCtrl', function($scope, $state, $http,alertService, ip, session, location){
+.controller('locationCtrl', function($scope, $state, $http, $ionicPopup, alertService, ip, session, location){
 
   $scope.states = ["AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG",
   "PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"];
@@ -277,6 +277,28 @@ angular.module('starter.controllers',['starter.services'])
     }).
     error(function() {
       alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
+    });
+  };
+
+  $scope.deleteLocation = function(data){
+    var key_locat = data['key_locat'];
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Confirmação',
+      template: 'Você tem certeza que deseja deletar a localização: '+data['key_locat']+'?'
+    });
+    confirmPopup.then(function(res) {
+      if(res) {
+        var id_locat = window.localStorage['id_locat'];
+        $http.post(ip + '/deleteLocation/' + id_locat).
+        success(function(response) {
+          alertService.alertPopup('Deletado com sucesso!', 'Registro deletado com sucesso!');
+          location.clearAll();
+          $state.go('navUser.home');
+        }).
+        error(function() {
+            alertService.alertPopup('ERRO','Erro ao excluir localização');
+        });
+      }
     });
   };
 })
