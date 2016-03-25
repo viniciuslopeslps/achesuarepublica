@@ -2,6 +2,7 @@ from flask import Flask
 from base import base
 from users import user_functions
 from locations import location_functions
+from universities import university_functions
 from flask.ext.cors import CORS
 
 app = Flask(__name__)
@@ -10,6 +11,7 @@ cors = CORS(app)
 base = base.Base()
 user = user_functions.User(base)
 location = location_functions.Location(base)
+university = university_functions.University(base)
 
 @app.route('/login/<email>/<password>')
 def login(email, password):
@@ -35,21 +37,29 @@ def update_password_user(password, id_usu):
 def reset_password(email_usu):
     return user.reset_password(email_usu)
 
-@app.route('/createLocation/<city_locat>/<state_locat>/<adress_locat>/<int:number_locat>/<int:id_usu>', methods = ["POST"])
-def create_location(city_locat, state_locat, adress_locat, number_locat, id_usu):
-    return location.create_location(city_locat, state_locat, adress_locat, number_locat, id_usu)
+@app.route('/createLocation/<city_locat>/<state_locat>/<adress_locat>/<int:id_usu>', methods = ["POST"])
+def create_location(city_locat, state_locat, adress_locat, id_usu):
+    return location.create_location(city_locat, state_locat, adress_locat, id_usu)
 
-@app.route('/getLocations/<int:id_usu>')
+@app.route('/getLocationsById/<int:id_usu>')
 def get_locations(id_usu):
-    return location.get_locations(id_usu)
+    return location.get_locations_by_id(id_usu)
 
-@app.route('/updateLocation/<city_locat>/<state_locat>/<address_locat>/<int:number_locat>/<int:id_locat>/<int:id_usu>', methods = ["POST"])
-def update_location(city_locat, state_locat, address_locat, number_locat, id_locat, id_usu):
-    return location.update_location(city_locat, state_locat, address_locat, number_locat, id_locat, id_usu)
+@app.route('/updateLocation/<city_locat>/<state_locat>/<address_locat>/<int:id_locat>/<int:id_usu>', methods = ["POST"])
+def update_location(city_locat, state_locat, address_locat, id_locat, id_usu):
+    return location.update_location(city_locat, state_locat, address_locat, id_locat, id_usu)
 
 @app.route('/deleteLocation/<int:id_locat>', methods=["POST"])
 def delete_location(id_locat):
     return location.delete_location(id_locat)
+
+@app.route('/getLocationKeys/')
+def get_location_keys():
+    return location.get_location_keys()
+
+@app.route('/createUniversity/<name>/<key_locat>', methods=["POST"])
+def new_university(name, key_locat):
+    return university.new_university(name, key_locat)
 
 #mudar o ip para testar
 if __name__ == "__main__":

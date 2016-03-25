@@ -1,0 +1,57 @@
+<ion-view view-title="Faculdade" align-title="left">
+</ion-view>
+
+<div ng-controller="universityCtrl">
+  <ion-tabs class="tabs-striped tabs-top tabs-background-positive tabs-color-light">
+
+    <ion-tab on-select="getUniversities()" href="#/navUser/university" title="Home" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-filing-outline">
+      <ion-view>
+         <ion-content>
+           <div ng-controller="universityCtrl">
+             <script>getUniversities();</script>
+             <form name="createLocation" novalidate="novalidate">
+               <br />
+               <h1 class="text-center">Nova Faculdade</h1>
+               <br />
+               <div class="list padding">
+                 <label class="item item-input">
+                   <span class="input-label">Nome:</span>
+                   <input name="nameUniversity" ng-model="data.nameUniversity" type="text">
+                 </label>
+                 <label class="item item-input item-select">
+                   <div class="input-label">
+                     Localização:
+                   </div>
+                   <select name="locationKey" ng-model="data.locationKey">
+                        <option ng-repeat="item in locationKeys" >{{item}}</option>
+                   </select>
+                 </label>
+                 <br /><br />
+                 <button ng-click="createUniversity(data)" class="bluedark-color button button-block button-positive">
+                   Cadastrar <i class="ion-android-checkbox-outline"></i>
+                 </button>
+                 <br />
+             </div>
+           </form>
+           </div>
+         </ion-content>
+       </ion-view>
+    </ion-tab>
+
+    <ion-tab title="Settings" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-gear-outline">
+      <ion-view>
+         <ion-content>
+           oie
+         </ion-content>
+       </ion-view>
+    </ion-tab>
+
+    <ion-tab title="a" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-filing-outline">
+      <ion-view>
+         <ion-content>
+           oi
+         </ion-content>
+       </ion-view>
+    </ion-tab>
+  </ion-tabs>
+</div>

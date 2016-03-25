@@ -5,9 +5,9 @@ use acheSuaRepublica;
 create table users
 (
 id_usu int primary key auto_increment,
-name_usu varchar(50) not null,
-email_usu varchar(40) not null unique,
-password_usu varchar(100) not null,
+name_usu varchar(20) not null,
+email_usu varchar(30) not null unique,
+password_usu varchar(20) not null,
 phone_user varchar(15) not null,
 admin_user bool not null
 );
@@ -15,13 +15,19 @@ admin_user bool not null
 create table location
 (
 id_locat int primary key auto_increment,
-city_locat varchar(40) not null unique,
+city_locat varchar(40) not null,
 state_locat varchar(2) not null,
-address_locat varchar(60) not null,
-key_locat varchar(60) not null,
-number_locat int,
+address_locat varchar(40),
+key_locat varchar(50) not null unique,
 id_usu int references users(id_usu)
 );
 
+create table university
+(
+id_uni int primary key auto_increment,
+key_uni varchar(50) not null unique,
+name_uni varchar(40) not null,
+id_locat int references location(id_locat)
+);
 
-insert into users values (0,'vinicius lopes','viniciuslopeslps@gmail.com','lopes123','12981437625',1);
+insert into users values (0,'vinicius lopes','viniciuslopeslps@gmail.com','segredo','12981437625',1);

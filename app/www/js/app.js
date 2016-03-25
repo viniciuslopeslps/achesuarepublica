@@ -70,8 +70,17 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
           url: '/location',
           views: {
             'menuContent': {
-              templateUrl: 'templates/location/location.html',
+              templateUrl: 'templates/locations/location.html',
               controller: 'locationCtrl'
+            }
+          }
+      })
+      .state('navUser.university', {
+          url: '/university',
+          views: {
+            'menuContent': {
+              templateUrl: 'templates/universities/university.html',
+              controller: 'universityCtrl'
             }
           }
       })
