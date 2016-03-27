@@ -60,4 +60,22 @@ angular.module('starter.services', [])
     }
   }
 })
+.factory('redirect', function($state, $ionicHistory) {
+  $ionicHistory.nextViewOptions({
+    disableBack: true
+  });
+
+  $state.go('navUser.home');
+})
+.factory('redirect', function($state, $ionicHistory) {
+  return {
+    go : function(path) {
+      $ionicHistory.nextViewOptions({
+        disableBack: true
+      });
+
+      $state.go(path);
+    }
+  }
+})
 ;

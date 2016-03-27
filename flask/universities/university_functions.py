@@ -13,7 +13,7 @@ class University():
     def new_university(self, name, key_locat, id_usu):
         cursor = self.base.get_cursor()
         conn = self.base.get_conn()
-        cursor.execute("select id_locat, state_locat from location where key_locat = '{0}' ; ".format(key_locat))
+        cursor.execute("select id_locat, city_locat from location where key_locat = '{0}' ; ".format(key_locat))
         location = cursor.fetchall()
         key_uni = name.lower() + ' - ' + location[0][1].lower()
         id_locat = location[0][0]
@@ -38,11 +38,12 @@ class University():
             array.append(dic)
         return jsonify(universities = array)
 
-    def delete_university(self, key_uni):
+    def delete_university(self, key_uni, id_usu):
         try:
             cursor = self.base.get_cursor()
             conn = self.base.get_conn()
-            cursor.execute("delete from university where key_uni = '{0}'".format(key_uni))
+            cursor.execute("delete from university where key_uni = '{0}' and id_usu = '{1}' "
+            .format(key_uni, id_usu))
             conn.commit()
             return 'SUCCESS'
         except Exception:

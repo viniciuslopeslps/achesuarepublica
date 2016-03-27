@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 from flask import Flask
 from base import base
 from users import user_functions
@@ -65,9 +66,9 @@ def new_university(name, key_locat, id_usu):
 def get_universities_by_id(id_usu):
     return university.get_universities_by_id(id_usu)
 
-@app.route('/deleteUniversity/<key_locat>', methods=["POST"])
-def delte_university(key_locat):
-    return university.delete_university(key_locat)
+@app.route('/deleteUniversity/<key_locat>/<int:id_usu>', methods=["POST"])
+def delte_university(key_locat, id_usu):
+    return university.delete_university(key_locat, id_usu)
 
 #mudar o ip para testar
 if __name__ == "__main__":

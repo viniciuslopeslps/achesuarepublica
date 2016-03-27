@@ -1,6 +1,6 @@
 angular.module('starter.controllers',['starter.services'])
 
-.controller('loginCtrl', function($scope, $state, $http, alertService, session, ip){
+.controller('loginCtrl', function($scope, $state, $http, alertService, session, ip, redirect){
 
     $scope.login = function(data) {
       if(data === undefined || data['email'] === undefined || data['password'] ===undefined){
@@ -20,7 +20,7 @@ angular.module('starter.controllers',['starter.services'])
           else {
             session.saveData(obj.user.id, obj.user.name, obj.user.email,
               obj.user.phone, obj.user.password, obj.user.admin);
-            $state.go('navUser.home');
+            redirect.go('navUser.home');
           }
         }).
         error(function() {
@@ -51,7 +51,7 @@ angular.module('starter.controllers',['starter.services'])
         error(function() {
           alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
         });
-        $state.go('nav.login');
+        redirect.go('nav.login');
       }
     };
 })
@@ -60,7 +60,7 @@ angular.module('starter.controllers',['starter.services'])
   $scope.name = window.localStorage['name'];
 })
 
-.controller('profileCtrl', function($scope, $state, $ionicPopup, $http,alertService, ip) {
+.controller('profileCtrl', function($scope, $state, $ionicPopup, $http, alertService, ip, redirect) {
     $scope.email = window.localStorage['email'];
     $scope.name = window.localStorage['name'];
     $scope.phone = window.localStorage['phone'];
@@ -90,7 +90,7 @@ angular.module('starter.controllers',['starter.services'])
         error(function() {
           alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
         });
-        $state.go('nav.login');
+        redirect.go('nav.login');
       }
     };
     $scope.updateUser = function(data) {
@@ -118,7 +118,7 @@ angular.module('starter.controllers',['starter.services'])
         };
 
         alertService.alertPopup('Atualizado com sucesso!','Registro atualizado com sucesso!');
-        $state.go('navUser.home');
+        redirect.go('navUser.home');
       }).
       error(function() {
           alertService.alertPopup('ERRO','Por favor confira suas credenciais');
@@ -137,7 +137,8 @@ angular.module('starter.controllers',['starter.services'])
             var dado =  angular.toJson(response);
             var obj = jQuery.parseJSON(dado);
             alertService.alertPopup('Deletado com sucesso!','Registro deletado com sucesso!');
-            $state.go('nav.login');
+            redirect.go('nav.login');
+
           }).
           error(function() {
               alertService.alertPopup('ERRO','Por favor confira suas credenciais');
@@ -159,25 +160,24 @@ angular.module('starter.controllers',['starter.services'])
         success(function(response) {
           var dado =  angular.toJson(response);
           var obj = jQuery.parseJSON(dado);
-          alertService.alertPopup('Atualizado!',
-          'Senha atualizada com sucesso!');
+          alertService.alertPopup('Atualizado!', 'Senha atualizada com sucesso!');
         }).
         error(function() {
           alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
         });
-        $state.go('nav.login');
+        redirect.go('nav.login');
       }
     };
 })
 
-.controller('logoutCtrl', function($scope, $state, session){
+.controller('logoutCtrl', function($scope, $state, session, redirect){
   $scope.logout = function(){
     session.logout();
-    $state.go('nav.login');
+    redirect.go('nav.login');
   };
 })
 
-.controller('locationCtrl', function($scope, $state, $http, $ionicPopup, alertService, ip, session, location){
+.controller('locationCtrl', function($scope, $state, $http, $ionicPopup, alertService, ip, session, location, redirect){
 
   $scope.states = ["AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG",
   "PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"];
@@ -292,7 +292,7 @@ angular.module('starter.controllers',['starter.services'])
         success(function(response) {
           alertService.alertPopup('Deletado com sucesso!', 'Registro deletado com sucesso!');
           location.clearAll();
-          $state.go('navUser.home');
+          redirect.go('navUser.home');
         }).
         error(function() {
             alertService.alertPopup('ERRO','Erro ao excluir localização');
@@ -302,7 +302,7 @@ angular.module('starter.controllers',['starter.services'])
   };
 })
 
-.controller('universityCtrl', function($scope, $state, $http, $ionicPopup, $ionicHistory,alertService, ip, session, location, university){
+.controller('universityCtrl', function($scope, $state, $http, $ionicPopup, $ionicHistory,alertService, ip, session, location, university, redirect){
     $scope.getLocationKeys = function(){
       $http.get(ip + '/getLocationKeys/').
       success(function(response) {
@@ -333,6 +333,7 @@ angular.module('starter.controllers',['starter.services'])
           $http.post(ip + '/createUniversity/'+ name_uni + '/'+ key_locat + '/' + id_usu).
           success(function(response) {
             alertService.alertPopup('Nova localização!','Registro de localização inserida com sucesso!');
+            redirect.go('navUser.university');
           }).
           error(function() {
             alertService.alertPopup('ERRO', 'Localização já existente na base de dados!');
@@ -360,7 +361,7 @@ angular.module('starter.controllers',['starter.services'])
           $scope.universitiesObjs.push(universities);
         }
         else{
-          alertService.alertPopup('ERRO', 'Não existem univercidades cadastradas por esse usuário!');
+          alertService.alertPopup('ERRO', 'Não existem universidades criadas por esse usuário!');
         }
       }).
       error(function() {
@@ -386,20 +387,16 @@ angular.module('starter.controllers',['starter.services'])
     $scope.deleteUniversity = function(data){
       var confirmPopup = $ionicPopup.confirm({
         title: 'Confirmação',
-        template: 'Você tem certeza que deseja deletar sua conta?'
+        template: 'Você tem certeza que deseja remover esta universidade?'
       });
       confirmPopup.then(function(res) {
         if(res) {
+          var id_usu = window.localStorage['id_usu'];
           var key_uni = $scope.data.key_uni;
-          $http.post(ip + '/deleteUniversity/'+ key_uni).
+          $http.post(ip + '/deleteUniversity/'+ key_uni + '/' + id_usu).
           success(function(response) {
             alertService.alertPopup('Removido!','Registro removido com sucesso!');
-
-            $ionicHistory.nextViewOptions({
-              disableBack: true
-            });
-
-            $state.go('navUser.home');
+            redirect.go('navUser.home');
           }).
           error(function() {
             alertService.alertPopup('ERRO', 'Alguma coisa aconteceu, tente novamente!');

@@ -24,7 +24,7 @@ class Location():
 
     def get_locations_by_id(self, id_usu):
         cursor = self.base.get_cursor()
-        cursor.execute("select * from location where id_usu = '{0}' ; ".format(id_usu))
+        cursor.execute("select * from location ; ")
         locations = cursor.fetchall()
 
         if(len(locations)==0):

@@ -24,6 +24,7 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
 
   .state('nav.createUser', {
       url: '/createUser',
+      cache: false,
       views: {
         'menuContent': {
           templateUrl: 'templates/users/createUser.html',
@@ -34,6 +35,7 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
 
     .state('nav.login', {
         url: '/login',
+        cache: false,
         views: {
           'menuContent': {
             templateUrl: 'templates/users/login.html',
@@ -50,6 +52,7 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
 
       .state('navUser.home', {
           url: '/home',
+          cache: false,
           views: {
             'menuContent': {
               templateUrl: 'templates/base/home.html',
@@ -59,6 +62,7 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
       })
       .state('navUser.profile', {
           url: '/profile',
+          cache: false,
           views: {
             'menuContent': {
               templateUrl: 'templates/users/profileUserIdea.html',
@@ -68,6 +72,7 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
       })
       .state('navUser.location', {
           url: '/location',
+          cache: false,
           views: {
             'menuContent': {
               templateUrl: 'templates/locations/location.html',
@@ -77,6 +82,7 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
       })
       .state('navUser.university', {
           url: '/university',
+          cache: false,
           views: {
             'menuContent': {
               templateUrl: 'templates/universities/university.html',
