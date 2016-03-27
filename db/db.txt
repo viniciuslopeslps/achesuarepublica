@@ -27,7 +27,8 @@ create table university
 id_uni int primary key auto_increment,
 key_uni varchar(50) not null unique,
 name_uni varchar(40) not null,
-id_locat int references location(id_locat)
+id_locat int references location(id_locat),
+id_usu int references users(id_usu)
 );
 
 insert into users values (0,'vinicius lopes','viniciuslopeslps@gmail.com','segredo','12981437625',1);

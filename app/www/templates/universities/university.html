@@ -4,16 +4,22 @@
 <div ng-controller="universityCtrl">
   <ion-tabs class="tabs-striped tabs-top tabs-background-positive tabs-color-light">
 
-    <ion-tab on-select="getUniversities()" href="#/navUser/university" title="Home" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-filing-outline">
+    <ion-tab href="#/navUser/university" title="Home" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-filing-outline">
       <ion-view>
          <ion-content>
            <div ng-controller="universityCtrl">
-             <script>getUniversities();</script>
              <form name="createLocation" novalidate="novalidate">
                <br />
                <h1 class="text-center">Nova Faculdade</h1>
                <br />
-               <div class="list padding">
+               <br />
+                <div class="col text-center">
+                 <button ng-click="getLocationKeys()" class="button icon ion-refresh">
+                    Carregar Faculdades
+                  </button>
+                </div>
+                <br />
+               <div class="list padding" ng-show="locationKeys.length > 0">
                  <label class="item item-input">
                    <span class="input-label">Nome:</span>
                    <input name="nameUniversity" ng-model="data.nameUniversity" type="text">
@@ -41,17 +47,48 @@
     <ion-tab title="Settings" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-gear-outline">
       <ion-view>
          <ion-content>
-           oie
+           <div ng-controller="universityCtrl">
+             <form name="createLocation" novalidate="novalidate">
+               <br />
+               <h1 class="text-center">Atualizar Univesidade</h1>
+               <br />
+               <br />
+                <div class="col text-center">
+                 <button ng-click="getUniversities()" class="button icon ion-refresh">
+                    Carregar Faculdades
+                  </button>
+                </div>
+                <br />
+               <div class="list padding" ng-show="universitiesArray.length > 0">
+                 <label  class="item item-input item-select" >
+                   <div class="input-label">
+                     Univerdade:
+                   </div>
+                   <select name="key_uni" ng-model="data.key_uni" ng-change="universitySelected(data)">
+                        <option ng-repeat="item in universitiesArray">{{item}}</option>
+                   </select>
+                 </label>
+                 <label class="item item-input">
+                   <span class="input-label">Nome:</span>
+                   <input name="name_uni" ng-model="data.name_uni" placeholder="{{name_uni}}" type="text">
+                 </label>
+                 <label class="item item-input">
+                   <span class="input-label">Localização:</span>
+                   <input name="key_locat" ng-model="data.key_locat" placeholder="{{key_locat}}" type="text">
+                 </label>
+                 <br /><br />
+                 <h7>Para atualizações, apague o registro e insira um novo!</h7>
+                 <button ng-click="deleteUniversity(data)" class="button button-full icon-right button-assertive">
+                   Excluir <i class="ion-android-checkbox-outline"></i>
+                 </button>
+                 <br />
+             </div>
+           </form>
+           </div>
          </ion-content>
        </ion-view>
     </ion-tab>
 
-    <ion-tab title="a" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-filing-outline">
-      <ion-view>
-         <ion-content>
-           oi
-         </ion-content>
-       </ion-view>
-    </ion-tab>
+
   </ion-tabs>
 </div>

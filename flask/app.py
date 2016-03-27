@@ -57,9 +57,17 @@ def delete_location(id_locat):
 def get_location_keys():
     return location.get_location_keys()
 
-@app.route('/createUniversity/<name>/<key_locat>', methods=["POST"])
-def new_university(name, key_locat):
-    return university.new_university(name, key_locat)
+@app.route('/createUniversity/<name>/<key_locat>/<int:id_usu>', methods=["POST"])
+def new_university(name, key_locat, id_usu):
+    return university.new_university(name, key_locat, id_usu)
+
+@app.route('/getUniversitiesById/<int:id_usu>')
+def get_universities_by_id(id_usu):
+    return university.get_universities_by_id(id_usu)
+
+@app.route('/deleteUniversity/<key_locat>', methods=["POST"])
+def delte_university(key_locat):
+    return university.delete_university(key_locat)
 
 #mudar o ip para testar
 if __name__ == "__main__":

@@ -302,8 +302,8 @@ angular.module('starter.controllers',['starter.services'])
   };
 })
 
-.controller('universityCtrl', function($scope, $state, $http, $ionicPopup, alertService, ip, session, location){
-    $scope.getUniversities = function(){
+.controller('universityCtrl', function($scope, $state, $http, $ionicPopup, $ionicHistory,alertService, ip, session, location, university){
+    $scope.getLocationKeys = function(){
       $http.get(ip + '/getLocationKeys/').
       success(function(response) {
         var dado =  angular.toJson(response);
@@ -328,8 +328,9 @@ angular.module('starter.controllers',['starter.services'])
       else{
           var key_locat = $scope.data.locationKey;
           var name_uni = $scope.data.nameUniversity;
+          var id_usu =   window.localStorage['id_usu'];
 
-          $http.post(ip + '/createUniversity/'+ name_uni + '/'+ key_locat).
+          $http.post(ip + '/createUniversity/'+ name_uni + '/'+ key_locat + '/' + id_usu).
           success(function(response) {
             alertService.alertPopup('Nova localização!','Registro de localização inserida com sucesso!');
           }).
@@ -338,5 +339,75 @@ angular.module('starter.controllers',['starter.services'])
           });
       }
     };
+    var universitiesArray = $scope.universitiesArray = [];
+    var universitiesObjs = $scope.universitiesObjs = [];
+
+    $scope.getUniversities = function(){
+      var universitiesArray = $scope.universitiesArray = [];
+      var universitiesObjs = $scope.universitiesObjs = [];
+      var id_usu = window.localStorage['id_usu'];
+
+      $http.get(ip + '/getUniversitiesById/' + id_usu).
+      success(function(response) {
+        var dado =  angular.toJson(response);
+        var obj = jQuery.parseJSON(dado);
+        var universities = obj["universities"];
+        if(universities !== null){
+          for (i = 0; i < universities.length; i++) {
+            var objctKey = {};
+            $scope.universitiesArray.push(universities[i]["key_uni"]);
+          }
+          $scope.universitiesObjs.push(universities);
+        }
+        else{
+          alertService.alertPopup('ERRO', 'Não existem univercidades cadastradas por esse usuário!');
+        }
+      }).
+      error(function() {
+        alertService.alertPopup('ERRO', 'Algo inesperado');
+      });
+    };
+
+    $scope.universitySelected = function(data){
+      var objRespose = data["key_uni"];
+      var universitiesAnswer = $scope.universitiesObjs;
+      for(i=0; i < universitiesAnswer.length;i++){
+          for(a=0; a < universitiesAnswer[0].length;a++){
+              if(universitiesAnswer[i][a]["key_uni"]==objRespose){
+                $scope.key_uni = universitiesAnswer[i][a]["key_uni"];
+                $scope.name_uni = universitiesAnswer[i][a]["name_uni"];
+                $scope.key_locat = universitiesAnswer[i][a]["key_locat"];
+                location.saveData(universitiesAnswer[i][a]["id_uni"],$scope.name);
+              }
+            };
+        };
+    };
+
+    $scope.deleteUniversity = function(data){
+      var confirmPopup = $ionicPopup.confirm({
+        title: 'Confirmação',
+        template: 'Você tem certeza que deseja deletar sua conta?'
+      });
+      confirmPopup.then(function(res) {
+        if(res) {
+          var key_uni = $scope.data.key_uni;
+          $http.post(ip + '/deleteUniversity/'+ key_uni).
+          success(function(response) {
+            alertService.alertPopup('Removido!','Registro removido com sucesso!');
+
+            $ionicHistory.nextViewOptions({
+              disableBack: true
+            });
+
+            $state.go('navUser.home');
+          }).
+          error(function() {
+            alertService.alertPopup('ERRO', 'Alguma coisa aconteceu, tente novamente!');
+          });
+        }
+      });
+
+    };
+
   })
 ;

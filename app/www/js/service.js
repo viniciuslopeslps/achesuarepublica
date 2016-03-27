@@ -48,4 +48,16 @@ angular.module('starter.services', [])
     }
   }
 })
+.factory('university', function() {
+  return {
+    saveData : function(id, name) {
+      window.localStorage['name_uni'] = name===undefined?window.localStorage['name_uni']:name;
+      window.localStorage['id_uni'] = id===undefined? window.localStorage['id_uni']:id;
+    },
+    clearAll : function() {
+      window.localStorage['name_uni'] = " ";
+      window.localStorage['id_uni'] = " ";
+    }
+  }
+})
 ;
