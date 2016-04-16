@@ -90,6 +90,16 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
             }
           }
       })
+      .state('navUser.republic', {
+          url: '/republic',
+          cache: false,
+          views: {
+            'menuContent': {
+              templateUrl: 'templates/republics/republic.html',
+              controller: 'republicCtrl'
+            }
+          }
+      })
       .state('logout', {
         url: '/logout',
         controller:'logoutCtrl'

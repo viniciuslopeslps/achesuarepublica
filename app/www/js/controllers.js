@@ -435,4 +435,45 @@ angular.module('starter.controllers',['starter.services'])
     };
 
   })
+
+.controller('republicCtrl', function($scope, $state, $http, $ionicPopup, $ionicHistory,alertService, ip, session, location, redirect){
+      $scope.getLocationKeys = function(){
+        $http.get(ip + '/getLocationKeys/').
+        success(function(response) {
+          var dado =  angular.toJson(response);
+          var obj = jQuery.parseJSON(dado);
+          if(obj['locations'] === null){
+            alertService.alertPopup('ERRO',
+             'Não existem localizações cadastradas, por favor primeiramente cadastre uma localização');
+          }
+          else{
+            $scope.locationKeys = obj['locations'];
+          }
+        }).
+        error(function() {
+          alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
+        });
+      };
+
+      $scope.createRepublic = function(data){
+        if(data === undefined || data['nameRepublic'] === undefined || data['locationKey'] ===undefined){
+            alertService.alertPopup('ERRO','Por favor complete os campos corretamente');
+        }
+        else{
+          var key_locat = $scope.data.locationKey;
+          var name_rep = $scope.data.nameRepublic;
+          var id_usu =   window.localStorage['id_usu'];
+
+            $http.post(ip + '/createRepublic/' + name_rep + "/" + key_locat + "/" + id_usu).
+            success(function(response) {
+              alertService.alertPopup('Nova República!','Registro de república inserida com sucesso!');
+              redirect.go('navUser.republic');
+            }).
+            error(function() {
+              alertService.alertPopup('ERRO', 'República já existente na base de dados!');
+            });
+        }
+      };
+
+    })
 ;

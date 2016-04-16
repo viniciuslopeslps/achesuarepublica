@@ -4,6 +4,7 @@ from base import base
 from users import user_functions
 from locations import location_functions
 from universities import university_functions
+from republics import republic_functions
 from flask.ext.cors import CORS
 
 app = Flask(__name__)
@@ -13,6 +14,7 @@ base = base.Base()
 user = user_functions.User(base)
 location = location_functions.Location(base)
 university = university_functions.University(base)
+republic = republic_functions.Republic(base)
 
 @app.route('/login/<email>/<password>')
 def login(email, password):
@@ -73,6 +75,10 @@ def update_university(name_uni, key_locat_uni, id_uni, id_usu):
 @app.route('/deleteUniversity/<key_locat>/<int:id_usu>', methods=["POST"])
 def delte_university(key_locat, id_usu):
     return university.delete_university(key_locat, id_usu)
+
+@app.route('/createRepublic/<name>/<key_locat>/<int:id_usu>', methods=["POST"])
+def new_republic(name, key_locat, id_usu):
+    return republic.new_republic(name, key_locat, id_usu)
 
 #mudar o ip para testar
 if __name__ == "__main__":

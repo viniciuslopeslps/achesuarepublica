@@ -31,4 +31,12 @@ id_locat int references location(id_locat),
 id_usu int references users(id_usu)
 );
 
+create table republic
+(
+id_rep int primary key auto_increment,
+name_rep varchar(40) not null,
+id_locat int references location(id_locat),
+id_usu int references users(id_usu)
+);
+
 insert into users values (0,'vinicius lopes','viniciuslopeslps@gmail.com','segredo','12981437625',1);
