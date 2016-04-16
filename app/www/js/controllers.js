@@ -344,6 +344,7 @@ angular.module('starter.controllers',['starter.services'])
     var universitiesObjs = $scope.universitiesObjs = [];
 
     $scope.getUniversities = function(){
+      $scope.getLocationKeys();
       var universitiesArray = $scope.universitiesArray = [];
       var universitiesObjs = $scope.universitiesObjs = [];
       var id_usu = window.localStorage['id_usu'];
@@ -378,10 +379,37 @@ angular.module('starter.controllers',['starter.services'])
                 $scope.key_uni = universitiesAnswer[i][a]["key_uni"];
                 $scope.name_uni = universitiesAnswer[i][a]["name_uni"];
                 $scope.key_locat = universitiesAnswer[i][a]["key_locat"];
-                location.saveData(universitiesAnswer[i][a]["id_uni"],$scope.name);
+                university.saveData(universitiesAnswer[i][a]["id_uni"], $scope.name_uni, $scope.key_locat);
               }
             };
         };
+    };
+    $scope.updateUniversity = function(data){
+      var key_uni =  $scope.data.key_uni;
+      var name_uni =   $scope.data.name_uni;
+      var key_locat_uni =   $scope.data.locationKey;
+
+      if (key_uni === undefined){
+          var key_uni = window.localStorage['key_uni'];
+      }
+      if (name_uni===undefined){
+          var name_uni = window.localStorage['name_uni'];
+      }
+      if (key_locat_uni===undefined){
+          var key_locat_uni = window.localStorage['key_locat_uni'];
+      }
+
+      var id_usu =   window.localStorage['id_usu'];
+      var id_uni =   window.localStorage['id_uni'];
+
+      $http.post(ip + '/updateUniversity/' + name_uni + '/' + key_locat_uni + '/' + id_uni + '/' + id_usu).
+      success(function(response) {
+        alertService.alertPopup('Alterado!', 'Registro de localização alterado com sucesso!');
+      }).
+      error(function() {
+        alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
+      });
+
     };
 
     $scope.deleteUniversity = function(data){

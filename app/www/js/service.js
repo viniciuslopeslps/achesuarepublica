@@ -30,7 +30,7 @@ angular.module('starter.services', [])
   }
 })
 .factory('ip', function() {
-  return 'http://192.168.1.105:5000';
+  return 'http://192.168.1.106:5000';
 })
 .factory('location', function() {
   return {
@@ -50,13 +50,15 @@ angular.module('starter.services', [])
 })
 .factory('university', function() {
   return {
-    saveData : function(id, name) {
+    saveData : function(id, name, key_locat_uni) {
       window.localStorage['name_uni'] = name===undefined?window.localStorage['name_uni']:name;
       window.localStorage['id_uni'] = id===undefined? window.localStorage['id_uni']:id;
+      window.localStorage['key_locat_uni'] = key_locat_uni===undefined? window.localStorage['key_locat_uni']:key_locat_uni;
     },
     clearAll : function() {
       window.localStorage['name_uni'] = " ";
       window.localStorage['id_uni'] = " ";
+      window.localStorage['key_locat_uni'] = " ";
     }
   }
 })

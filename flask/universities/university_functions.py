@@ -38,6 +38,19 @@ class University():
             array.append(dic)
         return jsonify(universities = array)
 
+    def update_university(self,name_uni,key_locat_uni, id_uni, id_usu):
+        cursor = self.base.get_cursor()
+        conn = self.base.get_conn()
+        cursor.execute("select id_locat, city_locat from location where key_locat = '{0}' ; ".format(key_locat_uni))
+        location = cursor.fetchall()
+        key_uni = name_uni.lower() + ' - ' + location[0][1].lower()
+        id_locat = location[0][0]
+
+        query = "update university set key_uni='{0}', name_uni='{1}', id_locat='{2}' where id_usu='{3}' and id_uni='{4}'".format(key_uni, name_uni, id_locat, id_usu, id_uni)
+        cursor.execute(query)
+        conn.commit()
+        return 'SUCCESS'
+
     def delete_university(self, key_uni, id_usu):
         try:
             cursor = self.base.get_cursor()

@@ -43,7 +43,53 @@
          </ion-content>
        </ion-view>
     </ion-tab>
-
+    <ion-tab title="Settings" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-gear-outline">
+      <ion-view>
+         <ion-content>
+           <div ng-controller="universityCtrl">
+             <form name="createLocation" novalidate="novalidate">
+               <br />
+               <h1 class="text-center">Alterar Universidade</h1>
+               <br />
+               <br />
+                <div class="col text-center">
+                 <button ng-click="getUniversities()" class="button icon ion-refresh">
+                    Carregar Faculdades
+                  </button>
+                </div>
+                <br />
+               <div class="list padding" ng-show="universitiesArray.length > 0">
+                 <label  class="item item-input item-select" >
+                   <div class="input-label">
+                     Univerdade:
+                   </div>
+                   <select name="key_uni" ng-model="data.key_uni" ng-change="universitySelected(data)">
+                        <option ng-repeat="item in universitiesArray">{{item}}</option>
+                   </select>
+                 </label>
+                 <label class="item item-input">
+                   <span class="input-label">Nome:</span>
+                   <input name="name_uni" ng-model="data.name_uni" placeholder="{{name_uni}}" type="text">
+                 </label>
+                 <label class="item item-input item-select">
+                   <div class="input-label">
+                     Localização:
+                   </div>
+                   <select name="locationKey" ng-model="data.locationKey">
+                        <option ng-repeat="item in locationKeys" >{{item}}</option>
+                   </select>
+                 </label>
+                 <br /><br />
+                 <button ng-click="updateUniversity(data)" class="bluedark-color button button-block button-positive">
+                   atualizar <i class="ion-android-checkbox-outline"></i>
+                 </button>
+                 <br />
+             </div>
+           </form>
+           </div>
+         </ion-content>
+       </ion-view>
+    </ion-tab>
     <ion-tab title="Settings" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-gear-outline">
       <ion-view>
          <ion-content>
@@ -77,7 +123,7 @@
                    <input name="key_locat" ng-model="data.key_locat" placeholder="{{key_locat}}" type="text">
                  </label>
                  <br /><br />
-                 <h7>Para atualizações, apague o registro e insira um novo!</h7>
+
                  <button ng-click="deleteUniversity(data)" class="button button-full icon-right button-assertive">
                    Excluir <i class="ion-android-checkbox-outline"></i>
                  </button>

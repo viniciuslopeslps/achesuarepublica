@@ -66,10 +66,14 @@ def new_university(name, key_locat, id_usu):
 def get_universities_by_id(id_usu):
     return university.get_universities_by_id(id_usu)
 
+@app.route('/updateUniversity/<name_uni>/<key_locat_uni>/<int:id_uni>/<int:id_usu>', methods=["POST"])
+def update_university(name_uni, key_locat_uni, id_uni, id_usu):
+    return university.update_university(name_uni, key_locat_uni, id_uni, id_usu)
+
 @app.route('/deleteUniversity/<key_locat>/<int:id_usu>', methods=["POST"])
 def delte_university(key_locat, id_usu):
     return university.delete_university(key_locat, id_usu)
 
 #mudar o ip para testar
 if __name__ == "__main__":
-    app.run(host="192.168.1.105", debug=True, use_reloader=True)
+    app.run(host="192.168.1.106", debug=True, use_reloader=True)
