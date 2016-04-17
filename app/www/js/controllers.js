@@ -479,7 +479,6 @@ angular.module('starter.controllers',['starter.services'])
 
       $scope.getRepublics = function(){
         $scope.getLocationKeys();
-        debugger;
         var republicArray = $scope.republicArray = [];
         var republicObjs = $scope.republicObjs = [];
         var idUsu = window.localStorage['id_usu'];
@@ -506,7 +505,6 @@ angular.module('starter.controllers',['starter.services'])
       };
 
       $scope.republicSelected = function(data){
-        debugger;
         var objRespose = data["name_rep"];
         var republicAnswer = $scope.republicObjs;
         for(i=0; i < republicAnswer.length;i++){
@@ -514,7 +512,8 @@ angular.module('starter.controllers',['starter.services'])
                 if(republicAnswer[i][a]["name_rep"]==objRespose){
                   $scope.republicName = republicAnswer[i][a]["name_rep"];
                   $scope.locationKey = republicAnswer[i][a]["key_locat"];
-                  republic.saveData(republicAnswer[i][a]["id_rep"], $scope.republicName, $scope.locationKey);
+                  $scope.idRep = republicAnswer[i][a]["id_rep"];
+                  republic.saveData($scope.idRep, $scope.republicName, $scope.locationKey);
                 }
               };
           };
@@ -539,6 +538,29 @@ angular.module('starter.controllers',['starter.services'])
         }).
         error(function() {
           alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
+        });
+
+      };
+
+      $scope.deleteRepublic = function(data){
+        var confirmPopup = $ionicPopup.confirm({
+          title: 'Confirmação',
+          template: 'Você tem certeza que deseja remover esta república?'
+        });
+        confirmPopup.then(function(res) {
+          if(res) {
+            var idUsu = window.localStorage['id_usu'];
+            var idRep = window.localStorage['id_rep'];
+
+            $http.post(ip + '/deleteRepublic/'+ idRep + '/' + idUsu).
+            success(function(response) {
+              alertService.alertPopup('Removido!','Registro removido com sucesso!');
+              redirect.go('navUser.home');
+            }).
+            error(function() {
+              alertService.alertPopup('ERRO', 'Alguma coisa aconteceu, tente novamente!');
+            });
+          }
         });
 
       };

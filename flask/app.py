@@ -88,6 +88,10 @@ def get_republics_by_id(id_usu):
 def update_republic(name, key_locat, id_rep, id_usu):
     return republic.update_republic(name, key_locat, id_rep, id_usu)
 
+@app.route('/deleteRepublic/<int:id_rep>/<int:id_usu>', methods=["POST"])
+def delete_republic(id_rep, id_usu):
+    return republic.delete_republic(id_rep, id_usu)
+
 #mudar o ip para testar
 if __name__ == "__main__":
     app.run(host="192.168.1.106", debug=True, use_reloader=True)
