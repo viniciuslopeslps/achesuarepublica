@@ -436,7 +436,7 @@ angular.module('starter.controllers',['starter.services'])
 
   })
 
-.controller('republicCtrl', function($scope, $state, $http, $ionicPopup, $ionicHistory,alertService, ip, session, location, redirect){
+.controller('republicCtrl', function($scope, $state, $http, $ionicPopup, $ionicHistory,alertService, ip, session, location, republic, redirect){
       $scope.getLocationKeys = function(){
         $http.get(ip + '/getLocationKeys/').
         success(function(response) {
@@ -473,6 +473,74 @@ angular.module('starter.controllers',['starter.services'])
               alertService.alertPopup('ERRO', 'República já existente na base de dados!');
             });
         }
+      };
+      var republicArray = $scope.republicArray = [];
+      var republicObjs = $scope.republicObjs = [];
+
+      $scope.getRepublics = function(){
+        $scope.getLocationKeys();
+        debugger;
+        var republicArray = $scope.republicArray = [];
+        var republicObjs = $scope.republicObjs = [];
+        var idUsu = window.localStorage['id_usu'];
+
+        $http.get(ip + '/getRepublicsById/' + idUsu).
+        success(function(response) {
+          var dado =  angular.toJson(response);
+          var obj = jQuery.parseJSON(dado);
+          var republics = obj["republics"];
+          if(republics !== null){
+            for (i = 0; i < republics.length; i++) {
+              var objctKey = {};
+              $scope.republicArray.push(republics[i]["name_rep"]);
+            }
+            $scope.republicObjs.push(republics);
+          }
+          else{
+            alertService.alertPopup('ERRO', 'Não existem repúblicas criadas por esse usuário!');
+          }
+        }).
+        error(function() {
+          alertService.alertPopup('ERRO', 'Algo inesperado aconteceu, tente novamente!');
+        });
+      };
+
+      $scope.republicSelected = function(data){
+        debugger;
+        var objRespose = data["name_rep"];
+        var republicAnswer = $scope.republicObjs;
+        for(i=0; i < republicAnswer.length;i++){
+            for(a=0; a < republicAnswer[0].length;a++){
+                if(republicAnswer[i][a]["name_rep"]==objRespose){
+                  $scope.republicName = republicAnswer[i][a]["name_rep"];
+                  $scope.locationKey = republicAnswer[i][a]["key_locat"];
+                  republic.saveData(republicAnswer[i][a]["id_rep"], $scope.republicName, $scope.locationKey);
+                }
+              };
+          };
+      };
+      $scope.updateRepublic = function(data){
+        var republicName = $scope.data.republicName;
+        var keyLocatRep = $scope.data.locationKey;
+
+        if (republicName === undefined){
+            var republicName = window.localStorage['name_rep'];
+        }
+        if (keyLocatRep === undefined){
+            var keyLocatRep = window.localStorage['key_locat_rep'];
+        }
+
+        var idUsu = window.localStorage['id_usu'];
+        var idRep = window.localStorage['id_rep'];
+
+        $http.post(ip + '/updateRepublic/' + republicName + '/' + keyLocatRep + '/' + idRep + '/' + idUsu).
+        success(function(response) {
+          alertService.alertPopup('Alterado!', 'Registro de república alterado com sucesso!');
+        }).
+        error(function() {
+          alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
+        });
+
       };
 
     })

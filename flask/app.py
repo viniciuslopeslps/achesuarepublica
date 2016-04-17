@@ -80,6 +80,14 @@ def delte_university(key_locat, id_usu):
 def new_republic(name, key_locat, id_usu):
     return republic.new_republic(name, key_locat, id_usu)
 
+@app.route('/getRepublicsById/<int:id_usu>')
+def get_republics_by_id(id_usu):
+    return republic.get_republics_by_id(id_usu)
+
+@app.route('/updateRepublic/<name>/<key_locat>/<int:id_rep>/<int:id_usu>', methods=["POST"])
+def update_republic(name, key_locat, id_rep, id_usu):
+    return republic.update_republic(name, key_locat, id_rep, id_usu)
+
 #mudar o ip para testar
 if __name__ == "__main__":
     app.run(host="192.168.1.106", debug=True, use_reloader=True)

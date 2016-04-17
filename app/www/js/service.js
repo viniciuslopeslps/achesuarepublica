@@ -62,6 +62,20 @@ angular.module('starter.services', [])
     }
   }
 })
+.factory('republic', function() {
+  return {
+    saveData : function(id, name, key_locat) {
+      window.localStorage['name_rep'] = name===undefined?window.localStorage['name_rep']:name;
+      window.localStorage['id_rep'] = id===undefined? window.localStorage['id_rep']:id;
+      window.localStorage['key_locat_rep'] = key_locat===undefined? window.localStorage['key_locat_rep']:key_locat;
+    },
+    clearAll : function() {
+      window.localStorage['name_rep'] = " ";
+      window.localStorage['id_rep'] = " ";
+      window.localStorage['key_locat_rep'] = " ";
+    }
+  }
+})
 .factory('redirect', function($state, $ionicHistory) {
   $ionicHistory.nextViewOptions({
     disableBack: true

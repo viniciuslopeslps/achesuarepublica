@@ -3,7 +3,6 @@
 
 <div ng-controller="republicCtrl">
   <ion-tabs class="tabs-striped tabs-top tabs-background-positive tabs-color-light">
-
     <ion-tab href="#/navUser/republic" title="Home" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-filing-outline">
       <ion-view>
          <ion-content>
@@ -35,6 +34,53 @@
                  <br /><br />
                  <button ng-click="createRepublic(data)" class="bluedark-color button button-block button-positive">
                    Cadastrar <i class="ion-android-checkbox-outline"></i>
+                 </button>
+                 <br />
+             </div>
+           </form>
+           </div>
+         </ion-content>
+       </ion-view>
+    </ion-tab>
+    <ion-tab title="Settings" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-gear-outline">
+      <ion-view>
+         <ion-content>
+           <div ng-controller="republicCtrl">
+             <form name="republicForm" novalidate="novalidate">
+               <br />
+               <h1 class="text-center">Alterar República</h1>
+               <br />
+               <br />
+                <div class="col text-center">
+                 <button ng-click="getRepublics()" class="button icon ion-refresh">
+                    Carregar Repúblicas
+                  </button>
+                </div>
+                <br />
+               <div class="list padding" ng-show="republicArray.length > 0">
+                 <label  class="item item-input item-select" >
+                   <div class="input-label">
+                     Repúblicas:
+                   </div>
+                   <select name="name_rep" ng-model="data.name_rep" ng-change="republicSelected(data)">
+                        <option ng-repeat="item in republicArray">{{item}}</option>
+                   </select>
+                 </label>
+                 <label class="item item-input">
+                   <span class="input-label">Nome:</span>
+                   <input name="republicName" ng-model="data.republicName" placeholder="{{republicName}}" type="text">
+                 </label>
+                 <label class="item item-input item-select">
+                   <div class="input-label">
+                     Localização:
+                   </div>
+                   <select name="locationKey" ng-model="data.locationKey">
+                        <option ng-repeat="item in locationKeys" >{{item}}</option>
+                   </select>
+                 </label>
+                 <br /><br />
+                 <button ng-click="updateRepublic(data)" class="bluedark-color button button-block button-positive">
+                   atualizar <i class="ion-android-checkbox-outline"></i>
                  </button>
                  <br />
              </div>
