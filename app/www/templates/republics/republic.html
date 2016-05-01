@@ -28,7 +28,7 @@
                      Localização:
                    </div>
                    <select name="locationKey" ng-model="data.locationKey">
-                        <option ng-repeat="item in locationKeys" >{{item}}</option>
+                        <option ng-repeat="item in locationKeys">{{item}}</option>
                    </select>
                  </label>
                  <br /><br />
@@ -62,7 +62,7 @@
                    <div class="input-label">
                      Repúblicas:
                    </div>
-                   <select name="name_rep" ng-model="data.name_rep" ng-change="republicSelected(data)">
+                   <select name="key_rep" ng-model="data.key_rep" ng-change="republicSelected(data)">
                         <option ng-repeat="item in republicArray">{{item}}</option>
                    </select>
                  </label>
@@ -74,7 +74,9 @@
                    <div class="input-label">
                      Localização:
                    </div>
+
                    <select name="locationKey" ng-model="data.locationKey">
+                        <option value="" disabled selected>{{locationKey}}</option>
                         <option ng-repeat="item in locationKeys" >{{item}}</option>
                    </select>
                  </label>
@@ -109,7 +111,7 @@
                    <div class="input-label">
                      Repúblicas:
                    </div>
-                   <select name="name_rep" ng-model="data.name_rep" ng-change="republicSelected(data)">
+                   <select name="key_rep" ng-model="data.key_rep" ng-change="republicSelected(data)">
                         <option ng-repeat="item in republicArray">{{item}}</option>
                    </select>
                  </label>

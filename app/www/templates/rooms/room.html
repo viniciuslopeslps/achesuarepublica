@@ -1,0 +1,62 @@
+<ion-view view-title="Quarto" align-title="left">
+</ion-view>
+
+<div ng-controller="roomCtrl">
+  <ion-tabs class="tabs-striped tabs-top tabs-background-positive tabs-color-light">
+    <ion-tab href="#/navUser/room" title="Home" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-filing-outline">
+      <ion-view>
+         <ion-content>
+           <div ng-controller="roomCtrl">
+             <form name="roomForm" novalidate="novalidate">
+               <br />
+               <h1 class="text-center">Nova Quarto</h1>
+               <br />
+               <br />
+                <div class="col text-center">
+                 <button ng-click="getAllFkData()" class="button icon ion-refresh">
+                    Carregar tudo
+                  </button>
+                </div>
+                <br />
+               <div class="list padding" ng-show="locationKeys.length > 0">
+                 <label class="item item-input item-select">
+                   <div class="input-label">
+                     Localização:
+                   </div>
+                   <select name="locationKey" ng-model="data.locationKey">
+                        <option ng-repeat="item in locationKeys" >{{item}}</option>
+                   </select>
+                 </label>
+                 <label class="item item-input item-select">
+                   <div class="input-label">
+                     Universidade:
+                   </div>
+                   <select name="universityKey" ng-model="data.universityKey">
+                        <option ng-repeat="item in universityKeys" >{{item}}</option>
+                   </select>
+                 </label>
+                 <label class="item item-input item-select">
+                   <div class="input-label">
+                     República:
+                   </div>
+                   <select name="republicKey" ng-model="data.republicKey">
+                        <option ng-repeat="item in republicKeys" >{{item}}</option>
+                   </select>
+                 </label>
+                 <label class="item item-input">
+                   <span class="input-label">Descrição:</span>
+                   <input name="description" ng-model="data.description" type="text">
+                 </label>
+                 <br /><br />
+                 <button ng-click="createRoom(data)" class="bluedark-color button button-block button-positive">
+                   Cadastrar <i class="ion-android-checkbox-outline"></i>
+                 </button>
+                 <br />
+             </div>
+           </form>
+           </div>
+         </ion-content>
+       </ion-view>
+    </ion-tab>
+  </ion-tabs>
+</div>

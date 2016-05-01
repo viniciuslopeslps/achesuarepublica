@@ -4,6 +4,7 @@ from base import base
 from users import user_functions
 from locations import location_functions
 from universities import university_functions
+from rooms import room_functions
 from republics import republic_functions
 from flask.ext.cors import CORS
 
@@ -15,6 +16,7 @@ user = user_functions.User(base)
 location = location_functions.Location(base)
 university = university_functions.University(base)
 republic = republic_functions.Republic(base)
+room = room_functions.Room(base)
 
 @app.route('/login/<email>/<password>')
 def login(email, password):
@@ -76,6 +78,10 @@ def update_university(name_uni, key_locat_uni, id_uni, id_usu):
 def delte_university(key_locat, id_usu):
     return university.delete_university(key_locat, id_usu)
 
+@app.route('/getUnivertisyKeys/')
+def get_university_keys():
+    return university.get_university_keys()
+
 @app.route('/createRepublic/<name>/<key_locat>/<int:id_usu>', methods=["POST"])
 def new_republic(name, key_locat, id_usu):
     return republic.new_republic(name, key_locat, id_usu)
@@ -91,6 +97,14 @@ def update_republic(name, key_locat, id_rep, id_usu):
 @app.route('/deleteRepublic/<int:id_rep>/<int:id_usu>', methods=["POST"])
 def delete_republic(id_rep, id_usu):
     return republic.delete_republic(id_rep, id_usu)
+
+@app.route('/getRepublicKeys/')
+def get_republic_keys():
+    return republic.get_republic_keys()
+
+@app.route('/createRoom/<locat_key>/<university_key>/<republic_key>/<description>/<int:id_usu>', methods=["POST"])
+def new_room(locat_key,university_key,republic_key,description, id_usu):
+    return room.new_room(locat_key, university_key, republic_key, description, id_usu)
 
 #mudar o ip para testar
 if __name__ == "__main__":

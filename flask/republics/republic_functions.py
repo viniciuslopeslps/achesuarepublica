@@ -13,12 +13,14 @@ class Republic():
     def new_republic(self,name, key_locat, id_usu):
         cursor = self.base.get_cursor()
         conn = self.base.get_conn()
-        cursor.execute("select id_locat from location where key_locat = '{0}' ; ".format(key_locat))
+
+        cursor.execute("select id_locat, city_locat from location where key_locat = '{0}' ; ".format(key_locat))
         location = cursor.fetchall()
+        key_rep = name.lower() + ' - ' + location[0][1].lower()
         id_locat = location[0][0]
 
-        cursor.execute("insert into republic values (0,'{0}','{1}','{2}');"
-        .format(name, id_locat, id_usu))
+        cursor.execute("insert into republic values (0,'{0}','{1}','{2}','{3}');"
+        .format(name, id_locat, id_usu, key_rep))
         conn.commit()
         return 'SUCCESS'
 
@@ -32,8 +34,8 @@ class Republic():
 
         array = []
         for x in republics:
-            dic = {'id_rep':x[0],'name_rep':x[1], 'id_locat':x[2],'id_usu':x[3],'city_locat':x[5],
-                'state_locat':x[6], 'address_locat':x[7],'key_locat':x[8]}
+            dic = {'id_rep':x[0],'name_rep':x[1], 'id_locat':x[2],'id_usu':x[3], 'key_rep':x[4],
+            'city_locat':x[5], 'state_locat':x[7], 'address_locat':x[8],'key_locat':x[9]}
             array.append(dic)
         return jsonify(republics = array)
 
@@ -41,11 +43,13 @@ class Republic():
     def update_republic(self,name_rep,key_locat_rep, id_rep, id_usu):
         cursor = self.base.get_cursor()
         conn = self.base.get_conn()
-        cursor.execute("select id_locat from location where key_locat = '{0}' ; ".format(key_locat_rep))
+
+        cursor.execute("select id_locat, city_locat from location where key_locat = '{0}' ; ".format(key_locat_rep))
         location = cursor.fetchall()
+        key_rep = name_rep.lower() + ' - ' + location[0][1].lower()
         id_locat = location[0][0]
 
-        query = "update republic set name_rep='{0}', id_locat='{1}' where id_usu='{2}' and id_rep='{3}'".format(name_rep, id_locat, id_usu, id_rep)
+        query = "update republic set name_rep='{0}', id_locat='{1}', key_rep='{2}' where id_usu='{3}' and id_rep='{4}'".format(name_rep, id_locat, key_rep, id_usu, id_rep)
         cursor.execute(query)
         conn.commit()
         return 'SUCCESS'
@@ -57,3 +61,15 @@ class Republic():
         .format(id_rep, id_usu))
         conn.commit()
         return 'SUCCESS'
+
+    def get_republic_keys(self):
+        cursor = self.base.get_cursor()
+        cursor.execute("select key_rep from republic;")
+        republics = cursor.fetchall()
+
+        if(len(republics)==0):
+            return jsonify(republics = None)
+        array = []
+        for x in republics:
+            array.append(x[0])
+        return jsonify(republics = array)

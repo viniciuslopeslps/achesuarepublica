@@ -100,6 +100,16 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
             }
           }
       })
+      .state('navUser.room', {
+          url: '/room',
+          cache: false,
+          views: {
+            'menuContent': {
+              templateUrl: 'templates/rooms/room.html',
+              controller: 'roomCtrl'
+            }
+          }
+      })
       .state('logout', {
         url: '/logout',
         controller:'logoutCtrl'

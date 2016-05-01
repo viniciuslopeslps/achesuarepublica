@@ -61,3 +61,15 @@ class University():
             return 'SUCCESS'
         except Exception:
             return 'ERROR'
+
+    def get_university_keys(self):
+        cursor = self.base.get_cursor()
+        cursor.execute("select key_uni from university;")
+        universities = cursor.fetchall()
+
+        if(len(universities)==0):
+            return jsonify(universities = None)
+        array = []
+        for x in universities:
+            array.append(x[0])
+        return jsonify(universities = array)
