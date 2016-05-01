@@ -240,6 +240,7 @@ angular.module('starter.controllers',['starter.services'])
     for(i=0; i < locationsAnswer.length;i++){
         for(a=0; a < locationsAnswer[0].length;a++){
             if(locationsAnswer[i][a]["key_locat"]==objRespose){
+              debugger;
               $scope.city = locationsAnswer[i][a]["city_locat"];
               $scope.address = locationsAnswer[i][a]["address_locat"];
               $scope.state = locationsAnswer[i][a]["state_locat"];
@@ -378,7 +379,7 @@ angular.module('starter.controllers',['starter.services'])
               if(universitiesAnswer[i][a]["key_uni"]==objRespose){
                 $scope.key_uni = universitiesAnswer[i][a]["key_uni"];
                 $scope.name_uni = universitiesAnswer[i][a]["name_uni"];
-                $scope.key_locat = universitiesAnswer[i][a]["key_locat"];
+                $scope.locationKey = universitiesAnswer[i][a]["key_locat"];
                 university.saveData(universitiesAnswer[i][a]["id_uni"], $scope.name_uni, $scope.key_locat);
               }
             };

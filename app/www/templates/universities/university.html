@@ -76,6 +76,7 @@
                      Localização:
                    </div>
                    <select name="locationKey" ng-model="data.locationKey">
+                        <option disabled selected>{{locationKey}}</option>
                         <option ng-repeat="item in locationKeys" >{{item}}</option>
                    </select>
                  </label>
