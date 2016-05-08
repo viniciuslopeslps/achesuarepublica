@@ -47,6 +47,7 @@ id_locat int references location(id_locat),
 id_rep int references republic(id_rep),
 id_uni int references university(id_rep),
 id_usu int references users(id_usu),
+title varchar(30) not null,
 created_at DATETIME
 );
 

@@ -102,9 +102,17 @@ def delete_republic(id_rep, id_usu):
 def get_republic_keys():
     return republic.get_republic_keys()
 
-@app.route('/createRoom/<locat_key>/<university_key>/<republic_key>/<description>/<int:id_usu>', methods=["POST"])
-def new_room(locat_key,university_key,republic_key,description, id_usu):
-    return room.new_room(locat_key, university_key, republic_key, description, id_usu)
+@app.route('/createRoom/<locat_key>/<university_key>/<republic_key>/<description>/<title>/<int:id_usu>', methods=["POST"])
+def new_room(locat_key,university_key,republic_key,description, title, id_usu):
+    return room.new_room(locat_key, university_key, republic_key, description, title, id_usu)
+
+@app.route('/getRoomsByUser/<int:id_usu>')
+def get_rooms_by_user(id_usu):
+    return room.get_rooms_by_user(id_usu)
+
+@app.route('/updateRoom/<locat_key>/<university_key>/<republic_key>/<description>/<title>/<int:id_usu>/<int:id_room>', methods=["POST"])
+def update_room(locat_key,university_key,republic_key,description, title, id_usu, id_room):
+    return room.update_room(locat_key, university_key, republic_key, description, title, id_usu, id_room)
 
 #mudar o ip para testar
 if __name__ == "__main__":

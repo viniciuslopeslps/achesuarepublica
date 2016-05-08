@@ -1,13 +1,12 @@
 <ion-view view-title="Quarto" align-title="left">
 </ion-view>
 
-<div ng-controller="roomCtrl">
   <ion-tabs class="tabs-striped tabs-top tabs-background-positive tabs-color-light">
     <ion-tab href="#/navUser/room" title="Home" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-filing-outline">
       <ion-view>
          <ion-content>
            <div ng-controller="roomCtrl">
-             <form name="roomForm" novalidate="novalidate">
+             <form name="roomInsertForm" novalidate="novalidate">
                <br />
                <h1 class="text-center">Nova Quarto</h1>
                <br />
@@ -19,6 +18,10 @@
                 </div>
                 <br />
                <div class="list padding" ng-show="locationKeys.length > 0">
+                 <label class="item item-input">
+                   <span class="input-label">Titulo:</span>
+                   <input name="title" ng-model="data.title" maxlength="25" type="text">
+                 </label>
                  <label class="item item-input item-select">
                    <div class="input-label">
                      Localização:
@@ -58,5 +61,71 @@
          </ion-content>
        </ion-view>
     </ion-tab>
+
+    <ion-tab title="Settings" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-gear-outline">
+      <ion-view>
+         <ion-content>
+           <div ng-controller="roomCtrl">
+             <form name="updateRoomForm" novalidate="novalidate">
+               <br />
+               <h1 class="text-center">Alterar Quarto</h1>
+               <br />
+               <br />
+                <div class="col text-center">
+                 <button ng-click="getRoomsByUser()" class="button icon ion-refresh">
+                    Carregar Quarto
+                  </button>
+                </div>
+                <br />
+                <div class="list padding" ng-show="roomArray.length > 0">
+                  <label  class="item item-input item-select" >
+                    <div class="input-label">
+                      Quartos:
+                    </div>
+                    <select name="selectTitle" ng-model="data.selectTitle" ng-change="roomSelected(data)">
+                         <option ng-repeat="item in roomArray track by $index">{{item}}</option>
+                    </select>
+                  </label>
+                  <label class="item item-input">
+                    <span class="input-label">Title:</span>
+                    <input name="title" ng-model="data.title" placeholder="{{title}}" type="text">
+                  </label>
+                  <label class="item item-input item-select">
+                    <div class="input-label">
+                      Localização:
+                    </div>
+                    <select ng-model="data.locationKey" ng-options="item for item in locationKeys">
+                      <option value="">{{locationKey}}</option>
+                    </select>
+                  </label>
+                  <label class="item item-input item-select">
+                    <div class="input-label">
+                      Universidade:
+                    </div>
+                    <select ng-model="data.universityKey" ng-options="item for item in universityKeys">
+                      <option value="">{{universityKey}}</option>
+                    </select>
+                  </label>
+                  <label class="item item-input item-select">
+                    <div class="input-label">
+                      República:
+                    </div>
+                    <select ng-model="data.republicKey" ng-options="item for item in republicKeys">
+                      <option value="">{{republicKey}}</option>
+                    </select>
+                  </label>
+                  <label class="item item-input">
+                    <span class="input-label">Descrição:</span>
+                    <input name="description" ng-model="data.description" placeholder="{{description}}" type="text">
+                  </label>
+                  <br /><br />
+                  <button ng-click="updateRoom(data)" class="bluedark-color button button-block button-positive">
+                    atualizar <i class="ion-android-checkbox-outline"></i>
+                  </button>
+                </div>
+             </form>
+           </div>
+         </ion-content>
+       </ion-view>
+    </ion-tab>
   </ion-tabs>
-</div>

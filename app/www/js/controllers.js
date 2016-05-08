@@ -240,7 +240,6 @@ angular.module('starter.controllers',['starter.services'])
     for(i=0; i < locationsAnswer.length;i++){
         for(a=0; a < locationsAnswer[0].length;a++){
             if(locationsAnswer[i][a]["key_locat"]==objRespose){
-              debugger;
               $scope.city = locationsAnswer[i][a]["city_locat"];
               $scope.address = locationsAnswer[i][a]["address_locat"];
               $scope.state = locationsAnswer[i][a]["state_locat"];
@@ -570,7 +569,7 @@ angular.module('starter.controllers',['starter.services'])
 
     })
 
-.controller('roomCtrl', function($scope, $state, $http, alertService, ip, redirect) {
+.controller('roomCtrl', function($scope, $state, $http, alertService, ip, redirect, room) {
   $scope.getLocationKeys = function(){
     $http.get(ip + '/getLocationKeys/').
     success(function(response) {
@@ -629,7 +628,8 @@ angular.module('starter.controllers',['starter.services'])
   };
   $scope.createRoom = function(data){
     if(data === undefined || data['locationKey'] === undefined ||
-        data['universityKey'] === undefined || data['description'] === undefined){
+        data['universityKey'] === undefined || data['description'] === undefined ||
+        data['title'] === undefined){
         alertService.alertPopup('ERRO','Por favor complete os campos corretamente');
     }
     else{
@@ -637,13 +637,14 @@ angular.module('starter.controllers',['starter.services'])
       var universityKey = $scope.data.universityKey;
       var republicKey = $scope.data.republicKey;
       var description = $scope.data.description;
+      var title = $scope.data.title;
       var idUsu =   window.localStorage['id_usu'];
 
       if(republicKey === undefined){
         republicKey = null;
       }
       $http.post(ip + '/createRoom/' + locationKey + "/" + universityKey + "/"
-        + republicKey + "/" + description + "/" + idUsu).
+        + republicKey + "/" + description + "/" + title + "/" + idUsu).
         success(function(response) {
           alertService.alertPopup('Nova Quarto!','Registro de quarto inserido com sucesso!');
           delete $scope.data;
@@ -653,6 +654,102 @@ angular.module('starter.controllers',['starter.services'])
           alertService.alertPopup('ERRO', 'Quarto já existente na base de dados!');
         });
     }
+  };
+
+  $scope.getRoomsByUser = function(){
+    var roomArray = $scope.roomArray = [];
+    var roomObjs = $scope.roomObjs = [];
+    var idUsu = window.localStorage['id_usu'];
+
+    $http.get(ip + '/getRoomsByUser/' + idUsu).
+    success(function(response) {
+      var dado =  angular.toJson(response);
+      var obj = jQuery.parseJSON(dado);
+      var rooms = obj["rooms"];
+      if(rooms !== null){
+        for (i = 0; i < rooms.length; i++) {
+          var objctKey = {};
+          $scope.roomArray.push(rooms[i]["title"]);
+        }
+        $scope.roomObjs.push(rooms);
+      }
+      else{
+        alertService.alertPopup('ERRO', 'Não existem quartos criadas por esse usuário!');
+      }
+    }).
+    error(function() {
+      alertService.alertPopup('ERRO', 'Algo inesperado aconteceu, tente novamente!');
+    });
+  };
+
+  $scope.roomSelected = function(data){
+    $scope.getAllFkData();
+    var objRespose = data["selectTitle"];
+    var roomAnswer = $scope.roomObjs;
+    for(i=0; i < roomAnswer.length;i++){
+        for(a=0; a < roomAnswer[0].length;a++){
+            if(roomAnswer[i][a]["title"]==objRespose){
+              $scope.description = roomAnswer[i][a]["description"];
+              $scope.title = roomAnswer[i][a]["title"];
+              $scope.locationKey = roomAnswer[i][a]["key_locat"];
+              $scope.universityKey = roomAnswer[i][a]["key_uni"];
+              $scope.republicKey = roomAnswer[i][a]["key_rep"];
+              $scope.idRoom = roomAnswer[i][a]["id_room"];
+              room.saveData($scope.title, $scope.description, $scope.locationKey,
+                 $scope.republicKey, $scope.universityKey, $scope.idRoom);
+            }
+        }
+      }
+  };
+
+  $scope.updateRoom = function(data){
+    var desc = $scope.data.description;
+    var title = $scope.data.title;
+    var universityKey = $scope.data.universityKey;
+    var republicKey = $scope.data.republicKey;
+    var locationKey = $scope.data.locationKey;
+
+    if (desc === undefined){
+      var desc = window.localStorage['description'];
+    }
+    if (title === undefined){
+      var title = window.localStorage['title'];
+    }
+    if (universityKey === undefined){
+      var universityKey = window.localStorage['key_uni_room'];
+    }
+    if (universityKey === undefined){
+      var universityKey = window.localStorage['key_uni_room'];
+    }
+    if (republicKey === undefined){
+      var republicKey = window.localStorage['key_rep_room'];
+    }
+    if (locationKey === undefined){
+      var locationKey = window.localStorage['key_locat_room'];
+    }
+
+    var idRoom = window.localStorage['id_room'];
+    var idUsu = window.localStorage['id_usu'];
+
+    if(republicKey === undefined || republicKey.length === 0){
+      republicKey = null;
+    }
+
+    $http.post(ip + '/updateRoom/' + locationKey + "/" + universityKey + "/"
+      + republicKey + "/" + desc + "/" + title + "/" + idUsu + "/" + idRoom).
+      success(function(response) {
+        alertService.alertPopup('Nova Quarto!','Registro de quarto alterado com sucesso!');
+        delete $scope.data;
+        delete $scope.locationKey;
+        delete $scope.republicKey;
+        delete $scope.universityKey;
+        delete $scope.title;
+        delete $scope.description;
+        room.clearAll();
+      }).
+      error(function() {
+        alertService.alertPopup('ERRO', 'Quarto já existente na base de dados!');
+      });
   };
 })
 ;
