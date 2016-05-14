@@ -114,6 +114,10 @@ def get_rooms_by_user(id_usu):
 def update_room(locat_key,university_key,republic_key,description, title, id_usu, id_room):
     return room.update_room(locat_key, university_key, republic_key, description, title, id_usu, id_room)
 
+@app.route('/deleteRoom/<int:id_room>/<int:id_usu>', methods=["POST"])
+def delete_room(id_room, id_usu):
+    return room.delete_room(id_room, id_usu)
+
 #mudar o ip para testar
 if __name__ == "__main__":
     app.run(host="192.168.1.106", debug=True, use_reloader=True)

@@ -751,5 +751,25 @@ angular.module('starter.controllers',['starter.services'])
         alertService.alertPopup('ERRO', 'Quarto já existente na base de dados!');
       });
   };
+
+  $scope.deleteRoom = function(data){
+    debugger;
+    var idRoom = window.localStorage['id_room'];
+    var idUsu = window.localStorage['id_usu'];
+    $http.post(ip + '/deleteRoom/' + idRoom + "/" + idUsu).
+      success(function(response) {
+        alertService.alertPopup('Quarto removido','Registro de quarto removido com sucesso!');
+        delete $scope.data;
+        delete $scope.locationKey;
+        delete $scope.republicKey;
+        delete $scope.universityKey;
+        delete $scope.title;
+        delete $scope.description;
+        room.clearAll();
+      }).
+      error(function() {
+        alertService.alertPopup('ERRO', 'Algo inesperado aconteceu!');
+      });
+  };
 })
 ;

@@ -128,4 +128,58 @@
          </ion-content>
        </ion-view>
     </ion-tab>
+
+    <ion-tab title="Settings" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-gear-outline">
+      <ion-view>
+         <ion-content>
+           <div ng-controller="roomCtrl">
+             <form name="removeRoomForm" novalidate="novalidate">
+               <br />
+               <h1 class="text-center">Remover Quarto</h1>
+               <br />
+               <br />
+               <div class="col text-center">
+                <button ng-click="getRoomsByUser()" class="button icon ion-refresh">
+                   Carregar Quarto
+                 </button>
+               </div>
+               <br />
+               <div class="list padding" ng-show="roomArray.length > 0">
+                 <label  class="item item-input item-select" >
+                   <div class="input-label">
+                     Quartos:
+                   </div>
+                   <select name="selectTitle" ng-model="data.selectTitle" ng-change="roomSelected(data)">
+                        <option ng-repeat="item in roomArray track by $index">{{item}}</option>
+                   </select>
+                 </label>
+                 <div ng-show="locationKey.length > 0 || universityKey.length > 0
+                    || republicKey.length > 0 || description.length > 0" class="list card">
+                    <a href="#" ng-show="locationKey.length > 0" class="item item-icon-left">
+                      <i class="ion-clipboard"></i>
+                       Cidade: {{locationKey}}
+                    </a>
+                    <a href="#" ng-show="universityKey.length > 0" class="item item-icon-left">
+                      <i class="ion-university"></i>
+                      Universidade: {{universityKey}}
+                    </a>
+                    <a href="#" ng-show="republicKey.length > 0" class="item item-icon-left">
+                      <i class="ion-edit"></i>
+                      República: {{republicKey}}
+                    </a>
+                    <a href="#" ng-show="description.length > 0" class="item item-icon-left">
+                      <i class="ion-edit"></i>
+                      Descrição: {{description}}
+                    </a>
+                  </div>
+                 <button ng-click="deleteRoom(data)" class="button button-full icon-right button-assertive">
+                   Excluir <i class="ion-android-checkbox-outline"></i>
+                 </button>
+               </div>
+                <br />
+              </form>
+           </div>
+         </ion-content>
+       </ion-view>
+    </ion-tab>
   </ion-tabs>

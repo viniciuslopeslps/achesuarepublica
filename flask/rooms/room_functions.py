@@ -82,3 +82,11 @@ class Room():
         cursor.execute(query)
         conn.commit()
         return 'SUCCESS'
+
+    def delete_room(self, id_room, id_usu):
+        cursor = self.base.get_cursor()
+        conn = self.base.get_conn()
+        cursor.execute("delete from room where id_room = '{0}' and id_usu = '{1}' ;"
+        .format(id_room, id_usu))
+        conn.commit()
+        return 'SUCCESS'
