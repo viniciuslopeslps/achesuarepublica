@@ -66,20 +66,22 @@
                         <option ng-repeat="item in republicArray">{{item}}</option>
                    </select>
                  </label>
-                 <label class="item item-input">
-                   <span class="input-label">Nome:</span>
-                   <input name="republicName" ng-model="data.republicName" placeholder="{{republicName}}" type="text">
-                 </label>
-                 <label class="item item-input item-select">
-                   <div class="input-label">
-                     Localização:
-                   </div>
+                 <div ng-show="republicName.length > 0 || locationKey.length > 0">
+                   <label class="item item-input">
+                     <span class="input-label">Nome:</span>
+                     <input name="republicName" ng-model="data.republicName" placeholder="{{republicName}}" type="text">
+                   </label>
+                   <label class="item item-input item-select">
+                     <div class="input-label">
+                       Localização:
+                     </div>
 
-                   <select name="locationKey" ng-model="data.locationKey">
-                        <option disabled selected>{{locationKey}}</option>
-                        <option ng-repeat="item in locationKeys" >{{item}}</option>
-                   </select>
-                 </label>
+                     <select name="locationKey" ng-model="data.locationKey">
+                          <option disabled selected>{{locationKey}}</option>
+                          <option ng-repeat="item in locationKeys" >{{item}}</option>
+                     </select>
+                   </label>
+                 </div>
                  <br /><br />
                  <button ng-click="updateRepublic(data)" class="bluedark-color button button-block button-positive">
                    atualizar <i class="ion-android-checkbox-outline"></i>
@@ -106,29 +108,33 @@
                   </button>
                 </div>
                 <br />
-               <div class="list padding" ng-show="republicArray.length > 0">
-                 <label  class="item item-input item-select" >
-                   <div class="input-label">
-                     Repúblicas:
+                <div class="row">
+                  <div class="col">
+                    <div class="list padding" ng-show="republicArray.length > 0">
+                      <label  class="item item-input item-select" >
+                        <div class="input-label">
+                          Repúblicas:
+                        </div>
+                        <select name="key_rep" ng-model="data.key_rep" ng-change="republicSelected(data)">
+                             <option ng-repeat="item in republicArray">{{item}}</option>
+                        </select>
+                      </label>
+                      <div ng-show="republicName.length > 0 || locationKey.length > 0" class="list card">
+                         <span ng-show="republicName.length > 0" class="item item-icon-left">
+                           <i class="ion-ios-home"></i>
+                            República: {{republicName}}
+                         </span>
+                         <span ng-show="locationKey.length > 0" class="item item-icon-left">
+                           <i class="ion-map"></i>
+                           Localização: {{locationKey}}
+                         </span>
+                       </div>
+                       <button ng-click="deleteRepublic(data)" class="button button-full icon-right button-assertive">
+                         Deletar República <i class="ion-android-checkbox-outline"></i>
+                       </button>
+                     </div>
                    </div>
-                   <select name="key_rep" ng-model="data.key_rep" ng-change="republicSelected(data)">
-                        <option ng-repeat="item in republicArray">{{item}}</option>
-                   </select>
-                 </label>
-                 <label class="item item-input">
-                   <span class="input-label">Nome:</span>
-                   <input name="republicName" ng-model="data.republicName" placeholder="{{republicName}}" type="text">
-                 </label>
-                 <label class="item item-input">
-                   <span class="input-label">Localização:</span>
-                   <input name="locationKey" ng-model="data.locationKey" placeholder="{{locationKey}}" type="text">
-                 </label>
-                 <br /><br />
-                 <button ng-click="deleteRepublic(data)" class="button button-full icon-right button-assertive">
-                   Excluir <i class="ion-android-checkbox-outline"></i>
-                 </button>
-                 <br />
-             </div>
+                 </div>
              </form>
            </div>
          </ion-content>

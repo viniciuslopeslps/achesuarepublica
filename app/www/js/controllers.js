@@ -291,7 +291,6 @@ angular.module('starter.controllers',['starter.services'])
         success(function(response) {
           alertService.alertPopup('Deletado com sucesso!', 'Registro deletado com sucesso!');
           location.clearAll();
-          redirect.go('navUser.home');
         }).
         error(function() {
             alertService.alertPopup('ERRO','Erro ao excluir localização');
@@ -423,7 +422,6 @@ angular.module('starter.controllers',['starter.services'])
           $http.post(ip + '/deleteUniversity/'+ key_uni + '/' + id_usu).
           success(function(response) {
             alertService.alertPopup('Removido!','Registro removido com sucesso!');
-            redirect.go('navUser.home');
           }).
           error(function() {
             alertService.alertPopup('ERRO', 'Alguma coisa aconteceu, tente novamente!');
