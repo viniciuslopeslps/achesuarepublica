@@ -1,4 +1,4 @@
-<ion-view view-title="Faculdade" align-title="left">
+<ion-view view-title="Universidade" align-title="left">
 </ion-view>
 
 <div ng-controller="universityCtrl">
@@ -102,33 +102,38 @@
                <br />
                 <div class="col text-center">
                  <button ng-click="getUniversities()" class="button icon ion-refresh">
-                    Carregar Faculdades
+                    Carregar Universidades
                   </button>
                 </div>
                 <br />
-               <div class="list padding" ng-show="universitiesArray.length > 0">
-                 <label  class="item item-input item-select" >
-                   <div class="input-label">
-                     Univerdade:
-                   </div>
-                   <select name="key_uni" ng-model="data.key_uni" ng-change="universitySelected(data)">
-                        <option ng-repeat="item in universitiesArray">{{item}}</option>
-                   </select>
-                 </label>
-                 <label class="item item-input">
-                   <span class="input-label">Nome:</span>
-                   <input name="name_uni" ng-model="data.name_uni" placeholder="{{name_uni}}" type="text">
-                 </label>
-                 <label class="item item-input">
-                   <span class="input-label">Localização:</span>
-                   <input name="key_locat" ng-model="data.key_locat" placeholder="{{key_locat}}" type="text">
-                 </label>
-                 <br /><br />
+                <div class="row">
+                  <div class="col">
+                     <div class="list padding" ng-show="universitiesArray.length > 0">
+                       <label  class="item item-input item-select" >
+                         <div class="input-label">
+                           Univerdade:
+                         </div>
+                         <select name="key_uni" ng-model="data.key_uni" ng-change="universitySelected(data)">
+                              <option ng-repeat="item in universitiesArray">{{item}}</option>
+                         </select>
+                       </label>
+                       <div ng-show="name_uni.length > 0 || key_locat.length > 0" class="list card">
+                          <span ng-show="name_uni.length > 0" class="item item-icon-left">
+                            <i class="ion-university"></i>
+                             Universidade: {{name_uni}}
+                          </span>
+                          <span ng-show="locationKey.length > 0" class="item item-icon-left">
+                            <i class="ion-map"></i>
+                            Localização: {{locationKey}}
+                          </span>
+                        </div>
 
-                 <button ng-click="deleteUniversity(data)" class="button button-full icon-right button-assertive">
-                   Excluir <i class="ion-android-checkbox-outline"></i>
-                 </button>
-                 <br />
+                       <button ng-click="deleteUniversity(data)" class="button button-full icon-right button-assertive">
+                         Excluir <i class="ion-android-checkbox-outline"></i>
+                       </button>
+                       <br />
+                  </div>
+                </div>
              </div>
            </form>
            </div>
