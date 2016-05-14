@@ -72,13 +72,26 @@
            <form name="updateUserForm" novalidate="novalidate">
              <br />
              <h2 class="text-center">Excluir conta</h2>
-             <br />
              <div class="list padding">
                <div class="row">
-                <div class="col text-center">
-                  <button ng-click="deleteUser()" class="button button-outline icon-right button-assertive">
-                    Deletar Conta <i class="ion-close-round"></i>
-                  </button>
+                <div class="col">
+                  <div ng-show="email.length > 0 || name.length > 0 || phone.length > 0" class="list card">
+                     <span href="#" ng-show="email.length > 0" class="item item-icon-left">
+                       <i class="ion-email"></i>
+                        Email: {{email}}
+                     </span>
+                     <span href="#" ng-show="name.length > 0" class="item item-icon-left">
+                       <i class="ion-person"></i>
+                        Nome: {{name}}
+                     </span>
+                     <span href="#" ng-show="phone.length > 0" class="item item-icon-left">
+                       <i class="ion-ios-telephone"></i>
+                        Telefone: {{phone}}
+                     </span>
+                   </div>
+                   <button ng-click="deleteUser()" class="button button-full icon-right button-assertive">
+                     Deletar Conta <i class="ion-android-checkbox-outline"></i>
+                   </button>
                 </div>
              </div>
            </div>

@@ -118,7 +118,6 @@ angular.module('starter.controllers',['starter.services'])
         };
 
         alertService.alertPopup('Atualizado com sucesso!','Registro atualizado com sucesso!');
-        redirect.go('navUser.home');
       }).
       error(function() {
           alertService.alertPopup('ERRO','Por favor confira suas credenciais');
@@ -753,7 +752,6 @@ angular.module('starter.controllers',['starter.services'])
   };
 
   $scope.deleteRoom = function(data){
-    debugger;
     var idRoom = window.localStorage['id_room'];
     var idUsu = window.localStorage['id_usu'];
     $http.post(ip + '/deleteRoom/' + idRoom + "/" + idUsu).
