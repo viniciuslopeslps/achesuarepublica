@@ -12,3 +12,6 @@
 .tabs-background-positive .tabs, .tabs-background-positive > .tabs{
   border-color: transparent;
 }
+.error {
+  color: #c0392b;
+}

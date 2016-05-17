@@ -65,7 +65,7 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
           cache: false,
           views: {
             'menuContent': {
-              templateUrl: 'templates/users/profileUserIdea.html',
+              templateUrl: 'templates/users/profileUser.html',
               controller: 'profileCtrl'
             }
           }

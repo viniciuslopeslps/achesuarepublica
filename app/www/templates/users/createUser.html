@@ -7,24 +7,40 @@
           <br />
           <div class="list padding">
             <label class="item item-input">
-              <span class="input-label">Nome:</span>
-              <input name="name" ng-model="data.name" type="text">
+              <span class="input-label">Nome:
+                <span ng-show="createUserForm.name.$error.required ||
+                createUserForm.name.$pristine || createUserForm.name.$invalid" class="error">*</span>
+              </span>
+              <input name="name" ng-model="data.name" type="text" required maxlength="20" ng-pattern="/^[a-zA-Z0-9]*$/">
             </label>
             <label class="item item-input">
-              <span class="input-label">Email:</span>
-              <input name="email" ng-model="data.email" type="email">
+              <span class="input-label">Email:
+                <span ng-show="createUserForm.email.$error.required ||
+                 createUserForm.email.$pristine || createUserForm.email.$error.email" class="error">*</span>
+              </span>
+              <input name="email" ng-model="data.email" type="email" required maxlength="30">
             </label>
             <label class="item item-input">
-              <span class="input-label">Senha:</span>
-              <input name="password" ng-model="data.password" type="password">
+              <span class="input-label">Senha:
+                <span ng-show="createUserForm.password.$error.required ||
+                 createUserForm.password.$pristine || createUserForm.password.$invalid" class="error">*</span>
+              </span>
+              <input name="password" ng-model="data.password" type="password" required maxlength="20" ng-pattern="/^[a-zA-Z0-9]*$/">
             </label>
             <label class="item item-input">
-              <span class="input-label">Confirmar senha:</span>
-              <input name="confirmPassword" ng-model="data.confirmPassword" type="password">
+              <span class="input-label">Confirmar senha:
+                <span ng-show="createUserForm.confirmPassword.$error.required ||
+                 createUserForm.confirmPassword.$pristine || createUserForm.confirmPassword.$invalid"
+                class="error">*</span>
+              </span>
+              <input name="confirmPassword" ng-model="data.confirmPassword" type="password" required maxlength="20" ng-pattern="/^[a-zA-Z0-9]*$/">
             </label>
             <label class="item item-input">
-              <span class="input-label">Telefone:</span>
-              <input name="phone" ng-model="data.phone" type="tel">
+              <span class="input-label">Telefone:
+                <span ng-show="createUserForm.phone.$error.required || createUserForm.phone.$pristine"
+                class="error">*</span>
+              </span>
+              <input name="phone" ng-model="data.phone" type="tel" required maxlength="15">
             </label>
             <br /><br />
             <button ng-click="createUser(data)" class="bluedark-color button button-block button-positive">
