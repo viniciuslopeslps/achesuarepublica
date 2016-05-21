@@ -11,7 +11,7 @@
                 <span ng-show="createUserForm.name.$error.required ||
                 createUserForm.name.$pristine || createUserForm.name.$invalid" class="error">*</span>
               </span>
-              <input name="name" ng-model="data.name" type="text" required maxlength="20" ng-pattern="/^[a-zA-Z0-9]*$/">
+              <input name="name" ng-model="data.name" type="text" required maxlength="20" ng-pattern="/^[\w -]*$/">
             </label>
             <label class="item item-input">
               <span class="input-label">Email:
@@ -25,7 +25,7 @@
                 <span ng-show="createUserForm.password.$error.required ||
                  createUserForm.password.$pristine || createUserForm.password.$invalid" class="error">*</span>
               </span>
-              <input name="password" ng-model="data.password" type="password" required maxlength="20" ng-pattern="/^[a-zA-Z0-9]*$/">
+              <input name="password" ng-model="data.password" type="password" required maxlength="20" ng-pattern="/^[\w -]*$/">
             </label>
             <label class="item item-input">
               <span class="input-label">Confirmar senha:
@@ -33,7 +33,7 @@
                  createUserForm.confirmPassword.$pristine || createUserForm.confirmPassword.$invalid"
                 class="error">*</span>
               </span>
-              <input name="confirmPassword" ng-model="data.confirmPassword" type="password" required maxlength="20" ng-pattern="/^[a-zA-Z0-9]*$/">
+              <input name="confirmPassword" ng-model="data.confirmPassword" type="password" required maxlength="20" ng-pattern="/^[\w -]*$/">
             </label>
             <label class="item item-input">
               <span class="input-label">Telefone:

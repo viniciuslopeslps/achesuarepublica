@@ -13,20 +13,30 @@
              <br />
              <div class="list padding">
                <label class="item item-input">
-                 <span class="input-label">Cidade:</span>
-                 <input name="city" ng-model="data.city" type="text">
+                 <span class="input-label">Cidade:
+                   <span ng-show="createLocation.city.$error.required ||
+                   createLocation.city.$pristine || createLocation.city.$invalid" class="error">*</span>
+                  </span>
+                 </span>
+                 <input name="city" ng-model="data.city" type="text" required maxlength="40" ng-pattern="/^[\w -]*$/">
                </label>
                <label class="item item-input item-select">
                  <div class="input-label">
                    Estado:
+                   <span ng-show="createLocation.state.$error.required ||
+                   createLocation.state.$pristine || createLocation.state.$invalid" class="error">*</span>
+                    </span>
                  </div>
-                 <select name="state" ng-model="data.state">
+                 <select name="state" ng-model="data.state" required>
                       <option ng-repeat="item in states" >{{item}}</option>
                  </select>
                </label>
                <label class="item item-input">
-                 <span class="input-label">Bairro:</span>
-                 <input name="address" ng-model="data.address" type="text">
+                 <span class="input-label">Bairro:
+                   <span ng-show="createLocation.address.$invalid" class="error">*</span>
+                 </span>
+                 </span>
+                 <input name="address" ng-model="data.address" type="text" maxlength="40" ng-pattern="/^[\w -]*$/">
                </label>
                <br /><br />
                <button ng-click="createNewLocation(data)" class="bluedark-color button button-block button-positive">
@@ -64,20 +74,29 @@
                   </select>
                 </label>
                 <label class="item item-input">
-                  <span class="input-label">Cidade:</span>
-                  <input name="address" ng-model="data.city_locat" placeholder="{{city}}" type="text">
+                  <span class="input-label">Cidade:
+                    <span ng-show="updateLocation.city.$error.required ||
+                    updateLocation.city.$pristine || updateLocation.city.$invalid" class="error">*</span>
+                   </span>
+                  </span>
+                  <input name="city" ng-model="data.city_locat" placeholder="{{city}}" type="text" required maxlength="40" ng-pattern="/^[\w -]*$/">
                 </label>
                 <label class="item item-input item-select">
                   <div class="input-label">
                     Estado:
+                    <span ng-show="updateLocation.state.$error.required ||
+                    updateLocation.state.$pristine || updateLocation.state.$invalid" class="error">*</span>
+                     </span>
                   </div>
-                  <select name="state" ng-model="data.state_locat" placeholder="{{state}}">
+                  <select name="state" ng-model="data.state_locat" placeholder="{{state}}" required>
                        <option ng-repeat="item in states" >{{item}}</option>
                   </select>
                 </label>
                 <label class="item item-input">
-                  <span class="input-label">Bairro:</span>
-                  <input name="address" ng-model="data.address_locat" placeholder="{{address}}" type="text">
+                  <span class="input-label">Bairro:
+                    <span ng-show="updateLocation.address.$invalid" class="error">*</span>
+                  </span>
+                  <input name="address" ng-model="data.address_locat" placeholder="{{address}}" type="text" maxlength="40" ng-pattern="/^[\w -]*$/">
                 </label>
                 <br /><br />
                 <button ng-click="updateLocalization(data)" class="bluedark-color button button-block button-positive">
