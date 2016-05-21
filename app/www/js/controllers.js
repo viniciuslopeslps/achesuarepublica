@@ -457,18 +457,18 @@ angular.module('starter.controllers',['starter.services'])
       };
 
       $scope.createRepublic = function(data){
-        if(data === undefined || data['nameRepublic'] === undefined || data['locationKey'] ===undefined){
+        if(data === undefined || data['name'] === undefined || data['locationKey'] ===undefined){
             alertService.alertPopup('ERRO','Por favor complete os campos corretamente');
         }
         else{
           var key_locat = $scope.data.locationKey;
-          var name_rep = $scope.data.nameRepublic;
+          var name_rep = $scope.data.name;
           var id_usu =   window.localStorage['id_usu'];
 
             $http.post(ip + '/createRepublic/' + name_rep + "/" + key_locat + "/" + id_usu).
             success(function(response) {
               alertService.alertPopup('Nova República!','Registro de república inserida com sucesso!');
-              redirect.go('navUser.republic');
+              delete $scope.data;
             }).
             error(function() {
               alertService.alertPopup('ERRO', 'República já existente na base de dados!');
@@ -479,6 +479,7 @@ angular.module('starter.controllers',['starter.services'])
       var republicObjs = $scope.republicObjs = [];
 
       $scope.getRepublics = function(){
+        debugger;
         $scope.getLocationKeys();
         var republicArray = $scope.republicArray = [];
         var republicObjs = $scope.republicObjs = [];
@@ -506,12 +507,13 @@ angular.module('starter.controllers',['starter.services'])
       };
 
       $scope.republicSelected = function(data){
-        var objRespose = data["key_rep"];
+        debugger;
+        var objRespose = data["keyRep"];
         var republicAnswer = $scope.republicObjs;
         for(i=0; i < republicAnswer.length;i++){
             for(a=0; a < republicAnswer[0].length;a++){
                 if(republicAnswer[i][a]["key_rep"]==objRespose){
-                  $scope.republicName = republicAnswer[i][a]["name_rep"];
+                  $scope.name = republicAnswer[i][a]["name_rep"];
                   $scope.locationKey = republicAnswer[i][a]["key_locat"];
                   $scope.idRep = republicAnswer[i][a]["id_rep"];
                   republic.saveData($scope.idRep, $scope.republicName, $scope.locationKey);
@@ -520,27 +522,37 @@ angular.module('starter.controllers',['starter.services'])
           };
       };
       $scope.updateRepublic = function(data){
-        var republicName = $scope.data.republicName;
-        var keyLocatRep = $scope.data.locationKey;
-
-        if (republicName === undefined){
-            var republicName = window.localStorage['name_rep'];
+        debugger;
+        if(data === undefined || data['keyRep'] === undefined){
+            alertService.alertPopup('Alteração',
+            'É preciso de uma república para alterar!');
         }
-        if (keyLocatRep === undefined){
-            var keyLocatRep = window.localStorage['key_locat_rep'];
+        else {
+          var name = $scope.data.name;
+          var keyLocatRep = $scope.data.locationKey;
+
+          if (name === undefined || name.length === 0){
+              var name = window.localStorage['name_rep'];
+          }
+          if (keyLocatRep === undefined){
+              var keyLocatRep = window.localStorage['key_locat_rep'];
+          }
+
+          var idUsu = window.localStorage['id_usu'];
+          var idRep = window.localStorage['id_rep'];
+
+          $http.post(ip + '/updateRepublic/' + name + '/' + keyLocatRep + '/' + idRep + '/' + idUsu).
+          success(function(response) {
+            delete $scope.data;
+            delete $scope.name;
+            delete $scope.locationKey;
+
+            alertService.alertPopup('Alterado!', 'Registro de república alterado com sucesso!');
+          }).
+          error(function() {
+            alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
+          });
         }
-
-        var idUsu = window.localStorage['id_usu'];
-        var idRep = window.localStorage['id_rep'];
-
-        $http.post(ip + '/updateRepublic/' + republicName + '/' + keyLocatRep + '/' + idRep + '/' + idUsu).
-        success(function(response) {
-          delete $scope.data;
-          alertService.alertPopup('Alterado!', 'Registro de república alterado com sucesso!');
-        }).
-        error(function() {
-          alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
-        });
 
       };
 
@@ -556,9 +568,12 @@ angular.module('starter.controllers',['starter.services'])
 
             $http.post(ip + '/deleteRepublic/'+ idRep + '/' + idUsu).
             success(function(response) {
+
               delete $scope.data;
+              delete $scope.name;
+              delete $scope.locationKey;
+
               alertService.alertPopup('Removido!','Registro removido com sucesso!');
-              redirect.go('navUser.home');
             }).
             error(function() {
               alertService.alertPopup('ERRO', 'Alguma coisa aconteceu, tente novamente!');

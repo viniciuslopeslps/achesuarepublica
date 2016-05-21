@@ -20,14 +20,21 @@
                 <br />
                <div class="list padding" ng-show="locationKeys.length > 0">
                  <label class="item item-input">
-                   <span class="input-label">Nome:</span>
-                   <input name="nameRepublic" ng-model="data.nameRepublic" type="text">
+                   <span class="input-label">Nome:
+                     <span ng-show="republicForm.name.$error.required ||
+                      republicForm.name.$pristine || republicForm.name.$invalid" class="error">*</span>
+                      </span>
+                   </span>
+                   <input name="name" ng-model="data.name" type="text" required maxlength="40" ng-pattern="/^[\w -]*$/">
                  </label>
                  <label class="item item-input item-select">
                    <div class="input-label">
                      Localização:
+                     <span ng-show="republicForm.locationKey.$error.required ||
+                     republicForm.locationKey.$pristine || republicForm.locationKey.$invalid" class="error">*</span>
+                      </span>
                    </div>
-                   <select name="locationKey" ng-model="data.locationKey">
+                   <select name="locationKey" ng-model="data.locationKey" required>
                         <option ng-repeat="item in locationKeys">{{item}}</option>
                    </select>
                  </label>
@@ -62,14 +69,17 @@
                    <div class="input-label">
                      Repúblicas:
                    </div>
-                   <select name="key_rep" ng-model="data.key_rep" ng-change="republicSelected(data)">
+                   <select name="keyRep" ng-model="data.keyRep" ng-change="republicSelected(data)">
                         <option ng-repeat="item in republicArray">{{item}}</option>
                    </select>
                  </label>
-                 <div ng-show="republicName.length > 0 || locationKey.length > 0">
+                 <div ng-show="name.length > 0 || locationKey.length > 0">
                    <label class="item item-input">
-                     <span class="input-label">Nome:</span>
-                     <input name="republicName" ng-model="data.republicName" placeholder="{{republicName}}" type="text">
+                     <span class="input-label">Nome:
+                       <span ng-show="republicForm.name.$invalid" class="error">*</span>
+                      </span>
+                     </span>
+                     <input name="name" ng-model="data.name" placeholder="{{name}}" type="text" maxlength="40" ng-pattern="/^[\w -]*$/">
                    </label>
                    <label class="item item-input item-select">
                      <div class="input-label">
@@ -115,14 +125,14 @@
                         <div class="input-label">
                           Repúblicas:
                         </div>
-                        <select name="key_rep" ng-model="data.key_rep" ng-change="republicSelected(data)">
+                        <select name="keyRep" ng-model="data.keyRep" ng-change="republicSelected(data)">
                              <option ng-repeat="item in republicArray">{{item}}</option>
                         </select>
                       </label>
-                      <div ng-show="republicName.length > 0 || locationKey.length > 0" class="list card">
-                         <span ng-show="republicName.length > 0" class="item item-icon-left">
+                      <div ng-show="name.length > 0 || locationKey.length > 0" class="list card">
+                         <span ng-show="name.length > 0" class="item item-icon-left">
                            <i class="ion-ios-home"></i>
-                            República: {{republicName}}
+                            República: {{name}}
                          </span>
                          <span ng-show="locationKey.length > 0" class="item item-icon-left">
                            <i class="ion-map"></i>
