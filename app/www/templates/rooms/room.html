@@ -6,7 +6,7 @@
       <ion-view>
          <ion-content>
            <div ng-controller="roomCtrl">
-             <form name="roomInsertForm" novalidate="novalidate">
+             <form name="roomForm" novalidate="novalidate">
                <br />
                <h1 class="text-center">Nova Quarto</h1>
                <br />
@@ -19,22 +19,32 @@
                 <br />
                <div class="list padding" ng-show="locationKeys.length > 0">
                  <label class="item item-input">
-                   <span class="input-label">Titulo:</span>
-                   <input name="title" ng-model="data.title" maxlength="25" type="text">
+                   <span class="input-label">Titulo:
+                     <span ng-show="roomForm.title.$error.required ||
+                      roomForm.title.$pristine || roomForm.title.$invalid" class="error">*</span>
+                      </span>
+                    </span>
+                   <input name="title" ng-model="data.title" type="text" maxlength="25" required ng-pattern="/^[\w -]*$/">
                  </label>
                  <label class="item item-input item-select">
                    <div class="input-label">
                      Localização:
+                     <span ng-show="roomForm.locationKey.$error.required ||
+                     roomForm.locationKey.$pristine || roomForm.locationKey.$invalid" class="error">*</span>
+                      </span>
                    </div>
-                   <select name="locationKey" ng-model="data.locationKey">
+                   <select name="locationKey" ng-model="data.locationKey" required>
                         <option ng-repeat="item in locationKeys" >{{item}}</option>
                    </select>
                  </label>
                  <label class="item item-input item-select">
                    <div class="input-label">
                      Universidade:
+                     <span ng-show="roomForm.universityKey.$error.required ||
+                     roomForm.universityKey.$pristine || roomForm.universityKey.$invalid" class="error">*</span>
+                      </span>
                    </div>
-                   <select name="universityKey" ng-model="data.universityKey">
+                   <select name="universityKey" ng-model="data.universityKey" required>
                         <option ng-repeat="item in universityKeys" >{{item}}</option>
                    </select>
                  </label>
@@ -43,12 +53,16 @@
                      República:
                    </div>
                    <select name="republicKey" ng-model="data.republicKey">
-                        <option ng-repeat="item in republicKeys" >{{item}}</option>
+                        <option ng-repeat="item in republicKeys">{{item}}</option>
                    </select>
                  </label>
                  <label class="item item-input">
-                   <span class="input-label">Descrição:</span>
-                   <input name="description" ng-model="data.description" type="text">
+                   <span class="input-label">Descrição:
+                     <span ng-show="roomForm.description.$error.required ||
+                      roomForm.description.$pristine || roomForm.description.$invalid" class="error">*</span>
+                      </span>
+                   </span>
+                   <input name="description" ng-model="data.description" type="text" maxlength="95" required ng-pattern="/^[\w -]*$/">
                  </label>
                  <br /><br />
                  <button ng-click="createRoom(data)" class="bluedark-color button button-block button-positive">
@@ -62,11 +76,11 @@
        </ion-view>
     </ion-tab>
 
-    <ion-tab title="Settings" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-gear-outline">
+    <ion-tab class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-gear-outline">
       <ion-view>
          <ion-content>
            <div ng-controller="roomCtrl">
-             <form name="updateRoomForm" novalidate="novalidate">
+             <form name="roomForm" novalidate="novalidate">
                <br />
                <h1 class="text-center">Alterar Quarto</h1>
                <br />
@@ -87,8 +101,10 @@
                     </select>
                   </label>
                   <label class="item item-input">
-                    <span class="input-label">Title:</span>
-                    <input name="title" ng-model="data.title" placeholder="{{title}}" type="text">
+                    <span class="input-label">Title:
+                      <span ng-show="roomForm.title.$invalid" class="error">*</span>
+                    </span>
+                    <input name="title" ng-model="data.title" placeholder="{{title}}" type="text" maxlength="25" ng-pattern="/^[\w -]*$/">
                   </label>
                   <label class="item item-input item-select">
                     <div class="input-label">
@@ -115,8 +131,10 @@
                     </select>
                   </label>
                   <label class="item item-input">
-                    <span class="input-label">Descrição:</span>
-                    <input name="description" ng-model="data.description" placeholder="{{description}}" type="text">
+                    <span class="input-label">Descrição:
+                      <span ng-show="roomForm.description.$invalid" class="error">*</span>
+                    </span>
+                    <input name="description" ng-model="data.description" placeholder="{{description}}" type="text" maxlength="95" ng-pattern="/^[\w -]*$/">
                   </label>
                   <br /><br />
                   <button ng-click="updateRoom(data)" class="bluedark-color button button-block button-positive">
