@@ -320,18 +320,19 @@ angular.module('starter.controllers',['starter.services'])
     };
 
     $scope.createUniversity = function(data){
-      if(data === undefined || data['nameUniversity'] === undefined || data['locationKey'] ===undefined){
+      if(data === undefined || data['name'] === undefined || data['locationKey'] ===undefined){
           alertService.alertPopup('ERRO','Por favor complete os campos corretamente');
       }
       else{
-          var key_locat = $scope.data.locationKey;
-          var name_uni = $scope.data.nameUniversity;
-          var id_usu =   window.localStorage['id_usu'];
+          var keyLocat = $scope.data.locationKey;
+          var name = $scope.data.name;
+          var idUsu =   window.localStorage['id_usu'];
 
-          $http.post(ip + '/createUniversity/'+ name_uni + '/'+ key_locat + '/' + id_usu).
+          $http.post(ip + '/createUniversity/'+ name + '/'+ keyLocat + '/' + idUsu).
           success(function(response) {
             alertService.alertPopup('Nova localização!','Registro de localização inserida com sucesso!');
             redirect.go('navUser.university');
+            delete $scope.data;
           }).
           error(function() {
             alertService.alertPopup('ERRO', 'Localização já existente na base de dados!');
@@ -345,9 +346,9 @@ angular.module('starter.controllers',['starter.services'])
       $scope.getLocationKeys();
       var universitiesArray = $scope.universitiesArray = [];
       var universitiesObjs = $scope.universitiesObjs = [];
-      var id_usu = window.localStorage['id_usu'];
+      var idUsu = window.localStorage['id_usu'];
 
-      $http.get(ip + '/getUniversitiesById/' + id_usu).
+      $http.get(ip + '/getUniversitiesById/' + idUsu).
       success(function(response) {
         var dado =  angular.toJson(response);
         var obj = jQuery.parseJSON(dado);
@@ -369,38 +370,38 @@ angular.module('starter.controllers',['starter.services'])
     };
 
     $scope.universitySelected = function(data){
-      var objRespose = data["key_uni"];
+      var objRespose = data["keyUni"];
       var universitiesAnswer = $scope.universitiesObjs;
       for(i=0; i < universitiesAnswer.length;i++){
           for(a=0; a < universitiesAnswer[0].length;a++){
               if(universitiesAnswer[i][a]["key_uni"]==objRespose){
-                $scope.key_uni = universitiesAnswer[i][a]["key_uni"];
-                $scope.name_uni = universitiesAnswer[i][a]["name_uni"];
+                $scope.keyUni = universitiesAnswer[i][a]["key_uni"];
+                $scope.name = universitiesAnswer[i][a]["name_uni"];
                 $scope.locationKey = universitiesAnswer[i][a]["key_locat"];
-                university.saveData(universitiesAnswer[i][a]["id_uni"], $scope.name_uni, $scope.key_locat);
+                university.saveData(universitiesAnswer[i][a]["id_uni"], $scope.name, $scope.locationKey);
               }
             };
         };
     };
     $scope.updateUniversity = function(data){
-      var key_uni =  $scope.data.key_uni;
-      var name_uni =   $scope.data.name_uni;
-      var key_locat_uni =   $scope.data.locationKey;
+      var keyUni =  $scope.data.keyUni;
+      var name =   $scope.data.name;
+      var keyLocatUni =   $scope.data.locationKey;
 
-      if (key_uni === undefined){
-          var key_uni = window.localStorage['key_uni'];
+      if (keyUni === undefined){
+          var keyUni = window.localStorage['key_uni'];
       }
-      if (name_uni===undefined){
-          var name_uni = window.localStorage['name_uni'];
+      if (name===undefined || name.length === 0){
+          var name = window.localStorage['name_uni'];
       }
-      if (key_locat_uni===undefined){
-          var key_locat_uni = window.localStorage['key_locat_uni'];
+      if (keyLocatUni===undefined){
+          var keyLocatUni = window.localStorage['key_locat_uni'];
       }
 
-      var id_usu =   window.localStorage['id_usu'];
-      var id_uni =   window.localStorage['id_uni'];
+      var idUsu =   window.localStorage['id_usu'];
+      var idUni =   window.localStorage['id_uni'];
 
-      $http.post(ip + '/updateUniversity/' + name_uni + '/' + key_locat_uni + '/' + id_uni + '/' + id_usu).
+      $http.post(ip + '/updateUniversity/' + name + '/' + keyLocatUni + '/' + idUni + '/' + idUsu).
       success(function(response) {
         alertService.alertPopup('Alterado!', 'Registro de localização alterado com sucesso!');
       }).
@@ -417,11 +418,14 @@ angular.module('starter.controllers',['starter.services'])
       });
       confirmPopup.then(function(res) {
         if(res) {
-          var id_usu = window.localStorage['id_usu'];
-          var key_uni = $scope.data.key_uni;
-          $http.post(ip + '/deleteUniversity/'+ key_uni + '/' + id_usu).
+          var idUsu = window.localStorage['id_usu'];
+          var keyUni = $scope.data.keyUni;
+          $http.post(ip + '/deleteUniversity/'+ keyUni + '/' + idUsu).
           success(function(response) {
             alertService.alertPopup('Removido!','Registro removido com sucesso!');
+            delete $scope.name;
+            delete $scope.locationKey;
+            delete $scope.data;
           }).
           error(function() {
             alertService.alertPopup('ERRO', 'Alguma coisa aconteceu, tente novamente!');
