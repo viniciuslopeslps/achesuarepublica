@@ -73,7 +73,6 @@ angular.module('starter.controllers',['starter.services'])
         alertService.alertPopup('ERRO','Por favor complete os campos corretamente');
 
       } else {
-
         var email = $scope.data.email;
         var password = $scope.data.password;
         var confirmPassword = $scope.data.confirmPassword;
@@ -86,6 +85,7 @@ angular.module('starter.controllers',['starter.services'])
           var obj = jQuery.parseJSON(dado);
           alertService.alertPopup('Bem vindo ao ache sua república',
           'Registro de usuário inserido com sucesso!');
+          delete $scope.data;
         }).
         error(function() {
           alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
@@ -197,6 +197,7 @@ angular.module('starter.controllers',['starter.services'])
         success(function(response) {
           location.saveData(undefined, city_locat,address_locat, state_locat);
           alertService.alertPopup('Nova localização!','Registro de localização inserida com sucesso!');
+          delete $scope.data;
         }).
         error(function() {
           alertService.alertPopup('ERRO', 'Localização já existente na base de dados!');
@@ -251,27 +252,30 @@ angular.module('starter.controllers',['starter.services'])
   };
 
   $scope.updateLocalization = function(data){
-    var city_locat =  $scope.data.city_locat;
-    var state_locat =   $scope.data.state_locat;
-    var address_locat =   $scope.data.address_locat;
+    var city =  $scope.data.city;
+    var state =   $scope.data.state;
+    var address =   $scope.data.address;
 
-    if (city_locat===undefined){
-        var city_locat = window.localStorage['city_locat'];
+    if (city===undefined){
+        var city = window.localStorage['city_locat'];
     }
-    if (state_locat===undefined){
-        var state_locat = window.localStorage['state_locat'];
+    if (state===undefined){
+        var state = window.localStorage['state_locat'];
     }
-    if (address_locat===undefined){
-        var address_locat = window.localStorage['address_locat'];
+    if (address===undefined){
+        var address = window.localStorage['address_locat'];
     }
 
-    var id_usu =   window.localStorage['id_usu'];
-    var id_locat =   window.localStorage['id_locat'];
+    var idUsu =   window.localStorage['id_usu'];
+    var idLocat =   window.localStorage['id_locat'];
 
-    $http.post(ip + '/updateLocation/'+ city_locat + '/'+ state_locat + '/' + address_locat +
-     '/' + id_locat + '/' + id_usu).
+    $http.post(ip + '/updateLocation/'+ city + '/'+ state + '/' + address + '/' + idLocat + '/' + idUsu).
     success(function(response) {
       alertService.alertPopup('Alterado!', 'Registro de localização alterado com sucesso!');
+      delete $scope.data;
+      delete $scope.city;
+      delete $scope.state;
+      delete $scope.address;
     }).
     error(function() {
       alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
@@ -291,6 +295,10 @@ angular.module('starter.controllers',['starter.services'])
         success(function(response) {
           alertService.alertPopup('Deletado com sucesso!', 'Registro deletado com sucesso!');
           location.clearAll();
+          delete $scope.data;
+          delete $scope.city;
+          delete $scope.state;
+          delete $scope.address;
         }).
         error(function() {
             alertService.alertPopup('ERRO','Erro ao excluir localização');
@@ -404,6 +412,9 @@ angular.module('starter.controllers',['starter.services'])
       $http.post(ip + '/updateUniversity/' + name + '/' + keyLocatUni + '/' + idUni + '/' + idUsu).
       success(function(response) {
         alertService.alertPopup('Alterado!', 'Registro de localização alterado com sucesso!');
+        delete $scope.name;
+        delete $scope.locationKey;
+        delete $scope.data;
       }).
       error(function() {
         alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
@@ -479,7 +490,6 @@ angular.module('starter.controllers',['starter.services'])
       var republicObjs = $scope.republicObjs = [];
 
       $scope.getRepublics = function(){
-        debugger;
         $scope.getLocationKeys();
         var republicArray = $scope.republicArray = [];
         var republicObjs = $scope.republicObjs = [];
@@ -507,7 +517,6 @@ angular.module('starter.controllers',['starter.services'])
       };
 
       $scope.republicSelected = function(data){
-        debugger;
         var objRespose = data["keyRep"];
         var republicAnswer = $scope.republicObjs;
         for(i=0; i < republicAnswer.length;i++){
@@ -522,7 +531,6 @@ angular.module('starter.controllers',['starter.services'])
           };
       };
       $scope.updateRepublic = function(data){
-        debugger;
         if(data === undefined || data['keyRep'] === undefined){
             alertService.alertPopup('Alteração',
             'É preciso de uma república para alterar!');

@@ -120,4 +120,4 @@ def delete_room(id_room, id_usu):
 
 #mudar o ip para testar
 if __name__ == "__main__":
-    app.run(host="192.168.1.106", debug=True, use_reloader=True)
+    app.run(host="192.168.1.108", debug=True, use_reloader=True)

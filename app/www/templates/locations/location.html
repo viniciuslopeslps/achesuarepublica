@@ -79,7 +79,7 @@
                     updateLocation.city.$pristine || updateLocation.city.$invalid" class="error">*</span>
                    </span>
                   </span>
-                  <input name="city" ng-model="data.city_locat" placeholder="{{city}}" type="text" required maxlength="40" ng-pattern="/^[\w -]*$/">
+                  <input name="city" ng-model="data.city" placeholder="{{city}}" type="text" required maxlength="40" ng-pattern="/^[\w -]*$/">
                 </label>
                 <label class="item item-input item-select">
                   <div class="input-label">
@@ -88,15 +88,15 @@
                     updateLocation.state.$pristine || updateLocation.state.$invalid" class="error">*</span>
                      </span>
                   </div>
-                  <select name="state" ng-model="data.state_locat" placeholder="{{state}}" required>
-                       <option ng-repeat="item in states" >{{item}}</option>
+                  <select name="state" ng-model="data.state" ng-options="item for item in states">
+                    <option value="">{{state}}</option>
                   </select>
                 </label>
                 <label class="item item-input">
                   <span class="input-label">Bairro:
                     <span ng-show="updateLocation.address.$invalid" class="error">*</span>
                   </span>
-                  <input name="address" ng-model="data.address_locat" placeholder="{{address}}" type="text" maxlength="40" ng-pattern="/^[\w -]*$/">
+                  <input name="address" ng-model="data.address" placeholder="{{address}}" type="text" maxlength="40" ng-pattern="/^[\w -]*$/">
                 </label>
                 <br /><br />
                 <button ng-click="updateLocalization(data)" class="bluedark-color button button-block button-positive">
