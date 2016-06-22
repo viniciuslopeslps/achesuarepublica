@@ -479,7 +479,6 @@ angular.module('starter.controllers',['starter.services'])
       var republicObjs = $scope.republicObjs = [];
 
       $scope.getRepublics = function(){
-        debugger;
         $scope.getLocationKeys();
         var republicArray = $scope.republicArray = [];
         var republicObjs = $scope.republicObjs = [];
@@ -645,7 +644,7 @@ angular.module('starter.controllers',['starter.services'])
   $scope.createRoom = function(data){
     if(data === undefined || data['locationKey'] === undefined ||
         data['universityKey'] === undefined || data['description'] === undefined ||
-        data['title'] === undefined){
+        data['title'] === undefined || data['price'] === undefined){
         alertService.alertPopup('ERRO','Por favor complete os campos corretamente');
     }
     else{
@@ -653,6 +652,7 @@ angular.module('starter.controllers',['starter.services'])
       var universityKey = $scope.data.universityKey;
       var republicKey = $scope.data.republicKey;
       var description = $scope.data.description;
+      var price = $scope.data.price;
       var title = $scope.data.title;
       var idUsu =   window.localStorage['id_usu'];
 
@@ -660,7 +660,7 @@ angular.module('starter.controllers',['starter.services'])
         republicKey = null;
       }
       $http.post(ip + '/createRoom/' + locationKey + "/" + universityKey + "/"
-        + republicKey + "/" + description + "/" + title + "/" + idUsu).
+        + republicKey + "/" + description + "/" + title + "/" + idUsu + "/" + price).
         success(function(response) {
           alertService.alertPopup('Nova Quarto!','Registro de quarto inserido com sucesso!');
           delete $scope.data;
@@ -711,8 +711,9 @@ angular.module('starter.controllers',['starter.services'])
               $scope.universityKey = roomAnswer[i][a]["key_uni"];
               $scope.republicKey = roomAnswer[i][a]["key_rep"];
               $scope.idRoom = roomAnswer[i][a]["id_room"];
+              $scope.price = roomAnswer[i][a]["price"];
               room.saveData($scope.title, $scope.description, $scope.locationKey,
-                 $scope.republicKey, $scope.universityKey, $scope.idRoom);
+                 $scope.republicKey, $scope.universityKey, $scope.idRoom, $scope.price);
             }
         }
       }
@@ -724,6 +725,7 @@ angular.module('starter.controllers',['starter.services'])
     var universityKey = $scope.data.universityKey;
     var republicKey = $scope.data.republicKey;
     var locationKey = $scope.data.locationKey;
+    var price = $scope.data.price;
 
     if (desc === undefined){
       var desc = window.localStorage['description'];
@@ -743,6 +745,9 @@ angular.module('starter.controllers',['starter.services'])
     if (locationKey === undefined){
       var locationKey = window.localStorage['key_locat_room'];
     }
+    if (price === undefined){
+      var price = window.localStorage['price'];
+    }
 
     var idRoom = window.localStorage['id_room'];
     var idUsu = window.localStorage['id_usu'];
@@ -752,7 +757,7 @@ angular.module('starter.controllers',['starter.services'])
     }
 
     $http.post(ip + '/updateRoom/' + locationKey + "/" + universityKey + "/"
-      + republicKey + "/" + desc + "/" + title + "/" + idUsu + "/" + idRoom).
+      + republicKey + "/" + desc + "/" + title + "/" + price + "/" + idUsu + "/" + idRoom).
       success(function(response) {
         alertService.alertPopup('Nova Quarto!','Registro de quarto alterado com sucesso!');
         delete $scope.data;
@@ -761,6 +766,7 @@ angular.module('starter.controllers',['starter.services'])
         delete $scope.universityKey;
         delete $scope.title;
         delete $scope.description;
+        delete $scope.price;
         room.clearAll();
       }).
       error(function() {
@@ -780,6 +786,8 @@ angular.module('starter.controllers',['starter.services'])
         delete $scope.universityKey;
         delete $scope.title;
         delete $scope.description;
+        delete $scope.price;
+
         room.clearAll();
       }).
       error(function() {

@@ -78,13 +78,14 @@ angular.module('starter.services', [])
 })
 .factory('room', function() {
   return {
-    saveData : function(title, desc, key_locat, key_rep, key_uni, id) {
+    saveData : function(title, desc, key_locat, key_rep, key_uni, id, price) {
       window.localStorage['title'] = title===undefined?window.localStorage['title']:title;
       window.localStorage['description'] = desc===undefined? window.localStorage['description']:desc;
       window.localStorage['key_locat_room'] = key_locat===undefined? window.localStorage['key_locat_room']:key_locat;
       window.localStorage['key_rep_room'] = key_rep===undefined? window.localStorage['key_rep_room']:key_rep;
       window.localStorage['key_uni_room'] = key_uni===undefined? window.localStorage['key_uni_room']:key_uni;
       window.localStorage['id_room'] = id===undefined? window.localStorage['id_room']:id;
+      window.localStorage['price'] = price===undefined? window.localStorage['price']:price;
     },
     clearAll : function() {
       window.localStorage.removeItem("title");
@@ -93,6 +94,7 @@ angular.module('starter.services', [])
       window.localStorage.removeItem("key_rep_room");
       window.localStorage.removeItem("key_uni_room");
       window.localStorage.removeItem("id_room");
+      window.localStorage.removeItem("price");
     }
   }
 })

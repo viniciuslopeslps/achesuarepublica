@@ -102,17 +102,17 @@ def delete_republic(id_rep, id_usu):
 def get_republic_keys():
     return republic.get_republic_keys()
 
-@app.route('/createRoom/<locat_key>/<university_key>/<republic_key>/<description>/<title>/<int:id_usu>', methods=["POST"])
-def new_room(locat_key,university_key,republic_key,description, title, id_usu):
-    return room.new_room(locat_key, university_key, republic_key, description, title, id_usu)
+@app.route('/createRoom/<locat_key>/<university_key>/<republic_key>/<description>/<title>/<int:id_usu>/<price>', methods=["POST"])
+def new_room(locat_key,university_key,republic_key,description, title, id_usu, price):
+    return room.new_room(locat_key, university_key, republic_key, description, title, id_usu, price)
 
 @app.route('/getRoomsByUser/<int:id_usu>')
 def get_rooms_by_user(id_usu):
     return room.get_rooms_by_user(id_usu)
 
-@app.route('/updateRoom/<locat_key>/<university_key>/<republic_key>/<description>/<title>/<int:id_usu>/<int:id_room>', methods=["POST"])
-def update_room(locat_key,university_key,republic_key,description, title, id_usu, id_room):
-    return room.update_room(locat_key, university_key, republic_key, description, title, id_usu, id_room)
+@app.route('/updateRoom/<locat_key>/<university_key>/<republic_key>/<description>/<title>/<price>/<int:id_usu>/<int:id_room>', methods=["POST"])
+def update_room(locat_key,university_key,republic_key,description, title, price, id_usu, id_room):
+    return room.update_room(locat_key, university_key, republic_key, description, title, price, id_usu, id_room)
 
 @app.route('/deleteRoom/<int:id_room>/<int:id_usu>', methods=["POST"])
 def delete_room(id_room, id_usu):

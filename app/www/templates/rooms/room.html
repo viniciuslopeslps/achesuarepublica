@@ -64,6 +64,13 @@
                    </span>
                    <input name="description" ng-model="data.description" type="text" maxlength="95" required ng-pattern="/^[\w -]*$/">
                  </label>
+                 <label class="item item-input">
+                   <span class="input-label">Price:
+                     <span ng-show="roomForm.price.$error.required || roomForm.price.$pristine ||
+                     roomForm.price.$invalid" class="error">*</span>
+                      </span>
+                   <input name="price" ng-model="data.price" type="number" step="any" required>
+                 </label>
                  <br /><br />
                  <button ng-click="createRoom(data)" class="bluedark-color button button-block button-positive">
                    Cadastrar <i class="ion-android-checkbox-outline"></i>
@@ -136,6 +143,12 @@
                     </span>
                     <input name="description" ng-model="data.description" placeholder="{{description}}" type="text" maxlength="95" ng-pattern="/^[\w -]*$/">
                   </label>
+                  <label class="item item-input">
+                    <span class="input-label">Preço:
+                      <span ng-show="roomForm.price.$invalid" class="error">*</span>
+                    </span>
+                    <input name="price" ng-model="data.price" placeholder="{{price}}" type="number" step="any"  min="0">
+                  </label>
                   <br /><br />
                   <button ng-click="updateRoom(data)" class="bluedark-color button button-block button-positive">
                     atualizar <i class="ion-android-checkbox-outline"></i>
@@ -188,6 +201,10 @@
                     <a href="#" ng-show="description.length > 0" class="item item-icon-left">
                       <i class="ion-edit"></i>
                       Descrição: {{description}}
+                    </a>
+                    <a href="#" ng-show="price.length > 0" class="item item-icon-left">
+                      <i class="ion-edit"></i>
+                      Preço: {{price}}
                     </a>
                   </div>
                  <button ng-click="deleteRoom(data)" class="button button-full icon-right button-assertive">
