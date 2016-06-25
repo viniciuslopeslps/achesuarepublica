@@ -2,10 +2,10 @@
 </ion-view>
 
   <ion-tabs class="tabs-striped tabs-top tabs-background-positive tabs-color-light">
-    <ion-tab href="#/navUser/room" title="Home" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-filing-outline">
+    <ion-tab href="#/navUser/room" title="Home" class="bar-options" icon="icon ion-home">
       <ion-view>
          <ion-content>
-           <div ng-controller="roomCtrl">
+           <div on-swipe-down="getAllFkData()" ng-controller="roomCtrl">
              <form name="roomForm" novalidate="novalidate">
                <br />
                <h1 class="text-center">Nova Quarto</h1>
@@ -83,10 +83,10 @@
        </ion-view>
     </ion-tab>
 
-    <ion-tab class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-gear-outline">
+    <ion-tab class="bar-options" icon="ion-ios-gear-outline">
       <ion-view>
          <ion-content>
-           <div ng-controller="roomCtrl">
+           <div on-swipe-down="getRoomsByUser()" ng-controller="roomCtrl">
              <form name="roomForm" novalidate="novalidate">
                <br />
                <h1 class="text-center">Alterar Quarto</h1>
@@ -160,10 +160,10 @@
        </ion-view>
     </ion-tab>
 
-    <ion-tab title="Settings" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-gear-outline">
+    <ion-tab title="Settings" class="bar-options" icon="icon ion-trash-b">
       <ion-view>
          <ion-content>
-           <div ng-controller="roomCtrl">
+           <div on-swipe-down="getRoomsByUser()" ng-controller="roomCtrl">
              <form name="removeRoomForm" novalidate="novalidate">
                <br />
                <h1 class="text-center">Remover Quarto</h1>

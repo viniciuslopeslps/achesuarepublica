@@ -58,6 +58,21 @@ angular.module('starter.controllers',['starter.services'])
 
 .controller('homeCtrl', function($scope, $state, $http, alertService, ip) {
   $scope.name = window.localStorage['name'];
+
+  $scope.getRooms = function(){
+    $http.get(ip + '/getRooms/').
+      success(function(response) {
+        var dado =  angular.toJson(response);
+        var obj = jQuery.parseJSON(dado);
+        if(obj['rooms'] !== null){
+          $scope.rooms = obj['rooms'];
+        }
+      }).
+      error(function() {
+        alertService.alertPopup('ERRO', 'Algo inesperado aconteceu');
+      });
+  };
+  $scope.getRooms();
 })
 
 .controller('profileCtrl', function($scope, $state, $ionicPopup, $http, alertService, ip, redirect) {
@@ -445,7 +460,6 @@ angular.module('starter.controllers',['starter.services'])
       });
 
     };
-
   })
 
 .controller('republicCtrl', function($scope, $state, $http, $ionicPopup, $ionicHistory,alertService, ip, session, location, republic, redirect){
@@ -588,9 +602,7 @@ angular.module('starter.controllers',['starter.services'])
             });
           }
         });
-
       };
-
     })
 
 .controller('roomCtrl', function($scope, $state, $http, alertService, ip, redirect, room) {

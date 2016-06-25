@@ -92,3 +92,20 @@ class Room():
         .format(id_room, id_usu))
         conn.commit()
         return 'SUCCESS'
+
+    def get_rooms(self):
+        cursor = self.base.get_cursor()
+        conn = self.base.get_conn()
+        cursor.execute("select ro.id_room, ro.title, lo.key_locat from room ro inner join location lo on (lo.id_locat = ro.id_locat) group by ro.created_at asc;")
+
+        rooms = cursor.fetchall()
+
+        if(len(rooms)==0):
+            return jsonify(rooms = None)
+
+        array = []
+        for x in rooms:
+            dic = {'id_room':x[0],'title':x[1], 'key_locat':x[2]}
+            array.append(dic)
+
+        return jsonify(rooms = array)

@@ -3,10 +3,10 @@
 
 <div ng-controller="republicCtrl">
   <ion-tabs class="tabs-striped tabs-top tabs-background-positive tabs-color-light">
-    <ion-tab href="#/navUser/republic" title="Home" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-filing-outline">
+    <ion-tab href="#/navUser/republic" title="Home" class="bar-options" icon="icon ion-home">
       <ion-view>
          <ion-content>
-           <div ng-controller="republicCtrl">
+           <div on-swipe-down="getLocationKeys()" ng-controller="republicCtrl">
              <form name="republicForm" novalidate="novalidate">
                <br />
                <h1 class="text-center">Nova Repúplica</h1>
@@ -49,10 +49,10 @@
          </ion-content>
        </ion-view>
     </ion-tab>
-    <ion-tab title="Settings" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-gear-outline">
+    <ion-tab title="Settings" class="bar-options" icon="ion-ios-gear-outline">
       <ion-view>
          <ion-content>
-           <div ng-controller="republicCtrl">
+           <div on-swipe-down="getRepublics()" ng-controller="republicCtrl">
              <form name="republicForm" novalidate="novalidate">
                <br />
                <h1 class="text-center">Alterar República</h1>
@@ -103,10 +103,10 @@
          </ion-content>
        </ion-view>
     </ion-tab>
-    <ion-tab title="Settings" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-gear-outline">
+    <ion-tab title="Settings" class="bar-options" icon="icon ion-trash-b">
       <ion-view>
          <ion-content>
-           <div ng-controller="republicCtrl">
+           <div on-swipe-down="getRepublics()" ng-controller="republicCtrl">
              <form name="republicForm" novalidate="novalidate">
                <br />
                <h1 class="text-center">Excluir República</h1>

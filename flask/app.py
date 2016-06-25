@@ -118,6 +118,10 @@ def update_room(locat_key,university_key,republic_key,description, title, price,
 def delete_room(id_room, id_usu):
     return room.delete_room(id_room, id_usu)
 
+@app.route('/getRooms/')
+def get_rooms():
+    return room.get_rooms()
+
 #mudar o ip para testar
 if __name__ == "__main__":
-    app.run(host="192.168.1.108", debug=True, use_reloader=True)
+    app.run(host="192.168.1.104", debug=True, use_reloader=True)

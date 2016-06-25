@@ -4,10 +4,10 @@
 <div ng-controller="universityCtrl">
   <ion-tabs class="tabs-striped tabs-top tabs-background-positive tabs-color-light">
 
-    <ion-tab href="#/navUser/university" title="Home" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-filing-outline">
+    <ion-tab href="#/navUser/university" title="Home" class="bar-options" icon="icon ion-university">
       <ion-view>
          <ion-content>
-           <div ng-controller="universityCtrl">
+           <div on-swipe-down="getLocationKeys()" ng-controller="universityCtrl">
              <form name="universityFrm" novalidate="novalidate">
                <br />
                <h1 class="text-center">Nova Universidade</h1>
@@ -50,10 +50,10 @@
          </ion-content>
        </ion-view>
     </ion-tab>
-    <ion-tab title="Settings" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-gear-outline">
+    <ion-tab title="Settings" class="bar-options" icon="ion-ios-gear-outline">
       <ion-view>
          <ion-content>
-           <div ng-controller="universityCtrl">
+           <div on-swipe-down="getUniversities()" ng-controller="universityCtrl">
              <form name="universityFrm" novalidate="novalidate">
                <br />
                <h1 class="text-center">Alterar Universidade</h1>
@@ -101,10 +101,10 @@
          </ion-content>
        </ion-view>
     </ion-tab>
-    <ion-tab title="Settings" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-gear-outline">
+    <ion-tab title="Settings" class="bar-options" icon="icon ion-trash-b">
       <ion-view>
          <ion-content>
-           <div ng-controller="universityCtrl">
+           <div on-swipe-down="getUniversities()" ng-controller="universityCtrl">
              <form name="removeUniversity" novalidate="novalidate">
                <br />
                <h1 class="text-center">Remover Universidade</h1>

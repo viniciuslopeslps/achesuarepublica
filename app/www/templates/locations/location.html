@@ -3,7 +3,7 @@
 
 <ion-tabs class="tabs-striped tabs-top tabs-background-positive tabs-color-light">
 
-  <ion-tab title="Home" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-filing-outline">
+  <ion-tab title="Home" class="bar-options" icon="icon ion-map">
     <ion-view>
        <ion-content>
          <div ng-controller="locationCtrl">
@@ -50,10 +50,10 @@
      </ion-view>
   </ion-tab>
 
-  <ion-tab title="Settings" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-gear-outline">
+  <ion-tab title="Settings" class="bar-options" icon="icon ion-gear-a">
     <ion-view>
        <ion-content>
-         <div ng-controller="locationCtrl">
+         <div on-swipe-down="getLocations()" ng-controller="locationCtrl">
            <form name="updateLocation" novalidate="novalidate">
              <br />
              <h1 class="text-center">Alterar Endereços</h1>
@@ -111,7 +111,7 @@
      </ion-view>
   </ion-tab>
 
-  <ion-tab title="Home" class="bar-options" icon-on="icon ion-home" icon-off="ion-ios-filing-outline">
+  <ion-tab title="Home" class="bar-options" icon="icon ion-trash-b">
     <ion-view>
        <ion-content>
          <div ng-controller="locationCtrl">

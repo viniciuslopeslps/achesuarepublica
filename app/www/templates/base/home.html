@@ -1,8 +1,17 @@
 <ion-view view-title="Login" align-title="left">
   <ion-content class="back-color padding">
-    <div ng-controller="homeCtrl">
-      Bom dia senhor {{name}}
-      Ultimos quartos adicionados
+    <h1 class="text-center">Últimos quartos adicionados</h1>
+    <br />
+    <div on-swipe-down="getRooms()" ng-controller="homeCtrl">
+      <div class="list">
+        <div ng-repeat="room in rooms track by room.id_room">
+          <a class="item item-avatar" href="#">
+            <h2>{{room.title}}</h2>
+            <p>{{room.key_locat}}</p>
+          </a>
+        </div>
+      </div>
     </div>
+
   </ion-content>
 </ion-view>
