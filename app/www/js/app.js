@@ -60,6 +60,16 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
             }
           }
       })
+      .state('navUser.selectedRoom', {
+          url: '/selectedRoom',
+          cache: false,
+          views: {
+            'menuContent': {
+              templateUrl: 'templates/rooms/selectedRoom.html',
+              controller: 'selectedRoomCtrl'
+            }
+          }
+      })
       .state('navUser.profile', {
           url: '/profile',
           cache: false,

@@ -56,7 +56,7 @@ angular.module('starter.controllers',['starter.services'])
     };
 })
 
-.controller('homeCtrl', function($scope, $state, $http, alertService, ip) {
+.controller('homeCtrl', function($scope, $state, $http, alertService, ip, redirect) {
   $scope.name = window.localStorage['name'];
 
   $scope.getRooms = function(){
@@ -66,6 +66,33 @@ angular.module('starter.controllers',['starter.services'])
         var obj = jQuery.parseJSON(dado);
         if(obj['rooms'] !== null){
           $scope.rooms = obj['rooms'];
+        }
+      }).
+      error(function() {
+        alertService.alertPopup('ERRO', 'Algo inesperado aconteceu');
+      });
+  };
+
+  $scope.getRoomById = function(idRoom){
+    window.localStorage['id_room_selected'] = idRoom;
+    redirect.go('navUser.selectedRoom');
+  };
+
+  $scope.getRooms();
+})
+
+.controller('selectedRoomCtrl', function($scope, $state, $http, alertService, ip) {
+  $scope.name = window.localStorage['name'];
+  $scope.idRoom = window.localStorage['id_room_selected'];
+  //PEGAR TUDO PELO ID DO QUARTO
+  $scope.getRooms = function(){
+    var idRoom = window.localStorage['id_room_selected'];
+    $http.get(ip + '/getRoomById/' + idRoom).
+      success(function(response) {
+        var dado =  angular.toJson(response);
+        var obj = jQuery.parseJSON(dado);
+        if(obj['room'] !== null){
+          $scope.room = obj['room'][0];
         }
       }).
       error(function() {

@@ -122,6 +122,10 @@ def delete_room(id_room, id_usu):
 def get_rooms():
     return room.get_rooms()
 
+@app.route('/getRoomById/<int:id_room>')
+def get_room_by_id(id_room):
+    return room.get_room_by_id(id_room)
+
 #mudar o ip para testar
 if __name__ == "__main__":
     app.run(host="192.168.1.104", debug=True, use_reloader=True)

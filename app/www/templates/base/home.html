@@ -1,13 +1,16 @@
-<ion-view view-title="Login" align-title="left">
+<ion-view view-title="Home" align-title="left">
   <ion-content class="back-color padding">
     <h1 class="text-center">Últimos quartos adicionados</h1>
     <br />
     <div on-swipe-down="getRooms()" ng-controller="homeCtrl">
       <div class="list">
         <div ng-repeat="room in rooms track by room.id_room">
-          <a class="item item-avatar" href="#">
-            <h2>{{room.title}}</h2>
-            <p>{{room.key_locat}}</p>
+          <a class="item item-icon-left item-icon-right" ng-click="getRoomById({{room.id_room}})">
+            <i class="icon ion-ios-home-outline"></i>
+            <h2>Quarto: {{room.title}}</h2>
+            <p>Localização: {{room.key_locat}}</p>
+            <p>Preço: {{room.price}}</p>
+            <i class="icon ion-ios-arrow-forward"></i>
           </a>
         </div>
       </div>

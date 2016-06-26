@@ -96,7 +96,7 @@ class Room():
     def get_rooms(self):
         cursor = self.base.get_cursor()
         conn = self.base.get_conn()
-        cursor.execute("select ro.id_room, ro.title, lo.key_locat from room ro inner join location lo on (lo.id_locat = ro.id_locat) group by ro.created_at asc;")
+        cursor.execute("select ro.id_room, ro.title,ro.price,lo.key_locat from room ro inner join location lo on (lo.id_locat = ro.id_locat) group by ro.created_at asc;")
 
         rooms = cursor.fetchall()
 
@@ -105,7 +105,33 @@ class Room():
 
         array = []
         for x in rooms:
-            dic = {'id_room':x[0],'title':x[1], 'key_locat':x[2]}
+            dic = {'id_room':x[0],'title':x[1],'price': str(x[2]), 'key_locat':x[3]}
             array.append(dic)
 
         return jsonify(rooms = array)
+
+    def get_room_by_id(self, id_room):
+        cursor = self.base.get_cursor()
+
+        query = '''select DISTINCT ro.id_room,ro.title,ro.created_at,ro.description,
+         l.key_locat, u.key_uni, if(ro.id_rep!=0, re.key_rep,'') as key_rep, ro.price,
+		 us.name_usu, us.email_usu
+         from room ro,location l, university u, republic re, users us
+         where l.id_locat = ro.id_locat and
+         ro.id_uni = u.id_uni and us.id_usu = ro.id_usu
+         and if(ro.id_rep!=0, ro.id_rep = re.id_rep,1) and ro.id_room='{0}'; '''.format(id_room);
+
+
+        cursor.execute(query)
+        room = cursor.fetchall()
+
+        if(len(room)==0):
+            return jsonify(room = None)
+
+        array = []
+        for x in room:
+            dic = {'id_room':x[0],'title':x[1], 'created_at':x[2],'description':x[3],
+             'key_locat':x[4],'key_uni':x[5], 'key_rep':x[6], 'price': str(x[7]),
+             'name_owner': x[8], 'email_owner': x[9]}
+            array.append(dic)
+        return jsonify(room = array)
