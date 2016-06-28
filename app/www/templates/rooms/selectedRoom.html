@@ -45,9 +45,56 @@
     </div>
   </ion-content>
   <div class="tabs tabs-icon-top tabs-color-positive">
-    <a class="tab-item active">
+    <a ng-click="openModal()" class="tab-item active">
       <i class="icon ion-android-chat"></i>
       Entrar em contato
     </a>
   </div>
 </ion-view>
+<script id="my-modal.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar class="bar-stable bluedark-color">
+      <h1 class="title">
+        Entre em contato com o proprietário  <i class="icon ion-close-round"></i>
+      </h1>
+    </ion-header-bar>
+    <ion-content>
+      <br />
+      <h3 class="text-center">Gostou? <i class="icon ion-happy-outline"></i></h3>
+      <h4 class="text-center">entre em contato com o proprietário!</h4>
+      <br />
+      <form name="selectedRoomFrm" novalidate="novalidate">
+        <div class="list padding">
+          <label class="item item-input">
+            <span class="input-label">Assunto:
+              <span ng-show="selectedRoomFrm.subject.$error.required || selectedRoomFrm.subject.$pristine || selectedRoomFrm.subject.$invalid" class="error">*</span>
+             </span>
+            </span>
+            <input name="subject" ng-model="data.subject" type="text" required maxlength="40" ng-pattern="/^[\w -]*$/">
+          </label>
+          <label class="item item-input">
+            <span class="input-label">Mensagem:
+              <span ng-show="selectedRoomFrm.message.$error.required || selectedRoomFrm.message.$pristine || selectedRoomFrm.message.$invalid" class="error">*</span>
+             </span>
+            </span>
+            <textarea name="message" ng-model="data.message" required maxlength="400" ng-pattern="/^[\w -]*$/"></textarea>
+          </label>
+          <br /><br />
+          <div class="row">
+            <div class="col">
+            <button ng-click="sendContactEmail(data)" class="bluedark-color button button-block button-positive">
+              Enviar <i class="ion-android-checkbox-outline"></i>
+            </button>
+            </div>
+            <div class="col">
+              <button class="button button-block button-stable" ng-click="closeModal()">
+                Fechar <i class="ion-close"></i>
+              </button>
+            </div>
+          </div>
+          <br />
+      </div>
+    </form>
+    </ion-content>
+  </ion-modal-view>
+</script>

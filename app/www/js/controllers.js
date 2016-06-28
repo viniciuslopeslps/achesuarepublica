@@ -81,10 +81,10 @@ angular.module('starter.controllers',['starter.services'])
   $scope.getRooms();
 })
 
-.controller('selectedRoomCtrl', function($scope, $state, $http, alertService, ip) {
+.controller('selectedRoomCtrl', function($scope, $state, $http, alertService, ip, $ionicModal) {
   $scope.name = window.localStorage['name'];
   $scope.idRoom = window.localStorage['id_room_selected'];
-  //PEGAR TUDO PELO ID DO QUARTO
+
   $scope.getRooms = function(){
     var idRoom = window.localStorage['id_room_selected'];
     $http.get(ip + '/getRoomById/' + idRoom).
@@ -93,11 +93,48 @@ angular.module('starter.controllers',['starter.services'])
         var obj = jQuery.parseJSON(dado);
         if(obj['room'] !== null){
           $scope.room = obj['room'][0];
+          window.localStorage['email_owner'] = (obj['room'][0]['email_owner']);
         }
       }).
       error(function() {
         alertService.alertPopup('ERRO', 'Algo inesperado aconteceu');
       });
+  };
+
+  $scope.sendContactEmail = function(data){
+    if(data === undefined || data['subject'] === undefined || data['message'] === undefined){
+      alertService.alertPopup('ERRO','Por favor complete os campos corretamente');
+    }else{
+      var emailOwner = window.localStorage['email_owner'];
+      var email = window.localStorage['email'];
+      var name = window.localStorage['name'];
+      var subject = data['subject'];
+      var message = data['message'];
+
+      $http.post(ip + '/sendRoomInterested/'+ emailOwner + '/'+ email + '/' + subject + "/" + message).
+      success(function(response) {
+        var dado =  angular.toJson(response);
+        var obj = jQuery.parseJSON(dado);
+        alertService.alertPopup('Falta pouco!','Contato realizado com sucesso!');
+        delete $scope.data;
+      }).
+      error(function() {
+        alertService.alertPopup('ERRO', 'Por favor, tente novamente mais tarde');
+      });
+    }
+  };
+
+  $ionicModal.fromTemplateUrl('my-modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+  $scope.openModal = function() {
+    $scope.modal.show();
+  };
+  $scope.closeModal = function() {
+    $scope.modal.hide();
   };
   $scope.getRooms();
 })

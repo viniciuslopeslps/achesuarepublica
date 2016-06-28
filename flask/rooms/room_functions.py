@@ -121,7 +121,6 @@ class Room():
          ro.id_uni = u.id_uni and us.id_usu = ro.id_usu
          and if(ro.id_rep!=0, ro.id_rep = re.id_rep,1) and ro.id_room='{0}'; '''.format(id_room);
 
-
         cursor.execute(query)
         room = cursor.fetchall()
 
@@ -135,3 +134,10 @@ class Room():
              'name_owner': x[8], 'email_owner': x[9]}
             array.append(dic)
         return jsonify(room = array)
+
+    def send_email_interested(self, email_owner, email_usu, subject, message):
+        assunto = 'Contato ache sua república - usuário interessado enviou: {0}'.format(subject)
+        mensagem = 'Olá senhor(a), foi solicitado uma mensagem do senhor dono do email: {0} , enviou a seguinte mensagem: {1}'.format(email_usu, message)
+        self.base.send_email(email_usu, assunto, mensagem)
+        dic = {"answer": "SUCCESS"}
+        return jsonify(answer = dic)

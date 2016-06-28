@@ -7,7 +7,7 @@ from datetime import timedelta, datetime
 from flask import Flask, request, redirect, render_template, jsonify
 
 class Base():
-    
+
     app = Flask(__name__)
     cors = CORS(app)
 

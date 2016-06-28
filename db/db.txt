@@ -48,8 +48,8 @@ id_rep int references republic(id_rep),
 id_uni int references university(id_rep),
 id_usu int references users(id_usu),
 title varchar(30) not null,
-created_at DATETIME,
-price DECIMAL(5,2) not null
+price DECIMAL(5,2) not null,
+created_at DATETIME
 );
 
 insert into users values (0,'vinicius lopes','viniciuslopeslps@gmail.com','segredo','12981437625',1);
