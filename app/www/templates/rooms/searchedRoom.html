@@ -1,0 +1,20 @@
+<ion-view view-title="Quatos procurados" align-title="left">
+  <ion-content class="back-color padding">
+    <h1 class="text-center">Quartos procurados</h1>
+    <br />
+    <div ng-controller="searchedRoomCtrl">
+      <div class="list">
+        <div ng-repeat="room in rooms track by room.id_room">
+          <a class="item item-icon-left item-icon-right" ng-click="getRoomById({{room.id_room}})">
+            <i class="icon ion-ios-home-outline"></i>
+            <h2>Quarto: {{room.title}}</h2>
+            <p>Localização: {{room.key_locat}}</p>
+            <p>Preço: {{room.price}}</p>
+            <i class="icon ion-ios-arrow-forward"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </ion-content>
+</ion-view>

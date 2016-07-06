@@ -141,3 +141,21 @@ class Room():
         self.base.send_email(email_usu, assunto, mensagem)
         dic = {"answer": "SUCCESS"}
         return jsonify(answer = dic)
+
+    def get_search_rooms(self, location, republic, university, price):
+        cursor = self.base.get_cursor()
+
+        query = '''select ro.id_room, ro.title, ro.price, ro.description
+            FROM room ro, location lo, university uni, republic re
+            where lo.key_locat like '%{0}%' or re.key_rep like '%{1}%'
+            or uni.key_uni like '%{2}%' and ro.price >={3} order by ro.created_at desc;  '''.format(location, republic, university, price)
+
+        print query    
+        cursor.execute(query)
+        rooms = cursor.fetchall()
+
+        array = []
+        for x in rooms:
+            dic = {'id_room':x[0],'title':x[1],'price': str(x[2]), 'description':x[3]}
+            array.append(dic)
+        return jsonify(rooms = array)

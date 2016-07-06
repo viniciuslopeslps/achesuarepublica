@@ -43,7 +43,6 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
           }
         }
       })
-
       .state('navUser', {
         url: '/navUser',
         abstract: true,
@@ -120,6 +119,26 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
             }
           }
       })
+      .state('navUser.searchRooms', {
+          url: '/searchRooms',
+          cache: false,
+          views: {
+            'menuContent': {
+              templateUrl: 'templates/rooms/searchRooms.html',
+              controller: 'searchRoomsCtrl'
+            }
+          }
+        })
+        .state('navUser.searchedRoom', {
+            url: '/searchedRoom',
+            cache: false,
+            views: {
+              'menuContent': {
+                templateUrl: 'templates/rooms/searchedRoom.html',
+                controller: 'searchedRoomCtrl'
+              }
+            }
+          })
       .state('logout', {
         url: '/logout',
         controller:'logoutCtrl'

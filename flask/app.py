@@ -130,6 +130,10 @@ def get_room_by_id(id_room):
 def send_email_interested(email_owner, email_usu, subject, message):
     return room.send_email_interested(email_owner, email_usu, subject, message)
 
+@app.route('/getSearchRooms/<location>/<republic>/<university>/<int:price>')
+def get_search_rooms(location, republic, university, price):
+    return room.get_search_rooms(location, republic, university, price)
+
 #mudar o ip para testar
 if __name__ == "__main__":
-    app.run(host="192.168.1.105", debug=True, use_reloader=True)
+    app.run(host="192.168.1.106", debug=True, use_reloader=True)

@@ -880,4 +880,51 @@ angular.module('starter.controllers',['starter.services'])
       });
   };
 })
+.controller('searchRoomsCtrl', function($scope, $state, $http, alertService, ip, redirect) {
+  $scope.price = 100;
+  $scope.rooms = [];
+
+  $scope.searchRoom = function(data){
+    if(data === undefined || data['location'] === undefined &&
+        data['university'] === undefined && data['republic'] === undefined){
+        alertService.alertPopup('ERRO','É preciso no minimo um campo para buscar');
+    }
+    else{
+      window.localStorage["search_room_price"] = $scope.price;
+      window.localStorage["search_room_location"] = $scope.data.location;
+      window.localStorage["search_room_republic"] = $scope.data.republic;
+      window.localStorage["search_room_university"] = $scope.data.university;
+      redirect.go('navUser.searchedRoom');
+    }
+  };
+})
+.controller('searchedRoomCtrl', function($scope, $state, $http, alertService, ip, redirect) {
+  var price = window.localStorage["search_room_price"];
+  var location = window.localStorage["search_room_location"];
+  var republic = window.localStorage["search_room_republic"];
+  var university = window.localStorage["search_room_university"];
+
+  $scope.getRoomById = function(idRoom){
+    window.localStorage['id_room_selected'] = idRoom;
+    redirect.go('navUser.selectedRoom');
+  };
+
+  $http.get(ip + '/getSearchRooms/' + location + "/" + republic + "/" + university + "/" + price).
+    success(function(response) {
+      var dado =  angular.toJson(response);
+      var obj = jQuery.parseJSON(dado);
+      var rooms = obj["rooms"];
+
+      if(rooms !== null && rooms.length > 0){
+          $scope.rooms = rooms;
+      }
+      else{
+        alertService.alertPopup('ERRO', 'Não existem quartos pesquisados com essas regras!');
+        redirect.go('navUser.searchRooms');
+      }
+    }).
+    error(function() {
+      alertService.alertPopup('ERRO', 'Algo inesperado aconteceu!');
+    });
+})
 ;
