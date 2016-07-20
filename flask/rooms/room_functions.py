@@ -145,7 +145,7 @@ class Room():
     def get_search_rooms(self, location, republic, university, price):
         cursor = self.base.get_cursor()
         query = '''
-            select ro.id_room, ro.title, ro.price, ro.description
+            select distinct ro.id_room, ro.title, ro.price, ro.description
             FROM room ro inner join location lo on(ro.id_locat=lo.id_locat)
             inner join republic re on(re.id_rep=ro.id_rep or ro.id_rep=0)
             inner join university uni on (uni.id_uni=ro.id_uni)
