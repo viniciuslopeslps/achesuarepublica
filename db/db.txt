@@ -48,7 +48,7 @@ id_rep int references republic(id_rep),
 id_uni int references university(id_rep),
 id_usu int references users(id_usu),
 title varchar(30) not null,
-price DECIMAL(5,2) not null,
+price DECIMAL(10,2) not null,
 created_at DATETIME
 );
 
