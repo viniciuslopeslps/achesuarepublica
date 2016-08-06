@@ -96,7 +96,7 @@ class Room():
     def get_rooms(self):
         cursor = self.base.get_cursor()
         conn = self.base.get_conn()
-        cursor.execute("select ro.id_room, ro.title,ro.price,lo.key_locat from room ro inner join location lo on (lo.id_locat = ro.id_locat) group by ro.created_at asc;")
+        cursor.execute("select ro.id_room, ro.title,ro.price,lo.key_locat from room ro inner join location lo on (lo.id_locat = ro.id_locat) group by ro.id_room, ro.created_at asc;")
 
         rooms = cursor.fetchall()
 
