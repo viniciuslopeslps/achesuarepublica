@@ -32,7 +32,7 @@
                  </select>
                </label>
                <label class="item item-input">
-                 <span class="input-label">Bairro:
+                 <span class="input-label">Adicional:
                    <span ng-show="createLocation.address.$invalid" class="error">*</span>
                  </span>
                  </span>
@@ -93,7 +93,7 @@
                   </select>
                 </label>
                 <label class="item item-input">
-                  <span class="input-label">Bairro:
+                  <span class="input-label">Adicional:
                     <span ng-show="updateLocation.address.$invalid" class="error">*</span>
                   </span>
                   <input name="address" ng-model="data.address" placeholder="{{address}}" type="text" maxlength="40" ng-pattern="/^[\w -]*$/">
@@ -147,7 +147,7 @@
                        </span>
                      <span ng-show="state.length > 0" class="item item-icon-left">
                        <i class="ion-ios-home"></i>
-                       Bairro: {{address}}
+                       Adicional: {{address}}
                      </span>
                      </div>
                      <button ng-click="deleteLocation(data)" class="button button-full icon-right button-assertive">

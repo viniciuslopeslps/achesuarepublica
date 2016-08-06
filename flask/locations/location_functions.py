@@ -10,13 +10,20 @@ class Location():
     def __init__(self, base):
        self.base = base
 
-    def create_location(self, city_locat, state_locat, adress_locat, id_usu):
+    def create_location(self, city_locat, state_locat, address_locat, id_usu):
         try:
             cursor = self.base.get_cursor()
             conn = self.base.get_conn()
             key_locat = city_locat.lower() + ' - ' + state_locat.lower()
-            cursor.execute("insert into location values (0,'{0}','{1}','{2}','{3}','{4}' ); "
-            .format(city_locat, state_locat, adress_locat, key_locat, id_usu))
+            if address_locat.lower() == 'undefined':
+                address_locat = 'NULL'
+            else:
+                address_locat = "'" + address_locat + "'"
+
+            query = "insert into location values (0,'{0}','{1}',{2},'{3}','{4}' );".format(city_locat, state_locat, address_locat, key_locat, id_usu)
+            print query
+
+            cursor.execute(query)
             conn.commit()
             return 'SUCCESS'
         except Exception:

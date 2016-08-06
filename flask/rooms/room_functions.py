@@ -115,7 +115,7 @@ class Room():
 
         query = '''select DISTINCT ro.id_room,ro.title,ro.created_at,ro.description,
          l.key_locat, u.key_uni, if(ro.id_rep!=0, re.key_rep,'') as key_rep, ro.price,
-		 us.name_usu, us.email_usu
+		 us.name_usu, us.email_usu, l.address_locat
          from room ro,location l, university u, republic re, users us
          where l.id_locat = ro.id_locat and
          ro.id_uni = u.id_uni and us.id_usu = ro.id_usu
@@ -131,7 +131,7 @@ class Room():
         for x in room:
             dic = {'id_room':x[0],'title':x[1], 'created_at':x[2],'description':x[3],
              'key_locat':x[4],'key_uni':x[5], 'key_rep':x[6], 'price': str(x[7]),
-             'name_owner': x[8], 'email_owner': x[9]}
+             'name_owner': x[8], 'email_owner': x[9], 'address': x[10]}
             array.append(dic)
         return jsonify(room = array)
 

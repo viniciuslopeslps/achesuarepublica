@@ -27,6 +27,9 @@
         <div class="item">
           Perto de: {{room.key_uni}}
         </div>
+        <div ng-show="room.address.length > 0" class="item">
+          Adicional: {{room.address}}
+        </div>
         <div ng-show="room.key_rep.length > 0" class="item">
           República: {{room.key_rep}}
         </div>

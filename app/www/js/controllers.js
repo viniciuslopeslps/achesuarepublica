@@ -261,14 +261,18 @@ angular.module('starter.controllers',['starter.services'])
   "PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"];
 
   $scope.createNewLocation = function(data){
-    if(data === undefined || data['city'] === undefined || data['state'] ===undefined
-        || data['address'] ===undefined){
+    if(data === undefined || data['city'] === undefined || data['state'] ===undefined){
         alertService.alertPopup('ERRO','Por favor complete os campos corretamente');
     }
     else{
         var city_locat = $scope.data.city;
         var state_locat = $scope.data.state;
         var address_locat = $scope.data.address;
+
+        if (address_locat !== undefined && address_locat.length===0){
+          address_locat = undefined;
+        }
+
         var id_usu = window.localStorage['id_usu'];
 
         $http.post(ip + '/createLocation/'+ city_locat + '/'+ state_locat + '/'
