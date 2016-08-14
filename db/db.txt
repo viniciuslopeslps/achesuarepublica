@@ -7,7 +7,7 @@ create table users
 id_usu int primary key auto_increment,
 name_usu varchar(20) not null,
 email_usu varchar(30) not null unique,
-password_usu varchar(20) not null,
+password_usu varchar(500) not null,
 phone_user varchar(15) not null,
 admin_user bool not null
 );
@@ -52,4 +52,4 @@ price DECIMAL(10,2) not null,
 created_at DATETIME
 );
 
-insert into users values (0,'vinicius lopes','viniciuslopeslps@gmail.com','segredo','12981437625',1);
+insert into users values (0,'vinicius lopes','viniciuslopeslps@gmail.com','1462449e95bc7aeb4dbfc81c2dc1792aa70d8223d09fd76e98c076a1169c2b1d8bd3cff861f4242e7de7febcd58ecf0d1d1eb46c711cf6aa44c2092d681fa96f','12981437625',1);

@@ -9,8 +9,10 @@ angular.module('starter.controllers',['starter.services'])
       else {
         var email = $scope.data.email;
         var password = $scope.data.password;
+        var jsSha = new jsSHA(password);
+        var hash = jsSha.getHash("SHA-512", "HEX");
 
-        $http.get(ip + '/login/'+ email + '/'+ password).
+        $http.get(ip + '/login/'+ email + '/'+ hash).
         success(function(response) {
           var dado =  angular.toJson(response);
           var obj = jQuery.parseJSON(dado);
@@ -154,11 +156,13 @@ angular.module('starter.controllers',['starter.services'])
       } else {
         var email = $scope.data.email;
         var password = $scope.data.password;
+        var jsSha = new jsSHA(password);
+        var hash = jsSha.getHash("SHA-512", "HEX");
         var confirmPassword = $scope.data.confirmPassword;
         var name = $scope.data.name;
         var phone = $scope.data.phone;
 
-        $http.post(ip + '/createUser/'+ email + '/'+ password + '/' + name + '/' + phone).
+        $http.post(ip + '/createUser/'+ email + '/'+ hash + '/' + name + '/' + phone).
         success(function(response) {
           var dado =  angular.toJson(response);
           var obj = jQuery.parseJSON(dado);

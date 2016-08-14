@@ -27,8 +27,9 @@ class User():
         try:
             cursor = self.base.get_cursor()
             conn = self.base.get_conn()
-            cursor.execute("insert into users values (0,'{0}','{1}','{2}','{3}', 0);"
-            .format(name, email, password, phone))
+            query = "insert into users values (0,'{0}','{1}','{2}','{3}', 0);".format(name, email, password, phone)
+            print query
+            cursor.execute(query)
             conn.commit()
             return 'SUCCESS'
         except Exception:
