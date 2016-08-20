@@ -22,15 +22,17 @@ class Room():
         university = cursor.fetchall()
         id_uni = university[0][0]
 
-
         if(republic_key != 'null'):
             cursor.execute("select id_rep from republic where key_rep = '{0}' ; ".format(republic_key))
             republic = cursor.fetchall()
             id_rep = republic[0][0]
-        else:
-            id_rep = 0
+            query = '''insert into room (description, id_locat, id_rep, id_uni, id_usu, title, price, created_at)
+            values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}', NOW()); '''.format(description, id_locat, id_rep, id_uni, id_usu, title, price)
 
-        query = "insert into room values (0,'{0}','{1}','{2}','{3}','{4}','{5}','{6}', NOW());".format(description, id_locat, id_rep, id_uni, id_usu, title, price)
+        else:
+            query = '''insert into room (description, id_locat, id_uni, id_usu, title, price, created_at)
+            values ('{0}','{1}','{2}','{3}','{4}','{5}', NOW()); '''.format(description, id_locat, id_uni, id_usu, title, price)
+
         cursor.execute(query)
         conn.commit()
         return 'SUCCESS'
@@ -45,13 +47,11 @@ class Room():
          ro.id_uni = u.id_uni
          and if(ro.id_rep!=0, ro.id_rep = re.id_rep,1) and u.id_usu= '{0}'; '''.format(id_usu);
 
-
         cursor.execute(query)
         rooms = cursor.fetchall()
 
         if(len(rooms)==0):
             return jsonify(rooms = None)
-
 
         array = []
         for x in rooms:
@@ -76,10 +76,13 @@ class Room():
             cursor.execute("select id_rep from republic where key_rep = '{0}' ; ".format(republic_key))
             republic = cursor.fetchall()
             id_rep = republic[0][0]
-        else:
-            id_rep = 0
+            query = '''update room set description='{0}', id_locat='{1}', id_rep='{2}', id_uni='{3}', title='{4}', price='{5}'
+             where id_usu='{6}' and id_room='{7}' ;'''.format(description, id_locat, id_rep, id_uni, title, price, id_usu, id_room)
 
-        query = "update room set description='{0}', id_locat='{1}', id_rep='{2}', id_uni='{3}', title='{4}', price='{5}' where id_usu='{6}' and id_room='{7}' ;".format(description, id_locat, id_rep, id_uni, title, price, id_usu, id_room)
+        else:
+            query = '''update room set description='{0}', id_locat='{1}', id_uni='{2}', title='{3}', price='{4}'
+                 where id_usu='{5}' and id_room='{6}' ;'''.format(description, id_locat, id_uni, title, price, id_usu, id_room)
+
         print query
         cursor.execute(query)
         conn.commit()
@@ -145,13 +148,13 @@ class Room():
     def get_search_rooms(self, location, republic, university, price):
         cursor = self.base.get_cursor()
         query = '''
-            select distinct ro.id_room, ro.title, ro.price, ro.description
+            select distinct ro.id_room, ro.title, ro.price, ro.description, ro.created_at
             FROM room ro inner join location lo on(ro.id_locat=lo.id_locat)
-            inner join republic re on(re.id_rep=ro.id_rep or ro.id_rep=0)
+            inner join republic re on(re.id_rep=ro.id_rep or ro.id_rep is null)
             inner join university uni on (uni.id_uni=ro.id_uni)
             where (ro.price >={3}) and (lo.key_locat like '%{0}%')
             or (uni.key_uni like '%{1}%' )
-            or (ro.id_rep !=0 and re.key_rep like '%{2}%')
+            or (ro.id_rep is not null and re.key_rep like '%{2}%')
             order by ro.created_at desc; '''.format(location, university, republic, price)
 
         cursor.execute(query)

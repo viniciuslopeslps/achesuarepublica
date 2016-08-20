@@ -223,7 +223,7 @@ angular.module('starter.controllers',['starter.services'])
 
           }).
           error(function() {
-              alertService.alertPopup('ERRO','Por favor confira suas credenciais');
+              alertService.alertPopup('ERRO','Erro ao excluir usuário, verifique se este registro não está relacionado a outros registros');
           });
         }
       });
@@ -388,7 +388,7 @@ angular.module('starter.controllers',['starter.services'])
           delete $scope.address;
         }).
         error(function() {
-            alertService.alertPopup('ERRO','Erro ao excluir localização');
+            alertService.alertPopup('ERRO','Erro ao excluir localização, verifique se este registro não está relacionado a outros registros');
         });
       }
     });
@@ -526,7 +526,7 @@ angular.module('starter.controllers',['starter.services'])
             delete $scope.data;
           }).
           error(function() {
-            alertService.alertPopup('ERRO', 'Alguma coisa aconteceu, tente novamente!');
+            alertService.alertPopup('ERRO', 'Erro ao excluir universidade, verifique se este registro não está relacionado a outros registros');
           });
         }
       });
@@ -598,7 +598,7 @@ angular.module('starter.controllers',['starter.services'])
           }
         }).
         error(function() {
-          alertService.alertPopup('ERRO', 'Algo inesperado aconteceu, tente novamente!');
+          alertService.alertPopup('ERRO', 'Erro ao excluir república, verifique se este registro não está relacionado a outros registros');
         });
       };
 
@@ -670,7 +670,7 @@ angular.module('starter.controllers',['starter.services'])
               alertService.alertPopup('Removido!','Registro removido com sucesso!');
             }).
             error(function() {
-              alertService.alertPopup('ERRO', 'Alguma coisa aconteceu, tente novamente!');
+              alertService.alertPopup('ERRO', 'Erro ao exluir república, verifique se este registro não está relacionado a outros registros');
             });
           }
         });
@@ -852,7 +852,7 @@ angular.module('starter.controllers',['starter.services'])
     $http.post(ip + '/updateRoom/' + locationKey + "/" + universityKey + "/"
       + republicKey + "/" + desc + "/" + title + "/" + price + "/" + idUsu + "/" + idRoom).
       success(function(response) {
-        alertService.alertPopup('Nova Quarto!','Registro de quarto alterado com sucesso!');
+        alertService.alertPopup('Quarto alterado!','Registro de quarto alterado com sucesso!');
         delete $scope.data;
         delete $scope.locationKey;
         delete $scope.republicKey;

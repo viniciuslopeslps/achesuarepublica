@@ -19,7 +19,8 @@ city_locat varchar(40) not null,
 state_locat varchar(2) not null,
 address_locat varchar(40),
 key_locat varchar(50) not null unique,
-id_usu int references users(id_usu)
+id_usu int,
+FOREIGN KEY (id_usu) REFERENCES users(id_usu)
 );
 
 create table university
@@ -27,26 +28,34 @@ create table university
 id_uni int primary key auto_increment,
 key_uni varchar(50) not null unique,
 name_uni varchar(40) not null,
-id_locat int references location(id_locat),
-id_usu int references users(id_usu)
+id_locat int,
+id_usu int,
+FOREIGN KEY (id_locat) REFERENCES location(id_locat),
+FOREIGN KEY (id_usu) REFERENCES users(id_usu)
 );
 
 create table republic
 (
 id_rep int primary key auto_increment,
 name_rep varchar(40) not null,
-id_locat int references location(id_locat),
-id_usu int references users(id_usu),
+id_locat int,
+id_usu int,
+FOREIGN KEY (id_locat) REFERENCES location(id_locat),
+FOREIGN KEY (id_usu) REFERENCES users(id_usu),
 key_rep varchar(50) not null unique
 );
 create table room
 (
 id_room int primary key auto_increment,
 description varchar(100) not null,
-id_locat int references location(id_locat),
-id_rep int references republic(id_rep),
-id_uni int references university(id_rep),
-id_usu int references users(id_usu),
+id_locat int,
+id_usu int,
+id_rep int,
+id_uni int,
+FOREIGN KEY (id_locat) REFERENCES location(id_locat),
+FOREIGN KEY (id_usu) REFERENCES users(id_usu),
+FOREIGN KEY (id_rep) REFERENCES republic(id_rep),
+FOREIGN KEY (id_uni) REFERENCES university(id_uni),
 title varchar(30) not null,
 price DECIMAL(10,2) not null,
 created_at DATETIME

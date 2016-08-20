@@ -52,15 +52,12 @@ class University():
         return 'SUCCESS'
 
     def delete_university(self, key_uni, id_usu):
-        try:
-            cursor = self.base.get_cursor()
-            conn = self.base.get_conn()
-            cursor.execute("delete from university where key_uni = '{0}' and id_usu = '{1}' "
-            .format(key_uni, id_usu))
-            conn.commit()
-            return 'SUCCESS'
-        except Exception:
-            return 'ERROR'
+        cursor = self.base.get_cursor()
+        conn = self.base.get_conn()
+        cursor.execute("delete from university where key_uni = '{0}' and id_usu = '{1}' "
+        .format(key_uni, id_usu))
+        conn.commit()
+        return 'SUCCESS'
 
     def get_university_keys(self):
         cursor = self.base.get_cursor()

@@ -47,14 +47,11 @@ class User():
             return 'ERROR'
 
     def delete_user(self, id_usu):
-        try:
-            cursor = self.base.get_cursor()
-            conn = self.base.get_conn()
-            cursor.execute("delete from users where id_usu = '{0}'".format(id_usu))
-            conn.commit()
-            return 'SUCCESS'
-        except Exception:
-            return 'ERROR'
+        cursor = self.base.get_cursor()
+        conn = self.base.get_conn()
+        cursor.execute("delete from users where id_usu = '{0}'".format(id_usu))
+        conn.commit()
+        return 'SUCCESS'
 
     def update_password_user(self, password, id_usu):
         try:
