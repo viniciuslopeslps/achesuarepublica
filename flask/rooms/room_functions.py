@@ -7,25 +7,20 @@ from datetime import timedelta, datetime
 from flask import Flask, request, redirect, render_template, jsonify
 
 class Room():
-    def __init__(self, base):
+    def __init__(self, base, location, university, republic):
        self.base = base
+       self.location = location
+       self.university = university
+       self.republic = republic
+       self.cursor = self.base.get_cursor()
+       self.conn = self.base.get_conn()
 
-    def new_room(self, locat_key, university_key, republic_key, description, title, id_usu, price):
-        cursor = self.base.get_cursor()
-        conn = self.base.get_conn()
+    def new_room(self, key_locat, key_uni, key_rep, description, title, id_usu, price):
+        id_locat = self.location.get_id_by_key(key_locat)
+        id_uni = self.university.get_id_by_key(key_uni)
 
-        cursor.execute("select id_locat from location where key_locat = '{0}' ; ".format(locat_key))
-        location = cursor.fetchall()
-        id_locat = location[0][0]
-
-        cursor.execute("select id_uni from university where key_uni = '{0}' ; ".format(university_key))
-        university = cursor.fetchall()
-        id_uni = university[0][0]
-
-        if(republic_key != 'null'):
-            cursor.execute("select id_rep from republic where key_rep = '{0}' ; ".format(republic_key))
-            republic = cursor.fetchall()
-            id_rep = republic[0][0]
+        if(key_rep != 'null'):
+            id_rep = self.republic.get_id_by_key(key_rep)
             query = '''insert into room (description, id_locat, id_rep, id_uni, id_usu, title, price, created_at)
             values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}', NOW()); '''.format(description, id_locat, id_rep, id_uni, id_usu, title, price)
 
@@ -33,13 +28,11 @@ class Room():
             query = '''insert into room (description, id_locat, id_uni, id_usu, title, price, created_at)
             values ('{0}','{1}','{2}','{3}','{4}','{5}', NOW()); '''.format(description, id_locat, id_uni, id_usu, title, price)
 
-        cursor.execute(query)
-        conn.commit()
+        self.cursor.execute(query)
+        self.conn.commit()
         return 'SUCCESS'
 
     def get_rooms_by_user(self, id_usu):
-        cursor = self.base.get_cursor()
-
         query = '''select DISTINCT ro.id_room,ro.title,ro.created_at,ro.description,
          l.key_locat, u.key_uni, if(ro.id_rep!=0, re.key_rep,'') as key_rep, ro.price
          from room ro,location l, university u, republic re
@@ -47,8 +40,8 @@ class Room():
          ro.id_uni = u.id_uni
          and if(ro.id_rep!=0, ro.id_rep = re.id_rep,1) and u.id_usu= '{0}'; '''.format(id_usu);
 
-        cursor.execute(query)
-        rooms = cursor.fetchall()
+        self.cursor.execute(query)
+        rooms = self.cursor.fetchall()
 
         if(len(rooms)==0):
             return jsonify(rooms = None)
@@ -60,22 +53,12 @@ class Room():
             array.append(dic)
         return jsonify(rooms = array)
 
-    def update_room(self, locat_key, university_key, republic_key, description, title, price, id_usu, id_room):
-        cursor = self.base.get_cursor()
-        conn = self.base.get_conn()
+    def update_room(self, key_locat, key_uni, key_rep, description, title, price, id_usu, id_room):
+        id_locat = self.location.get_id_by_key(key_locat)
+        id_uni = self.university.get_id_by_key(key_uni)
 
-        cursor.execute("select id_locat from location where key_locat = '{0}' ; ".format(locat_key))
-        location = cursor.fetchall()
-        id_locat = location[0][0]
-
-        cursor.execute("select id_uni from university where key_uni = '{0}' ; ".format(university_key))
-        university = cursor.fetchall()
-        id_uni = university[0][0]
-
-        if(republic_key != 'null'):
-            cursor.execute("select id_rep from republic where key_rep = '{0}' ; ".format(republic_key))
-            republic = cursor.fetchall()
-            id_rep = republic[0][0]
+        if(key_rep != 'null'):
+            id_rep = self.republic.get_id_by_key(key_rep)
             query = '''update room set description='{0}', id_locat='{1}', id_rep='{2}', id_uni='{3}', title='{4}', price='{5}'
              where id_usu='{6}' and id_room='{7}' ;'''.format(description, id_locat, id_rep, id_uni, title, price, id_usu, id_room)
 
@@ -83,25 +66,23 @@ class Room():
             query = '''update room set description='{0}', id_locat='{1}', id_uni='{2}', title='{3}', price='{4}'
                  where id_usu='{5}' and id_room='{6}' ;'''.format(description, id_locat, id_uni, title, price, id_usu, id_room)
 
-        print query
-        cursor.execute(query)
-        conn.commit()
+        self.cursor.execute(query)
+        self.conn.commit()
         return 'SUCCESS'
 
     def delete_room(self, id_room, id_usu):
-        cursor = self.base.get_cursor()
-        conn = self.base.get_conn()
-        cursor.execute("delete from room where id_room = '{0}' and id_usu = '{1}' ;"
+        self.cursor.execute("delete from room where id_room = '{0}' and id_usu = '{1}' ;"
         .format(id_room, id_usu))
-        conn.commit()
+        self.conn.commit()
         return 'SUCCESS'
 
     def get_rooms(self):
-        cursor = self.base.get_cursor()
-        conn = self.base.get_conn()
-        cursor.execute("select ro.id_room, ro.title,ro.price,lo.key_locat from room ro inner join location lo on (lo.id_locat = ro.id_locat) group by ro.id_room, ro.created_at asc;")
+        query = '''select ro.id_room, ro.title,ro.price,lo.key_locat
+         from room ro inner join location lo on (lo.id_locat = ro.id_locat)
+          group by ro.id_room, ro.created_at asc; '''
 
-        rooms = cursor.fetchall()
+        self.cursor.execute(query)
+        rooms = self.cursor.fetchall()
 
         if(len(rooms)==0):
             return jsonify(rooms = None)
@@ -114,7 +95,6 @@ class Room():
         return jsonify(rooms = array)
 
     def get_room_by_id(self, id_room):
-        cursor = self.base.get_cursor()
 
         query = '''select DISTINCT ro.id_room,ro.title,ro.created_at,ro.description,
          l.key_locat, u.key_uni, if(ro.id_rep is not null, re.key_rep,'') as key_rep, ro.price,
@@ -124,8 +104,8 @@ class Room():
          ro.id_uni = u.id_uni and us.id_usu = ro.id_usu
          and if(ro.id_rep is not null, ro.id_rep = re.id_rep,1) and ro.id_room='{0}'; '''.format(id_room);
 
-        cursor.execute(query)
-        room = cursor.fetchall()
+        self.cursor.execute(query)
+        room = self.cursor.fetchall()
 
         if(len(room)==0):
             return jsonify(room = None)
@@ -146,7 +126,6 @@ class Room():
         return jsonify(answer = dic)
 
     def get_search_rooms(self, location, republic, university, price):
-        cursor = self.base.get_cursor()
         query = '''
             select distinct ro.id_room, ro.title, ro.price, ro.description, ro.created_at
             FROM room ro inner join location lo on(ro.id_locat=lo.id_locat)
@@ -157,8 +136,8 @@ class Room():
             or (ro.id_rep is not null and re.key_rep like '%{2}%')
             order by ro.created_at desc; '''.format(location, university, republic, price)
 
-        cursor.execute(query)
-        rooms = cursor.fetchall()
+        self.cursor.execute(query)
+        rooms = self.cursor.fetchall()
 
         array = []
         for x in rooms:

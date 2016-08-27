@@ -7,27 +7,26 @@ from datetime import timedelta, datetime
 from flask import Flask, request, redirect, render_template, jsonify
 
 class Republic():
-    def __init__(self, base):
+    def __init__(self, base, location):
        self.base = base
+       self.location = location
+       self.cursor = self.base.get_cursor()
+       self.conn = self.base.get_conn()
 
-    def new_republic(self,name, key_locat, id_usu):
-        cursor = self.base.get_cursor()
-        conn = self.base.get_conn()
+    def new_republic(self, name, key_locat, id_usu):
+        location = self.location.get_id_and_city_by_key(key_locat)
 
-        cursor.execute("select id_locat, city_locat from location where key_locat = '{0}' ; ".format(key_locat))
-        location = cursor.fetchall()
         key_rep = name.lower() + ' - ' + location[0][1].lower()
         id_locat = location[0][0]
 
-        cursor.execute("insert into republic values (0,'{0}','{1}','{2}','{3}');"
+        self.cursor.execute("insert into republic values (0,'{0}','{1}','{2}','{3}');"
         .format(name, id_locat, id_usu, key_rep))
-        conn.commit()
+        self.conn.commit()
         return 'SUCCESS'
 
     def get_republics_by_id(self, id_usu):
-        cursor = self.base.get_cursor()
-        cursor.execute("select * from republic r inner join location l on l.id_locat = r.id_locat where r.id_usu = '{0}' ; ".format(id_usu))
-        republics = cursor.fetchall()
+        self.cursor.execute("select * from republic r inner join location l on l.id_locat = r.id_locat where r.id_usu = '{0}' ; ".format(id_usu))
+        republics = self.cursor.fetchall()
 
         if(len(republics)==0):
             return jsonify(republics = None)
@@ -40,32 +39,26 @@ class Republic():
         return jsonify(republics = array)
 
 
-    def update_republic(self,name_rep,key_locat_rep, id_rep, id_usu):
-        cursor = self.base.get_cursor()
-        conn = self.base.get_conn()
+    def update_republic(self, name_rep, key_locat, id_rep, id_usu):
+        location = self.location.get_id_and_city_by_key(key_locat)
 
-        cursor.execute("select id_locat, city_locat from location where key_locat = '{0}' ; ".format(key_locat_rep))
-        location = cursor.fetchall()
         key_rep = name_rep.lower() + ' - ' + location[0][1].lower()
         id_locat = location[0][0]
 
         query = "update republic set name_rep='{0}', id_locat='{1}', key_rep='{2}' where id_usu='{3}' and id_rep='{4}'".format(name_rep, id_locat, key_rep, id_usu, id_rep)
-        cursor.execute(query)
-        conn.commit()
+        self.cursor.execute(query)
+        self.conn.commit()
         return 'SUCCESS'
 
     def delete_republic(self, id_rep, id_usu):
-        cursor = self.base.get_cursor()
-        conn = self.base.get_conn()
-        cursor.execute("delete from republic where id_rep = '{0}' and id_usu = '{1}' "
+        self.cursor.execute("delete from republic where id_rep = '{0}' and id_usu = '{1}' "
         .format(id_rep, id_usu))
-        conn.commit()
+        self.conn.commit()
         return 'SUCCESS'
 
     def get_republic_keys(self):
-        cursor = self.base.get_cursor()
-        cursor.execute("select key_rep from republic;")
-        republics = cursor.fetchall()
+        self.cursor.execute("select key_rep from republic;")
+        republics = self.cursor.fetchall()
 
         if(len(republics)==0):
             return jsonify(republics = None)
@@ -73,3 +66,8 @@ class Republic():
         for x in republics:
             array.append(x[0])
         return jsonify(republics = array)
+
+    def get_id_by_key(self, key_rep):
+        self.cursor.execute("select id_rep from republic where key_rep = '{0}' ; ".format(key_rep))
+        republic = self.cursor.fetchall()
+        return republic[0][0]

@@ -238,7 +238,10 @@ angular.module('starter.controllers',['starter.services'])
         var password = $scope.data.password;
         var password = $scope.data.passwordConfirm;
 
-        $http.post(ip + '/updatePassword/'+ password +"/" + id).
+        var jsSha = new jsSHA(password);
+        var hash = jsSha.getHash("SHA-512", "HEX");
+
+        $http.post(ip + '/updatePassword/'+ hash +"/" + id).
         success(function(response) {
           var dado =  angular.toJson(response);
           var obj = jQuery.parseJSON(dado);

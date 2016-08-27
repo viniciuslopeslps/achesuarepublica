@@ -14,9 +14,9 @@ cors = CORS(app)
 base = base.Base()
 user = user_functions.User(base)
 location = location_functions.Location(base)
-university = university_functions.University(base)
-republic = republic_functions.Republic(base)
-room = room_functions.Room(base)
+university = university_functions.University(base, location)
+republic = republic_functions.Republic(base, location)
+room = room_functions.Room(base, location, university, republic)
 
 @app.route('/login/<email>/<password>')
 def login(email, password):
