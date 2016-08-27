@@ -117,12 +117,12 @@ class Room():
         cursor = self.base.get_cursor()
 
         query = '''select DISTINCT ro.id_room,ro.title,ro.created_at,ro.description,
-         l.key_locat, u.key_uni, if(ro.id_rep!=0, re.key_rep,'') as key_rep, ro.price,
+         l.key_locat, u.key_uni, if(ro.id_rep is not null, re.key_rep,'') as key_rep, ro.price,
 		 us.name_usu, us.email_usu, l.address_locat
          from room ro,location l, university u, republic re, users us
          where l.id_locat = ro.id_locat and
          ro.id_uni = u.id_uni and us.id_usu = ro.id_usu
-         and if(ro.id_rep!=0, ro.id_rep = re.id_rep,1) and ro.id_room='{0}'; '''.format(id_room);
+         and if(ro.id_rep is not null, ro.id_rep = re.id_rep,1) and ro.id_room='{0}'; '''.format(id_room);
 
         cursor.execute(query)
         room = cursor.fetchall()

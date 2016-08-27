@@ -16,11 +16,11 @@ class Location():
             conn = self.base.get_conn()
             key_locat = city_locat.lower() + ' - ' + state_locat.lower()
             if address_locat.lower() == 'undefined':
-                address_locat = 'NULL'
+                query = '''insert into location(city_locat, state_locat, key_locat, id_usu)
+                 values ('{0}','{1}','{2}','{3}');'''.format(city_locat, state_locat, key_locat, id_usu)
             else:
                 address_locat = "'" + address_locat + "'"
-
-            query = "insert into location values (0,'{0}','{1}',{2},'{3}','{4}' );".format(city_locat, state_locat, address_locat, key_locat, id_usu)
+                query = "insert into location values (0,'{0}','{1}',{2},'{3}','{4}' );".format(city_locat, state_locat, address_locat, key_locat, id_usu)
             print query
 
             cursor.execute(query)
