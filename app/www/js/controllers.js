@@ -47,7 +47,7 @@ angular.module('starter.controllers',['starter.services'])
           }
           else{
             alertService.alertPopup('Senha redefinida',
-            'Confira seu email e logue com a nova senha');
+            'Confira seu email e acesse com a nova senha');
           }
         }).
         error(function() {

@@ -27,9 +27,9 @@ class Location():
         except Exception:
             return 'ERROR'
 
-    def get_locations_by_id(self, id_usu):
-
-        self.cursor.execute("select * from location ; ")
+    def get_locations_by_id_user(self, id_usu):
+        query = ''' select * from location where id_usu='{0}'; '''.format(id_usu)
+        self.cursor.execute(query)
         locations = self.cursor.fetchall()
 
         if(len(locations)==0):

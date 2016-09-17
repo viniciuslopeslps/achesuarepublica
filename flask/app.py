@@ -48,7 +48,7 @@ def create_location(city_locat, state_locat, adress_locat, id_usu):
 
 @app.route('/getLocationsById/<int:id_usu>')
 def get_locations(id_usu):
-    return location.get_locations_by_id(id_usu)
+    return location.get_locations_by_id_user(id_usu)
 
 @app.route('/updateLocation/<city_locat>/<state_locat>/<address_locat>/<int:id_locat>/<int:id_usu>', methods = ["POST"])
 def update_location(city_locat, state_locat, address_locat, id_locat, id_usu):
