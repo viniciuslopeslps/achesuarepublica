@@ -5,10 +5,10 @@ use acheSuaRepublica;
 create table users
 (
 id_usu int primary key auto_increment,
-name_usu varchar(20) not null,
-email_usu varchar(30) not null unique,
+name_usu varchar(60) not null,
+email_usu varchar(60) not null unique,
 password_usu varchar(500) not null,
-phone_user varchar(15) not null,
+phone_user varchar(25) not null,
 admin_user bool not null
 );
 

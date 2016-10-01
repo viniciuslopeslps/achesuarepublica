@@ -131,7 +131,7 @@ class Room():
             FROM room ro inner join location lo on(ro.id_locat=lo.id_locat)
             inner join republic re on(re.id_rep=ro.id_rep or ro.id_rep is null)
             inner join university uni on (uni.id_uni=ro.id_uni)
-            where (ro.price >={3}) and (lo.key_locat like '%{0}%')
+            where (ro.price <={3}) and (lo.key_locat like '%{0}%')
             or (uni.key_uni like '%{1}%' )
             or (ro.id_rep is not null and re.key_rep like '%{2}%')
             order by ro.created_at desc; '''.format(location, university, republic, price)

@@ -30,7 +30,8 @@ angular.module('starter.services', [])
   }
 })
 .factory('ip', function() {
-  return 'http://192.168.1.107:5000';
+  return 'http://192.168.1.109:5000';
+  //return 'http://flask-viniciuslopeslps.c9users.io:8080';
 })
 .factory('location', function() {
   return {
