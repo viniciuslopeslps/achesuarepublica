@@ -419,15 +419,17 @@ angular.module('starter.controllers',['starter.services', 'ion-autocomplete'])
       $scope.getLocations();
       var locations = $scope.locationKeys;
       var array = [];
-      for (var i = 0; i < locations.length; i++) {
-        array.push({id: i, name: locations[i], view: locations[i] + query + locations[i]});
-      };
       if (query) {
+        for (var i = 0; i < locations.length; i++) {
+          if(locations[i].toLowerCase().indexOf(query.toLowerCase())!=-1){
+            array.push({id: i, name: locations[i], view: locations[i] + query + locations[i]});
+          }
+        };
         return {
           items: array
-          };
-        }
-        return {items: []};
+        };
+      }
+      return {items: []};
     };
 
     $scope.getLocationKeys = function() {
@@ -582,15 +584,17 @@ angular.module('starter.controllers',['starter.services', 'ion-autocomplete'])
     $scope.getLocations();
     var locations = $scope.locationKeys;
     var array = [];
-    for (var i = 0; i < locations.length; i++) {
-      array.push({id: i, name: locations[i], view: locations[i] + query + locations[i]});
-    };
     if (query) {
+      for (var i = 0; i < locations.length; i++) {
+        if(locations[i].toLowerCase().indexOf(query.toLowerCase())!=-1){
+          array.push({id: i, name: locations[i], view: locations[i] + query + locations[i]});
+        }
+      };
       return {
         items: array
-        };
-      }
-      return {items: []};
+      };
+    }
+    return {items: []};
   };
 
   $scope.getLocationKeys = function() {
@@ -750,15 +754,17 @@ angular.module('starter.controllers',['starter.services', 'ion-autocomplete'])
     $scope.getLocations();
     var locations = $scope.locationKeys;
     var array = [];
-    for (var i = 0; i < locations.length; i++) {
-      array.push({id: i, name: locations[i], view: locations[i] + query + locations[i]});
-    };
     if (query) {
+      for (var i = 0; i < locations.length; i++) {
+        if(locations[i].toLowerCase().indexOf(query.toLowerCase())!=-1){
+          array.push({id: i, name: locations[i], view: locations[i] + query + locations[i]});
+        }
+      };
       return {
-          items: array
-        };
-      }
-      return {items: []};
+        items: array
+      };
+    }
+    return {items: []};
   };
 
   $scope.getLocationKeys = function() {
@@ -791,10 +797,12 @@ angular.module('starter.controllers',['starter.services', 'ion-autocomplete'])
     $scope.getUniversities();
     var universities = $scope.universityKeys;
     var array = [];
-    for (var i = 0; i < universities.length; i++) {
-      array.push({id: i, name: universities[i], view: universities[i] + query + universities[i]});
-    };
     if (query) {
+      for (var i = 0; i < universities.length; i++) {
+        if(universities[i].toLowerCase().indexOf(query.toLowerCase())!=-1){
+          array.push({id: i, name: universities[i], view: universities[i] + query + universities[i]});
+        }
+      };
       return {
           items: array
         };
@@ -832,10 +840,12 @@ angular.module('starter.controllers',['starter.services', 'ion-autocomplete'])
     $scope.getRepublics();
     var republics = $scope.republicKeys;
     var array = [];
-    for (var i = 0; i < republics.length; i++) {
-      array.push({id: i, name: republics[i], view: republics[i] + query + republics[i]});
-    };
     if (query) {
+      for (var i = 0; i < republics.length; i++) {
+        if(republics[i].toLowerCase().indexOf(query.toLowerCase())!=-1){
+          array.push({id: i, name: republics[i], view: republics[i] + query + republics[i]});
+        }
+      };
       return {
           items: array
         };

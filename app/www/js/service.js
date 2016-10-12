@@ -31,12 +31,11 @@ angular.module('starter.services', [])
 })
 .factory('ip', function() {
   //pc-local
-  return 'http://192.168.1.105:5000';
+  return 'http://192.168.1.106:5000';
   //cloud9
   //return 'http://flask-viniciuslopeslps.c9users.io:8080';
   //amazon webservices
-  //return 'http://flask-viniciuslopeslps.c9users.io:8080';
-  //return 'http://ec2-54-69-216-10.us-west-2.compute.amazonaws.com:5000';
+  //return 'http://ec2-52-35-102-23.us-west-2.compute.amazonaws.com:5000';
 })
 .factory('location', function() {
   return {
