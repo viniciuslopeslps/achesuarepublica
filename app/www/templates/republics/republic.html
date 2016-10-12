@@ -27,16 +27,16 @@
                    </span>
                    <input name="name" ng-model="data.name" type="text" required maxlength="40" ng-pattern="/^[\w -]*$/">
                  </label>
-                 <label class="item item-input item-select">
+                 <label class="item item-input">
                    <div class="input-label">
                      Localização:
                      <span ng-show="republicForm.locationKey.$error.required ||
-                     republicForm.locationKey.$pristine || republicForm.locationKey.$invalid" class="error">*</span>
-                      </span>
+                        republicForm.locationKey.$pristine || republicForm.locationKey.$invalid" class="error">*</span>
+                     </span>
                    </div>
-                   <select name="locationKey" ng-model="data.locationKey" required>
-                        <option ng-repeat="item in locationKeys">{{item}}</option>
-                   </select>
+                   <input name="locationKey" ion-autocomplete type="text" readonly="readonly" class="ion-autocomplete" autocomplete="off"
+                       ng-model="data.locationKey" item-value-key="name" item-view-value-key="name" items-method="getFilterItems(query)"
+                       items-method-value-key="items" placeholder="Digite a localização" max-selected-items="1" required />
                  </label>
                  <br /><br />
                  <button ng-click="createRepublic(data)" class="bluedark-color button button-block button-positive">
@@ -81,15 +81,13 @@
                      </span>
                      <input name="name" ng-model="data.name" placeholder="{{name}}" type="text" maxlength="40" ng-pattern="/^[\w -]*$/">
                    </label>
-                   <label class="item item-input item-select">
+                   <label class="item item-input">
                      <div class="input-label">
                        Localização:
                      </div>
-
-                     <select name="locationKey" ng-model="data.locationKey">
-                          <option disabled selected>{{locationKey}}</option>
-                          <option ng-repeat="item in locationKeys" >{{item}}</option>
-                     </select>
+                     <input name="locationKey" ion-autocomplete type="text" readonly="readonly" class="ion-autocomplete" autocomplete="off"
+                         ng-model="data.locationKey" item-value-key="name" item-view-value-key="name" items-method="getFilterItems(query)"
+                         items-method-value-key="items" placeholder="{{locationKey}}" max-selected-items="1" required/>
                    </label>
                  </div>
                  <br /><br />

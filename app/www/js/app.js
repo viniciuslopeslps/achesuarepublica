@@ -1,5 +1,5 @@
 
-angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
+angular.module('starter', ['ionic', 'starter.controllers','starter.services', 'ion-autocomplete'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {

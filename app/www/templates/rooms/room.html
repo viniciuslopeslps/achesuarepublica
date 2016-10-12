@@ -26,35 +26,34 @@
                     </span>
                    <input name="title" ng-model="data.title" type="text" maxlength="25" required ng-pattern="/^[\w -]*$/">
                  </label>
-                 <label class="item item-input item-select">
+                 <label class="item item-input">
                    <div class="input-label">
                      Localização:
                      <span ng-show="roomForm.locationKey.$error.required ||
-                     roomForm.locationKey.$pristine || roomForm.locationKey.$invalid" class="error">*</span>
-                      </span>
+                        roomForm.locationKey.$pristine || roomForm.locationKey.$invalid" class="error">*</span>
+                     </span>
                    </div>
-                   <select name="locationKey" ng-model="data.locationKey" required>
-                        <option ng-repeat="item in locationKeys" >{{item}}</option>
-                   </select>
+                   <input name="locationKey" ion-autocomplete type="text" readonly="readonly" class="ion-autocomplete" autocomplete="off"
+                       ng-model="data.locationKey" item-value-key="name" item-view-value-key="name" items-method="getLocationItems(query)"
+                       items-method-value-key="items" placeholder="Digite a localização" max-selected-items="1" required/>
                  </label>
-                 <label class="item item-input item-select">
+                 <label class="item item-input">
                    <div class="input-label">
                      Universidade:
                      <span ng-show="roomForm.universityKey.$error.required ||
                      roomForm.universityKey.$pristine || roomForm.universityKey.$invalid" class="error">*</span>
-                      </span>
                    </div>
-                   <select name="universityKey" ng-model="data.universityKey" required>
-                        <option ng-repeat="item in universityKeys" >{{item}}</option>
-                   </select>
+                   <input name="universityKey" ion-autocomplete type="text" readonly="readonly" class="ion-autocomplete" autocomplete="off"
+                       ng-model="data.universityKey" item-value-key="name" item-view-value-key="name" items-method="getUniversityItems(query)"
+                       items-method-value-key="items" placeholder="Digite o nome da universidade" max-selected-items="1" required/>
                  </label>
-                 <label class="item item-input item-select">
+                 <label class="item item-input">
                    <div class="input-label">
                      República:
                    </div>
-                   <select name="republicKey" ng-model="data.republicKey">
-                        <option ng-repeat="item in republicKeys">{{item}}</option>
-                   </select>
+                   <input name="republicKey" ion-autocomplete type="text" readonly="readonly" class="ion-autocomplete" autocomplete="off"
+                       ng-model="data.republicKey" item-value-key="name" item-view-value-key="name" items-method="getRepublicItems(query)"
+                       items-method-value-key="items" placeholder="Digite o nome da república" max-selected-items="1" required/>
                  </label>
                  <label class="item item-input">
                    <span class="input-label">Descrição:
@@ -113,29 +112,29 @@
                     </span>
                     <input name="title" ng-model="data.title" placeholder="{{title}}" type="text" maxlength="25" ng-pattern="/^[\w -]*$/">
                   </label>
-                  <label class="item item-input item-select">
+                  <label class="item item-input">
                     <div class="input-label">
                       Localização:
                     </div>
-                    <select ng-model="data.locationKey" ng-options="item for item in locationKeys">
-                      <option value="">{{locationKey}}</option>
-                    </select>
+                    <input name="locationKey" ion-autocomplete type="text" readonly="readonly" class="ion-autocomplete" autocomplete="off"
+                        ng-model="data.locationKey" item-value-key="name" item-view-value-key="name" items-method="getLocationItems(query)"
+                        items-method-value-key="items" placeholder="{{locationKey}}" max-selected-items="1" required/>
                   </label>
-                  <label class="item item-input item-select">
+                  <label class="item item-input">
                     <div class="input-label">
                       Universidade:
                     </div>
-                    <select ng-model="data.universityKey" ng-options="item for item in universityKeys">
-                      <option value="">{{universityKey}}</option>
-                    </select>
+                    <input name="universityKey" ion-autocomplete type="text" readonly="readonly" class="ion-autocomplete" autocomplete="off"
+                        ng-model="data.universityKey" item-value-key="name" item-view-value-key="name" items-method="getUniversityItems(query)"
+                        items-method-value-key="items" placeholder="{{universityKey}}" max-selected-items="1" required/>
                   </label>
-                  <label class="item item-input item-select">
+                  <label class="item item-input">
                     <div class="input-label">
                       República:
                     </div>
-                    <select ng-model="data.republicKey" ng-options="item for item in republicKeys">
-                      <option value="">{{republicKey}}</option>
-                    </select>
+                    <input name="republicKey" ion-autocomplete type="text" readonly="readonly" class="ion-autocomplete" autocomplete="off"
+                        ng-model="data.republicKey" item-value-key="name" item-view-value-key="name" items-method="getRepublicItems(query)"
+                        items-method-value-key="items" placeholder="{{republicKey}}" max-selected-items="1" required/>
                   </label>
                   <label class="item item-input">
                     <span class="input-label">Descrição:

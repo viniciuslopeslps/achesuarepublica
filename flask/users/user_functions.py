@@ -13,9 +13,11 @@ class User():
        self.conn = self.base.get_conn()
 
     def login(self, email, password):
-        self.cursor.execute("select * from users where email_usu = '{0}' and password_usu='{1}'".format(email, password))
-        user = self.cursor.fetchall()
+        query = "select * from users where email_usu = '{0}' and password_usu='{1}'".format(email, password)
+        print query
+        self.cursor.execute(query)
 
+        user = self.cursor.fetchall()
         if(len(user)==0):
             return jsonify(user = None)
 

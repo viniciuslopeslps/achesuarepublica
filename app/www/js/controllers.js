@@ -1,4 +1,4 @@
-angular.module('starter.controllers',['starter.services'])
+angular.module('starter.controllers',['starter.services', 'ion-autocomplete'])
 
 .controller('loginCtrl', function($scope, $state, $http, alertService, session, ip, redirect){
 
@@ -60,6 +60,7 @@ angular.module('starter.controllers',['starter.services'])
 
 .controller('homeCtrl', function($scope, $state, $http, alertService, ip, redirect) {
   $scope.name = window.localStorage['name'];
+  $scope.rooms ="";
 
   $scope.getRooms = function(){
     $http.get(ip + '/getRooms/').
@@ -399,22 +400,46 @@ angular.module('starter.controllers',['starter.services'])
 })
 
 .controller('universityCtrl', function($scope, $state, $http, $ionicPopup, $ionicHistory,alertService, ip, session, location, university, redirect){
-    $scope.getLocationKeys = function(){
-      $http.get(ip + '/getLocationKeys/').
-      success(function(response) {
-        var dado =  angular.toJson(response);
-        var obj = jQuery.parseJSON(dado);
-        if(obj['locations'] === null){
-          alertService.alertPopup('ERRO',
-           'Não existem localizações cadastradas, por favor primeiramente cadastre uma localização');
-        }
-        else{
+    $scope.locationKeys = "";
+
+    $scope.getLocations = function() {
+        $http.get(ip + '/getLocationKeys/').
+        success(function(response) {
+          var dado = angular.toJson(response);
+          var obj = jQuery.parseJSON(dado);
           $scope.locationKeys = obj['locations'];
+          return obj;
+        }).
+        error(function() {
+          return "ERROR";
+        });
+      };
+
+    $scope.getFilterItems = function (query) {
+      $scope.getLocations();
+      var locations = $scope.locationKeys;
+      var array = [];
+      for (var i = 0; i < locations.length; i++) {
+        array.push({id: i, name: locations[i], view: locations[i] + query + locations[i]});
+      };
+      if (query) {
+        return {
+          items: array
+          };
         }
-      }).
-      error(function() {
+        return {items: []};
+    };
+
+    $scope.getLocationKeys = function() {
+      $scope.getLocations();
+      var locations = $scope.locationKeys;
+      if(locations === null || locations === undefined) {
+        alertService.alertPopup('ERRO',
+        'Não existem localizações cadastradas, por favor primeiramente cadastre uma localização');
+      }
+      if(locations === "ERROR") {
         alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
-      });
+      }
     };
 
     $scope.createUniversity = function(data){
@@ -538,205 +563,302 @@ angular.module('starter.controllers',['starter.services'])
   })
 
 .controller('republicCtrl', function($scope, $state, $http, $ionicPopup, $ionicHistory,alertService, ip, session, location, republic, redirect){
-      $scope.getLocationKeys = function(){
-        $http.get(ip + '/getLocationKeys/').
-        success(function(response) {
-          var dado =  angular.toJson(response);
-          var obj = jQuery.parseJSON(dado);
-          if(obj['locations'] === null){
-            alertService.alertPopup('ERRO',
-             'Não existem localizações cadastradas, por favor primeiramente cadastre uma localização');
-          }
-          else{
-            $scope.locationKeys = obj['locations'];
-          }
-        }).
-        error(function() {
-          alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
-        });
-      };
+  $scope.locationKeys = "";
 
-      $scope.createRepublic = function(data){
-        if(data === undefined || data['name'] === undefined || data['locationKey'] ===undefined){
-            alertService.alertPopup('ERRO','Por favor complete os campos corretamente');
-        }
-        else{
-          var key_locat = $scope.data.locationKey;
-          var name_rep = $scope.data.name;
-          var id_usu =   window.localStorage['id_usu'];
+  $scope.getLocations = function() {
+      $http.get(ip + '/getLocationKeys/').
+      success(function(response) {
+        var dado = angular.toJson(response);
+        var obj = jQuery.parseJSON(dado);
+        $scope.locationKeys = obj['locations'];
+        return obj;
+      }).
+      error(function() {
+        return "ERROR";
+      });
+    };
 
-            $http.post(ip + '/createRepublic/' + name_rep + "/" + key_locat + "/" + id_usu).
-            success(function(response) {
-              alertService.alertPopup('Nova República!','Registro de república inserida com sucesso!');
-              delete $scope.data;
-            }).
-            error(function() {
-              alertService.alertPopup('ERRO', 'República já existente na base de dados!');
-            });
-        }
-      };
-      var republicArray = $scope.republicArray = [];
-      var republicObjs = $scope.republicObjs = [];
+  $scope.getFilterItems = function (query) {
+    $scope.getLocations();
+    var locations = $scope.locationKeys;
+    var array = [];
+    for (var i = 0; i < locations.length; i++) {
+      array.push({id: i, name: locations[i], view: locations[i] + query + locations[i]});
+    };
+    if (query) {
+      return {
+        items: array
+        };
+      }
+      return {items: []};
+  };
 
-      $scope.getRepublics = function(){
-        $scope.getLocationKeys();
-        var republicArray = $scope.republicArray = [];
-        var republicObjs = $scope.republicObjs = [];
-        var idUsu = window.localStorage['id_usu'];
+  $scope.getLocationKeys = function() {
+    $scope.getLocations();
+    var locations = $scope.locationKeys;
+    if(locations === null || locations === undefined) {
+      alertService.alertPopup('ERRO',
+      'Não existem localizações cadastradas, por favor primeiramente cadastre uma localização');
+    }
+    if(locations === "ERROR") {
+      alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
+    }
+  };
 
-        $http.get(ip + '/getRepublicsById/' + idUsu).
-        success(function(response) {
-          var dado =  angular.toJson(response);
-          var obj = jQuery.parseJSON(dado);
-          var republics = obj["republics"];
-          if(republics !== null){
-            for (i = 0; i < republics.length; i++) {
-              var objctKey = {};
+  $scope.createRepublic = function(data){
+    if(data === undefined || data['name'] === undefined || data['locationKey'] ===undefined){
+      alertService.alertPopup('ERRO','Por favor complete os campos corretamente');
+    }
+    else{
+      var key_locat = $scope.data.locationKey;
+      var name_rep = $scope.data.name;
+      var id_usu =   window.localStorage['id_usu'];
+
+      $http.post(ip + '/createRepublic/' + name_rep + "/" + key_locat + "/" + id_usu).
+      success(function(response) {
+        alertService.alertPopup('Nova República!','Registro de república inserida com sucesso!');
+        delete $scope.data;
+      }).
+      error(function() {
+        alertService.alertPopup('ERRO', 'República já existente na base de dados!');
+      });
+    }
+  };
+  var republicArray = $scope.republicArray = [];
+  var republicObjs = $scope.republicObjs = [];
+
+  $scope.getRepublics = function(){
+    $scope.getLocationKeys();
+    var republicArray = $scope.republicArray = [];
+    var republicObjs = $scope.republicObjs = [];
+    var idUsu = window.localStorage['id_usu'];
+
+    $http.get(ip + '/getRepublicsById/' + idUsu).
+      success(function(response) {
+        var dado =  angular.toJson(response);
+        var obj = jQuery.parseJSON(dado);
+        var republics = obj["republics"];
+        if(republics !== null){
+          for (i = 0; i < republics.length; i++) {
+            var objctKey = {};
               $scope.republicArray.push(republics[i]["key_rep"]);
             }
             $scope.republicObjs.push(republics);
           }
-          else{
+        else{
             alertService.alertPopup('ERRO', 'Não existem repúblicas criadas por esse usuário!');
-          }
-        }).
-        error(function() {
-          alertService.alertPopup('ERRO', 'Erro ao excluir república, verifique se este registro não está relacionado a outros registros');
-        });
-      };
-
-      $scope.republicSelected = function(data){
-        var objRespose = data["keyRep"];
-        var republicAnswer = $scope.republicObjs;
-        for(i=0; i < republicAnswer.length;i++){
-            for(a=0; a < republicAnswer[0].length;a++){
-                if(republicAnswer[i][a]["key_rep"]==objRespose){
-                  $scope.name = republicAnswer[i][a]["name_rep"];
-                  $scope.locationKey = republicAnswer[i][a]["key_locat"];
-                  $scope.idRep = republicAnswer[i][a]["id_rep"];
-                  republic.saveData($scope.idRep, $scope.republicName, $scope.locationKey);
-                }
-              };
-          };
-      };
-      $scope.updateRepublic = function(data){
-        if(data === undefined || data['keyRep'] === undefined){
-            alertService.alertPopup('Alteração',
-            'É preciso de uma república para alterar!');
         }
-        else {
-          var name = $scope.data.name;
-          var keyLocatRep = $scope.data.locationKey;
-
-          if (name === undefined || name.length === 0){
-              var name = window.localStorage['name_rep'];
-          }
-          if (keyLocatRep === undefined){
-              var keyLocatRep = window.localStorage['key_locat_rep'];
-          }
-
-          var idUsu = window.localStorage['id_usu'];
-          var idRep = window.localStorage['id_rep'];
-
-          $http.post(ip + '/updateRepublic/' + name + '/' + keyLocatRep + '/' + idRep + '/' + idUsu).
-          success(function(response) {
-            delete $scope.data;
-            delete $scope.name;
-            delete $scope.locationKey;
-
-            alertService.alertPopup('Alterado!', 'Registro de república alterado com sucesso!');
-          }).
-          error(function() {
-            alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
-          });
-        }
-
-      };
-
-      $scope.deleteRepublic = function(data){
-        var confirmPopup = $ionicPopup.confirm({
-          title: 'Confirmação',
-          template: 'Você tem certeza que deseja remover esta república?'
-        });
-        confirmPopup.then(function(res) {
-          if(res) {
-            var idUsu = window.localStorage['id_usu'];
-            var idRep = window.localStorage['id_rep'];
-
-            $http.post(ip + '/deleteRepublic/'+ idRep + '/' + idUsu).
-            success(function(response) {
-
-              delete $scope.data;
-              delete $scope.name;
-              delete $scope.locationKey;
-
-              alertService.alertPopup('Removido!','Registro removido com sucesso!');
-            }).
-            error(function() {
-              alertService.alertPopup('ERRO', 'Erro ao exluir república, verifique se este registro não está relacionado a outros registros');
-            });
-          }
-        });
-      };
-    })
-
-.controller('roomCtrl', function($scope, $state, $http, alertService, ip, redirect, room) {
-  $scope.getLocationKeys = function(){
-    $http.get(ip + '/getLocationKeys/').
-    success(function(response) {
-      var dado =  angular.toJson(response);
-      var obj = jQuery.parseJSON(dado);
-      if(obj['locations'] === null){
-        alertService.alertPopup('ERRO',
-         'Não existem localizações cadastradas, por favor primeiramente cadastre uma localização');
-      }
-      else{
-        $scope.locationKeys = obj['locations'];
-      }
     }).
     error(function() {
-      alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
+      alertService.alertPopup('ERRO', 'Erro ao excluir república, verifique se este registro não está relacionado a outros registros');
     });
   };
 
-  $scope.getUniversitiesKeys = function(){
+  $scope.republicSelected = function(data){
+    var objRespose = data["keyRep"];
+    var republicAnswer = $scope.republicObjs;
+    for(i=0; i < republicAnswer.length;i++){
+        for(a=0; a < republicAnswer[0].length;a++){
+            if(republicAnswer[i][a]["key_rep"]==objRespose){
+              $scope.name = republicAnswer[i][a]["name_rep"];
+              $scope.locationKey = republicAnswer[i][a]["key_locat"];
+              $scope.idRep = republicAnswer[i][a]["id_rep"];
+              republic.saveData($scope.idRep, $scope.republicName, $scope.locationKey);
+            }
+        };
+     };
+  };
+  $scope.updateRepublic = function(data){
+    if(data === undefined || data['keyRep'] === undefined){
+        alertService.alertPopup('Alteração', 'É preciso de uma república para alterar!');
+    }
+    else {
+      var name = $scope.data.name;
+      var keyLocatRep = $scope.data.locationKey;
+
+      if (name === undefined || name.length === 0){
+          var name = window.localStorage['name_rep'];
+      }
+      if (keyLocatRep === undefined){
+          var keyLocatRep = window.localStorage['key_locat_rep'];
+      }
+
+      var idUsu = window.localStorage['id_usu'];
+      var idRep = window.localStorage['id_rep'];
+
+      $http.post(ip + '/updateRepublic/' + name + '/' + keyLocatRep + '/' + idRep + '/' + idUsu).
+        success(function(response) {
+          delete $scope.data;
+          delete $scope.name;
+          delete $scope.locationKey;
+
+          alertService.alertPopup('Alterado!', 'Registro de república alterado com sucesso!');
+      }).
+      error(function() {
+          alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
+      });
+    }
+  };
+
+  $scope.deleteRepublic = function(data){
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Confirmação',
+      template: 'Você tem certeza que deseja remover esta república?'
+    });
+    confirmPopup.then(function(res) {
+      if(res) {
+        var idUsu = window.localStorage['id_usu'];
+        var idRep = window.localStorage['id_rep'];
+
+        $http.post(ip + '/deleteRepublic/'+ idRep + '/' + idUsu).
+        success(function(response) {
+
+          delete $scope.data;
+          delete $scope.name;
+          delete $scope.locationKey;
+
+          alertService.alertPopup('Removido!','Registro removido com sucesso!');
+        }).
+        error(function() {
+          alertService.alertPopup('ERRO', 'Erro ao exluir república, verifique se este registro não está relacionado a outros registros');
+        });
+      }
+    });
+  };
+})
+
+.controller('roomCtrl', function($scope, $state, $http, alertService, ip, redirect, room) {
+  $scope.locationKeys = "";
+  $scope.universityKeys = "";
+  $scope.republicKeys = "";
+
+  //localizações
+  $scope.getLocations = function() {
+      $http.get(ip + '/getLocationKeys/').
+      success(function(response) {
+        var dado = angular.toJson(response);
+        var obj = jQuery.parseJSON(dado);
+        $scope.locationKeys = obj['locations'];
+        return obj;
+      }).
+      error(function() {
+        return "ERROR";
+      });
+    };
+
+  $scope.getLocationItems = function (query) {
+    $scope.getLocations();
+    var locations = $scope.locationKeys;
+    var array = [];
+    for (var i = 0; i < locations.length; i++) {
+      array.push({id: i, name: locations[i], view: locations[i] + query + locations[i]});
+    };
+    if (query) {
+      return {
+          items: array
+        };
+      }
+      return {items: []};
+  };
+
+  $scope.getLocationKeys = function() {
+    $scope.getLocations();
+    var locations = $scope.locationKeys;
+    if(locations === null || locations === undefined) {
+      alertService.alertPopup('ERRO',
+      'Não existem localizações cadastradas, por favor primeiramente cadastre uma localização');
+    }
+    if(locations === "ERROR") {
+      alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
+    }
+  };
+
+  //universidades
+  $scope.getUniversities = function() {
     $http.get(ip + '/getUnivertisyKeys/').
     success(function(response) {
       var dado =  angular.toJson(response);
       var obj = jQuery.parseJSON(dado);
-      if(obj['universities'] === null){
-        alertService.alertPopup('ERRO',
-         'Não existem Universidades cadastradas, por favor primeiramente cadastre uma universidade');
-      }
-      else{
-        $scope.universityKeys = obj['universities'];
-      }
+      $scope.universityKeys = obj['universities'];
+      return obj;
     }).
     error(function() {
-      alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
+      return "ERROR";
     });
   };
-  $scope.getRepublicKeys = function(){
+
+  $scope.getUniversityItems = function (query) {
+    $scope.getUniversities();
+    var universities = $scope.universityKeys;
+    var array = [];
+    for (var i = 0; i < universities.length; i++) {
+      array.push({id: i, name: universities[i], view: universities[i] + query + universities[i]});
+    };
+    if (query) {
+      return {
+          items: array
+        };
+      }
+      return {items: []};
+  };
+
+  $scope.getUniversitiesKeys = function() {
+    $scope.getUniversities();
+    var universities = $scope.universityKeys;
+    if(universities === null || universities === undefined) {
+      alertService.alertPopup('ERRO',
+       'Não existem Universidades cadastradas, por favor primeiramente cadastre uma universidade');
+    }
+    if(universities === "ERROR") {
+      alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
+    }
+  };
+
+  //republica
+  $scope.getRepublics = function() {
     $http.get(ip + '/getRepublicKeys/').
     success(function(response) {
       var dado =  angular.toJson(response);
       var obj = jQuery.parseJSON(dado);
-      if(obj['republics'] === null){
-        $scope.republicKeys = null;
-      }
-      else{
-        $scope.republicKeys = obj['republics'];
-      }
+      $scope.republicKeys = obj['republics'];
+      return obj;
     }).
     error(function() {
-      alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
+      return "ERROR";
     });
   };
+
+  $scope.getRepublicItems = function (query) {
+    $scope.getRepublics();
+    var republics = $scope.republicKeys;
+    var array = [];
+    for (var i = 0; i < republics.length; i++) {
+      array.push({id: i, name: republics[i], view: republics[i] + query + republics[i]});
+    };
+    if (query) {
+      return {
+          items: array
+        };
+      }
+      return {items: []};
+  };
+
+  $scope.getRepublicKeys = function() {
+    $scope.getRepublics();
+    var republics = $scope.republicKeys;
+    if(republics === "ERROR") {
+      alertService.alertPopup('ERRO', 'Por favor, confira suas credenciais');
+    }
+  };
+
+  ///
+
   $scope.getAllFkData = function(){
     $scope.getLocationKeys();
     $scope.getUniversitiesKeys();
     $scope.getRepublicKeys();
   };
+
   $scope.createRoom = function(data){
     if(data === undefined || data['locationKey'] === undefined ||
         data['universityKey'] === undefined || data['description'] === undefined ||
@@ -891,6 +1013,7 @@ angular.module('starter.controllers',['starter.services'])
       });
   };
 })
+
 .controller('searchRoomsCtrl', function($scope, $state, $http, alertService, ip, redirect) {
   $scope.price = 100;
   $scope.rooms = [];
@@ -909,6 +1032,7 @@ angular.module('starter.controllers',['starter.services'])
     }
   };
 })
+
 .controller('searchedRoomCtrl', function($scope, $state, $http, alertService, ip, redirect) {
   var price = window.localStorage["search_room_price"];
   var location = window.localStorage["search_room_location"];

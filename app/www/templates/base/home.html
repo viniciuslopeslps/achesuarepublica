@@ -4,6 +4,11 @@
     <br />
     <div on-swipe-down="getRooms()" ng-controller="homeCtrl">
       <div class="list">
+        <div class="card" ng-show="rooms.length == 0">
+          <div class="item item-text-wrap">
+            Ainda não existem quartos adicionados, que tal ser o primeiro? <i class="icon ion-android-happy"> </i>
+          </div>
+        </div>
         <div ng-repeat="room in rooms track by room.id_room">
           <a class="item item-icon-left item-icon-right" ng-click="getRoomById({{room.id_room}})">
             <i class="icon ion-ios-home-outline"></i>
