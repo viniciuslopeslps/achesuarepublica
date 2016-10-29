@@ -2,24 +2,24 @@
 </ion-view>
 
 <div ng-controller="republicCtrl">
-  <ion-tabs class="tabs-striped tabs-top tabs-background-positive tabs-color-light">
-    <ion-tab href="#/navUser/republic" title="Home" class="bar-options" icon="icon ion-home">
-      <ion-view>
-         <ion-content>
-           <div on-swipe-down="getLocationKeys()" ng-controller="republicCtrl">
-             <form name="republicForm" novalidate="novalidate">
-               <br />
-               <h1 class="text-center">Nova República</h1>
-               <br />
-               <br />
-                <div class="col text-center">
-                 <button ng-click="getLocationKeys()" class="button icon ion-refresh">
+	<ion-tabs class="tabs-striped tabs-top tabs-background-positive tabs-color-light">
+		<ion-tab href="#/navUser/republic" title="Home" class="bar-options" icon="icon ion-home">
+			<ion-view>
+				<ion-content>
+					<div on-swipe-down="getLocationKeys()" ng-controller="republicCtrl">
+						<form name="republicForm" novalidate="novalidate">
+							<br />
+							<h1 class="text-center">Nova República</h1>
+							<br />
+							<br />
+							<div class="col text-center">
+								<button ng-click="getLocationKeys()" class="button icon ion-refresh">
                     Carregar Localizações
                   </button>
-                </div>
-                <br />
-               <div class="list padding" ng-show="locationKeys.length > 0">
-                 <label class="item item-input">
+							</div>
+							<br />
+							<div class="list padding" ng-show="locationKeys.length > 0">
+								<label class="item item-input">
                    <span class="input-label">Nome:
                      <span ng-show="republicForm.name.$error.required ||
                       republicForm.name.$pristine || republicForm.name.$invalid" class="error">*</span>
@@ -27,7 +27,7 @@
                    </span>
                    <input name="name" ng-model="data.name" type="text" required maxlength="40" ng-pattern="/^[\w -]*$/">
                  </label>
-                 <label class="item item-input">
+								<label class="item item-input">
                    <div class="input-label">
                      Localização:
                      <span ng-show="republicForm.locationKey.$error.required ||
@@ -38,34 +38,34 @@
                        ng-model="data.locationKey" item-value-key="name" item-view-value-key="name" items-method="getFilterItems(query)"
                        items-method-value-key="items" placeholder="Digite a localização" max-selected-items="1" required />
                  </label>
-                 <br /><br />
-                 <button ng-click="createRepublic(data)" class="bluedark-color button button-block button-positive">
+								<br /><br />
+								<button ng-click="createRepublic(data)" class="bluedark-color button button-block button-positive">
                    Cadastrar <i class="ion-android-checkbox-outline"></i>
                  </button>
-                 <br />
-             </div>
-           </form>
-           </div>
-         </ion-content>
-       </ion-view>
-    </ion-tab>
-    <ion-tab title="Settings" class="bar-options" icon="ion-ios-gear-outline">
-      <ion-view>
-         <ion-content>
-           <div on-swipe-down="getRepublics()" ng-controller="republicCtrl">
-             <form name="republicForm" novalidate="novalidate">
-               <br />
-               <h1 class="text-center">Alterar República</h1>
-               <br />
-               <br />
-                <div class="col text-center">
-                 <button ng-click="getRepublics()" class="button icon ion-refresh">
+								<br />
+							</div>
+						</form>
+					</div>
+				</ion-content>
+			</ion-view>
+		</ion-tab>
+		<ion-tab title="Settings" class="bar-options" icon="ion-ios-gear-outline">
+			<ion-view>
+				<ion-content>
+					<div on-swipe-down="getRepublics()" ng-controller="republicCtrl">
+						<form name="republicForm" novalidate="novalidate">
+							<br />
+							<h1 class="text-center">Alterar República</h1>
+							<br />
+							<br />
+							<div class="col text-center">
+								<button ng-click="getRepublics()" class="button icon ion-refresh">
                     Carregar Repúblicas
                   </button>
-                </div>
-                <br />
-               <div class="list padding" ng-show="republicArray.length > 0">
-                 <label  class="item item-input item-select" >
+							</div>
+							<br />
+							<div class="list padding" ng-show="republicArray.length > 0">
+								<label class="item item-input item-select">
                    <div class="input-label">
                      Repúblicas:
                    </div>
@@ -73,15 +73,15 @@
                         <option ng-repeat="item in republicArray">{{item}}</option>
                    </select>
                  </label>
-                 <div ng-show="name.length > 0 || locationKey.length > 0">
-                   <label class="item item-input">
+								<div ng-show="name.length > 0 || locationKey.length > 0">
+									<label class="item item-input">
                      <span class="input-label">Nome:
                        <span ng-show="republicForm.name.$invalid" class="error">*</span>
                       </span>
                      </span>
                      <input name="name" ng-model="data.name" placeholder="{{name}}" type="text" maxlength="40" ng-pattern="/^[\w -]*$/">
                    </label>
-                   <label class="item item-input">
+									<label class="item item-input">
                      <div class="input-label">
                        Localização:
                      </div>
@@ -89,37 +89,37 @@
                          ng-model="data.locationKey" item-value-key="name" item-view-value-key="name" items-method="getFilterItems(query)"
                          items-method-value-key="items" placeholder="{{locationKey}}" max-selected-items="1" required/>
                    </label>
-                 </div>
-                 <br /><br />
-                 <button ng-click="updateRepublic(data)" class="bluedark-color button button-block button-positive">
+								</div>
+								<br /><br />
+								<button ng-click="updateRepublic(data)" class="bluedark-color button button-block button-positive">
                    atualizar <i class="ion-android-checkbox-outline"></i>
                  </button>
-                 <br />
-             </div>
-             </form>
-           </div>
-         </ion-content>
-       </ion-view>
-    </ion-tab>
-    <ion-tab title="Settings" class="bar-options" icon="icon ion-trash-b">
-      <ion-view>
-         <ion-content>
-           <div on-swipe-down="getRepublics()" ng-controller="republicCtrl">
-             <form name="republicForm" novalidate="novalidate">
-               <br />
-               <h1 class="text-center">Excluir República</h1>
-               <br />
-               <br />
-                <div class="col text-center">
-                 <button ng-click="getRepublics()" class="button icon ion-refresh">
+								<br />
+							</div>
+						</form>
+					</div>
+				</ion-content>
+			</ion-view>
+		</ion-tab>
+		<ion-tab title="Settings" class="bar-options" icon="icon ion-trash-b">
+			<ion-view>
+				<ion-content>
+					<div on-swipe-down="getRepublics()" ng-controller="republicCtrl">
+						<form name="republicForm" novalidate="novalidate">
+							<br />
+							<h1 class="text-center">Excluir República</h1>
+							<br />
+							<br />
+							<div class="col text-center">
+								<button ng-click="getRepublics()" class="button icon ion-refresh">
                     Carregar Repúblicas
                   </button>
-                </div>
-                <br />
-                <div class="row">
-                  <div class="col">
-                    <div class="list padding" ng-show="republicArray.length > 0">
-                      <label  class="item item-input item-select" >
+							</div>
+							<br />
+							<div class="row">
+								<div class="col">
+									<div class="list padding" ng-show="republicArray.length > 0">
+										<label class="item item-input item-select">
                         <div class="input-label">
                           Repúblicas:
                         </div>
@@ -127,26 +127,26 @@
                              <option ng-repeat="item in republicArray">{{item}}</option>
                         </select>
                       </label>
-                      <div ng-show="name.length > 0 || locationKey.length > 0" class="list card">
-                         <span ng-show="name.length > 0" class="item item-icon-left">
+										<div ng-show="name.length > 0 || locationKey.length > 0" class="list card">
+											<span ng-show="name.length > 0" class="item item-icon-left">
                            <i class="ion-ios-home"></i>
                             República: {{name}}
                          </span>
-                         <span ng-show="locationKey.length > 0" class="item item-icon-left">
+											<span ng-show="locationKey.length > 0" class="item item-icon-left">
                            <i class="ion-map"></i>
                            Localização: {{locationKey}}
                          </span>
-                       </div>
-                       <button ng-click="deleteRepublic(data)" class="button button-full icon-right button-assertive">
+										</div>
+										<button ng-click="deleteRepublic(data)" class="button button-full icon-right button-assertive">
                          Deletar República <i class="ion-android-checkbox-outline"></i>
                        </button>
-                     </div>
-                   </div>
-                 </div>
-             </form>
-           </div>
-         </ion-content>
-       </ion-view>
-    </ion-tab>
-  </ion-tabs>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</ion-content>
+			</ion-view>
+		</ion-tab>
+	</ion-tabs>
 </div>

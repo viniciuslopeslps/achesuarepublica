@@ -1,58 +1,58 @@
 <ion-view view-title="Quarto" align-title="left">
-  <ion-content class="back-color padding">
-    <h1 class="text-center">Quarto disponível</h1>
-    <br />
-    <div ng-controller="selectedRoomCtrl">
-      <div class="list">
-        <div class="item item-divider item-icon-left">
-          <i class="icon ion-ios-home-outline"></i>
+	<ion-content class="back-color padding">
+		<h1 class="text-center">Quarto disponível</h1>
+		<br />
+		<div ng-controller="selectedRoomCtrl">
+			<div class="list">
+				<div class="item item-divider item-icon-left">
+					<i class="icon ion-ios-home-outline"></i>
            Quarto
-        </div>
-        <div class="item">
-          Titulo: {{room.title}}
-        </div>
-        <div class="item">
-            Descrição: {{room.description}}
-        </div>
-        <div href="#" class="item">
-            Preço: {{room.price}}
-        </div>
-        <div class="item item-divider item-icon-left">
-          <i class="icon ion-map"></i>
-           Localização
-        </div>
-        <div class="item">
-          Localização: {{room.key_locat}}
-        </div>
-        <div class="item">
-          Perto de: {{room.key_uni}}
-        </div>
-        <div ng-show="room.address.length > 0" class="item">
-          Adicional: {{room.address}}
-        </div>
-        <div ng-show="room.key_rep.length > 0" class="item">
-          República: {{room.key_rep}}
-        </div>
-        <div class="item item-divider item-icon-left">
-          <i class="icon ion-ios-person-outline"></i>
-           Proprietário
-        </div>
-        <div class="item">
-          Proprietário: {{room.name_owner}}
-        </div>
-        <div class="item">
-          Email: {{room.email_owner}}
-        </div>
-      </div>
-      <br />
-    </div>
-  </ion-content>
-  <div class="tabs tabs-icon-top tabs-color-positive">
-    <a ng-click="openModal()" class="tab-item active">
-      <i class="icon ion-android-chat"></i>
+				</div>
+				<div class="item">
+					Titulo: {{room.title}}
+				</div>
+				<div class="item">
+					Descrição: {{room.description}}
+				</div>
+				<div href="#" class="item">
+					Preço: {{room.price}}
+				</div>
+				<div class="item item-divider item-icon-left">
+					<i class="icon ion-map"></i> 
+          Localização
+				</div>
+				<div class="item">
+					Localização: {{room.key_locat}}
+				</div>
+				<div class="item">
+					Perto de: {{room.key_uni}}
+				</div>
+				<div ng-show="room.address.length > 0" class="item">
+					Adicional: {{room.address}}
+				</div>
+				<div ng-show="room.key_rep.length > 0" class="item">
+					República: {{room.key_rep}}
+				</div>
+				<div class="item item-divider item-icon-left">
+					<i class="icon ion-ios-person-outline"></i> 
+          Proprietário
+				</div>
+				<div class="item">
+					Proprietário: {{room.name_owner}}
+				</div>
+				<div class="item">
+					Email: {{room.email_owner}}
+				</div>
+			</div>
+			<br />
+		</div>
+	</ion-content>
+	<div class="tabs tabs-icon-top tabs-color-positive">
+		<a ng-click="openModal()" class="tab-item active">
+			<i class="icon ion-android-chat"></i> 
       Entrar em contato
-    </a>
-  </div>
+		</a>
+	</div>
 </ion-view>
 <script id="my-modal.html" type="text/ng-template">
   <ion-modal-view>

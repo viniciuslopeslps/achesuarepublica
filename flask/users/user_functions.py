@@ -14,7 +14,6 @@ class User():
 
     def login(self, email, password):
         query = "select * from users where email_usu = '{0}' and password_usu='{1}'".format(email, password)
-        print query
         self.cursor.execute(query)
 
         user = self.cursor.fetchall()

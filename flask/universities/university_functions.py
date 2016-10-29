@@ -38,13 +38,13 @@ class University():
             array.append(dic)
         return jsonify(universities = array)
 
-    def update_university(self,name_uni,key_locat, id_uni, id_usu):
+    def update_university(self, name, key_locat, id_uni, id_usu):
         location = self.location.get_id_and_city_by_key(key_locat)
-        key_uni = name_uni.lower() + ' - ' + location[0][1].lower()
+        key_uni = name.lower() + ' - ' + location[0][1].lower()
         id_locat = location[0][0]
 
         query = '''update university set key_uni='{0}',
-        name_uni='{1}', id_locat='{2}' where id_usu='{3}' and id_uni='{4}' '''.format(key_uni, name_uni, id_locat, id_usu, id_uni)
+        name_uni='{1}', id_locat='{2}' where id_usu='{3}' and id_uni='{4}' '''.format(key_uni, name, id_locat, id_usu, id_uni)
 
         self.cursor.execute(query)
         self.conn.commit()

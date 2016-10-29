@@ -12,15 +12,15 @@ class Location():
        self.cursor = self.base.get_cursor()
        self.conn = self.base.get_conn()
 
-    def create_location(self, city_locat, state_locat, address_locat, id_usu):
+    def create_location(self, city_locat, state_locat, extra_locat, id_usu):
         try:
             key_locat = city_locat.lower() + ' - ' + state_locat.lower()
-            if address_locat.lower() == 'undefined':
+            if extra_locat == None:
                 query = '''insert into location(city_locat, state_locat, key_locat, id_usu)
                  values ('{0}','{1}','{2}','{3}');'''.format(city_locat, state_locat, key_locat, id_usu)
             else:
-                address_locat = "'" + address_locat + "'"
-                query = "insert into location values (0,'{0}','{1}',{2},'{3}','{4}' );".format(city_locat, state_locat, address_locat, key_locat, id_usu)
+                extra_locat = "'" + extra_locat + "'"
+                query = "insert into location values (0,'{0}','{1}',{2},'{3}','{4}' );".format(city_locat, state_locat, extra_locat, key_locat, id_usu)
             self.cursor.execute(query)
             self.conn.commit()
             return 'SUCCESS'
@@ -37,15 +37,19 @@ class Location():
 
         array = []
         for x in locations:
-            dic = {'id_locat':x[0],'city_locat':x[1],'state_locat':x[2],
-            'address_locat':x[3],'key_locat':x[4],'id_usu': x[5]}
+            dic = {'id_locat':x[0],'city_locat':x[1],'state_locat':x[2],'extra_locat':x[3],
+            'key_locat':x[4],'id_usu': x[5]}
             array.append(dic)
         return jsonify(locations = array)
 
-    def update_location(self, city_locat, state_locat, address_locat, id_locat, id_usu):
+    def update_location(self, city_locat, state_locat, extra_locat, id_locat, id_usu):
         key_locat = city_locat.lower() + ' - ' + state_locat.lower()
-        query = "update location set city_locat = '{0}', state_locat = '{1}', address_locat = '{2}', key_locat = '{3}' where id_locat = {4} and id_usu = {5} ; ".format(city_locat, state_locat,
-        address_locat, key_locat, id_locat, id_usu)
+        if extra_locat == None:
+            extra_locat = 'NULL'
+        else:
+            extra_locat = "'" + extra_locat + "'"
+        query = "update location set city_locat = '{0}', state_locat = '{1}', extra_locat = {2}, key_locat = '{3}' where id_locat = {4} and id_usu = {5} ; ".format(city_locat, state_locat,
+        extra_locat, key_locat, id_locat, id_usu)
         self.cursor.execute(query)
         self.conn.commit()
         return 'SUCCESS'

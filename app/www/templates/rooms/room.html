@@ -1,24 +1,24 @@
 <ion-view view-title="Quarto" align-title="left">
 </ion-view>
 
-  <ion-tabs class="tabs-striped tabs-top tabs-background-positive tabs-color-light">
-    <ion-tab href="#/navUser/room" title="Home" class="bar-options" icon="icon ion-home">
-      <ion-view>
-         <ion-content>
-           <div on-swipe-down="getAllFkData()" ng-controller="roomCtrl">
-             <form name="roomForm" novalidate="novalidate">
-               <br />
-               <h1 class="text-center">Novo Quarto</h1>
-               <br />
-               <br />
-                <div class="col text-center">
-                 <button ng-click="getAllFkData()" class="button icon ion-refresh">
+<ion-tabs class="tabs-striped tabs-top tabs-background-positive tabs-color-light">
+	<ion-tab href="#/navUser/room" title="Home" class="bar-options" icon="icon ion-home">
+		<ion-view>
+			<ion-content>
+				<div on-swipe-down="getAllFkData()" ng-controller="roomCtrl">
+					<form name="roomForm" novalidate="novalidate">
+						<br />
+						<h1 class="text-center">Novo Quarto</h1>
+						<br />
+						<br />
+						<div class="col text-center">
+							<button ng-click="getAllFkData()" class="button icon ion-refresh">
                     Carregar tudo
                   </button>
-                </div>
-                <br />
-               <div class="list padding" ng-show="locationKeys.length > 0">
-                 <label class="item item-input">
+						</div>
+						<br />
+						<div class="list padding" ng-show="locationKeys.length > 0">
+							<label class="item item-input">
                    <span class="input-label">Titulo:
                      <span ng-show="roomForm.title.$error.required ||
                       roomForm.title.$pristine || roomForm.title.$invalid" class="error">*</span>
@@ -26,7 +26,7 @@
                     </span>
                    <input name="title" ng-model="data.title" type="text" maxlength="25" required ng-pattern="/^[\w -]*$/">
                  </label>
-                 <label class="item item-input">
+							<label class="item item-input">
                    <div class="input-label">
                      Localização:
                      <span ng-show="roomForm.locationKey.$error.required ||
@@ -37,7 +37,7 @@
                        ng-model="data.locationKey" item-value-key="name" item-view-value-key="name" items-method="getLocationItems(query)"
                        items-method-value-key="items" placeholder="Digite a localização" max-selected-items="1" required/>
                  </label>
-                 <label class="item item-input">
+							<label class="item item-input">
                    <div class="input-label">
                      Universidade:
                      <span ng-show="roomForm.universityKey.$error.required ||
@@ -47,7 +47,7 @@
                        ng-model="data.universityKey" item-value-key="name" item-view-value-key="name" items-method="getUniversityItems(query)"
                        items-method-value-key="items" placeholder="Digite o nome da universidade" max-selected-items="1" required/>
                  </label>
-                 <label class="item item-input">
+							<label class="item item-input">
                    <div class="input-label">
                      República:
                    </div>
@@ -55,7 +55,7 @@
                        ng-model="data.republicKey" item-value-key="name" item-view-value-key="name" items-method="getRepublicItems(query)"
                        items-method-value-key="items" placeholder="Digite o nome da república" max-selected-items="1" required/>
                  </label>
-                 <label class="item item-input">
+							<label class="item item-input">
                    <span class="input-label">Descrição:
                      <span ng-show="roomForm.description.$error.required ||
                       roomForm.description.$pristine || roomForm.description.$invalid" class="error">*</span>
@@ -63,42 +63,42 @@
                    </span>
                    <input name="description" ng-model="data.description" type="text" maxlength="95" required ng-pattern="/^[\w -]*$/">
                  </label>
-                 <label class="item item-input">
+							<label class="item item-input">
                    <span class="input-label">Preço:
                      <span ng-show="roomForm.price.$error.required || roomForm.price.$pristine ||
                      roomForm.price.$invalid" class="error">*</span>
                       </span>
                    <input name="price" ng-model="data.price" type="number" step="any" required>
                  </label>
-                 <br /><br />
-                 <button ng-click="createRoom(data)" class="bluedark-color button button-block button-positive">
+							<br /><br />
+							<button ng-click="createRoom(data)" class="bluedark-color button button-block button-positive">
                    Cadastrar <i class="ion-android-checkbox-outline"></i>
                  </button>
-                 <br />
-             </div>
-           </form>
-           </div>
-         </ion-content>
-       </ion-view>
-    </ion-tab>
+							<br />
+						</div>
+					</form>
+				</div>
+			</ion-content>
+		</ion-view>
+	</ion-tab>
 
-    <ion-tab class="bar-options" icon="ion-ios-gear-outline">
-      <ion-view>
-         <ion-content>
-           <div on-swipe-down="getRoomsByUser()" ng-controller="roomCtrl">
-             <form name="roomForm" novalidate="novalidate">
-               <br />
-               <h1 class="text-center">Alterar Quarto</h1>
-               <br />
-               <br />
-                <div class="col text-center">
-                 <button ng-click="getRoomsByUser()" class="button icon ion-refresh">
+	<ion-tab class="bar-options" icon="ion-ios-gear-outline">
+		<ion-view>
+			<ion-content>
+				<div on-swipe-down="getRoomsByUser()" ng-controller="roomCtrl">
+					<form name="roomForm" novalidate="novalidate">
+						<br />
+						<h1 class="text-center">Alterar Quarto</h1>
+						<br />
+						<br />
+						<div class="col text-center">
+							<button ng-click="getRoomsByUser()" class="button icon ion-refresh">
                     Carregar Quarto
                   </button>
-                </div>
-                <br />
-                <div class="list padding" ng-show="roomArray.length > 0">
-                  <label  class="item item-input item-select" >
+						</div>
+						<br />
+						<div class="list padding" ng-show="roomArray.length > 0">
+							<label class="item item-input item-select">
                     <div class="input-label">
                       Quartos:
                     </div>
@@ -106,13 +106,13 @@
                          <option ng-repeat="item in roomArray track by $index">{{item}}</option>
                     </select>
                   </label>
-                  <label class="item item-input">
+							<label class="item item-input">
                     <span class="input-label">Title:
                       <span ng-show="roomForm.title.$invalid" class="error">*</span>
                     </span>
                     <input name="title" ng-model="data.title" placeholder="{{title}}" type="text" maxlength="25" ng-pattern="/^[\w -]*$/">
                   </label>
-                  <label class="item item-input">
+							<label class="item item-input">
                     <div class="input-label">
                       Localização:
                     </div>
@@ -120,7 +120,7 @@
                         ng-model="data.locationKey" item-value-key="name" item-view-value-key="name" items-method="getLocationItems(query)"
                         items-method-value-key="items" placeholder="{{locationKey}}" max-selected-items="1" required/>
                   </label>
-                  <label class="item item-input">
+							<label class="item item-input">
                     <div class="input-label">
                       Universidade:
                     </div>
@@ -128,7 +128,7 @@
                         ng-model="data.universityKey" item-value-key="name" item-view-value-key="name" items-method="getUniversityItems(query)"
                         items-method-value-key="items" placeholder="{{universityKey}}" max-selected-items="1" required/>
                   </label>
-                  <label class="item item-input">
+							<label class="item item-input">
                     <div class="input-label">
                       República:
                     </div>
@@ -136,46 +136,46 @@
                         ng-model="data.republicKey" item-value-key="name" item-view-value-key="name" items-method="getRepublicItems(query)"
                         items-method-value-key="items" placeholder="{{republicKey}}" max-selected-items="1" required/>
                   </label>
-                  <label class="item item-input">
+							<label class="item item-input">
                     <span class="input-label">Descrição:
                       <span ng-show="roomForm.description.$invalid" class="error">*</span>
                     </span>
                     <input name="description" ng-model="data.description" placeholder="{{description}}" type="text" maxlength="95" ng-pattern="/^[\w -]*$/">
                   </label>
-                  <label class="item item-input">
+							<label class="item item-input">
                     <span class="input-label">Preço:
                       <span ng-show="roomForm.price.$invalid" class="error">*</span>
                     </span>
                     <input name="price" ng-model="data.price" placeholder="{{price}}" type="number" step="any"  min="0">
                   </label>
-                  <br /><br />
-                  <button ng-click="updateRoom(data)" class="bluedark-color button button-block button-positive">
+							<br /><br />
+							<button ng-click="updateRoom(data)" class="bluedark-color button button-block button-positive">
                     atualizar <i class="ion-android-checkbox-outline"></i>
                   </button>
-                </div>
-             </form>
-           </div>
-         </ion-content>
-       </ion-view>
-    </ion-tab>
+						</div>
+					</form>
+				</div>
+			</ion-content>
+		</ion-view>
+	</ion-tab>
 
-    <ion-tab title="Settings" class="bar-options" icon="icon ion-trash-b">
-      <ion-view>
-         <ion-content>
-           <div on-swipe-down="getRoomsByUser()" ng-controller="roomCtrl">
-             <form name="removeRoomForm" novalidate="novalidate">
-               <br />
-               <h1 class="text-center">Remover Quarto</h1>
-               <br />
-               <br />
-               <div class="col text-center">
-                <button ng-click="getRoomsByUser()" class="button icon ion-refresh">
+	<ion-tab title="Settings" class="bar-options" icon="icon ion-trash-b">
+		<ion-view>
+			<ion-content>
+				<div on-swipe-down="getRoomsByUser()" ng-controller="roomCtrl">
+					<form name="removeRoomForm" novalidate="novalidate">
+						<br />
+						<h1 class="text-center">Remover Quarto</h1>
+						<br />
+						<br />
+						<div class="col text-center">
+							<button ng-click="getRoomsByUser()" class="button icon ion-refresh">
                    Carregar Quarto
                  </button>
-               </div>
-               <br />
-               <div class="list padding" ng-show="roomArray.length > 0">
-                 <label  class="item item-input item-select" >
+						</div>
+						<br />
+						<div class="list padding" ng-show="roomArray.length > 0">
+							<label class="item item-input item-select">
                    <div class="input-label">
                      Quartos:
                    </div>
@@ -183,37 +183,37 @@
                         <option ng-repeat="item in roomArray track by $index">{{item}}</option>
                    </select>
                  </label>
-                 <div ng-show="locationKey.length > 0 || universityKey.length > 0
+							<div ng-show="locationKey.length > 0 || universityKey.length > 0
                     || republicKey.length > 0 || description.length > 0" class="list card">
-                    <a href="#" ng-show="locationKey.length > 0" class="item item-icon-left">
-                      <i class="ion-clipboard"></i>
-                       Cidade: {{locationKey}}
-                    </a>
-                    <a href="#" ng-show="universityKey.length > 0" class="item item-icon-left">
-                      <i class="ion-university"></i>
-                      Universidade: {{universityKey}}
-                    </a>
-                    <a href="#" ng-show="republicKey.length > 0" class="item item-icon-left">
-                      <i class="ion-ios-home-outline"></i>
-                      República: {{republicKey}}
-                    </a>
-                    <a href="#" ng-show="description.length > 0" class="item item-icon-left">
-                      <i class="ion-edit"></i>
-                      Descrição: {{description}}
-                    </a>
-                    <a href="#" ng-show="price.length > 0" class="item item-icon-left">
-                      <i class="ion-cash"></i>
-                      Preço: {{price}}
-                    </a>
-                  </div>
-                 <button ng-click="deleteRoom(data)" class="button button-full icon-right button-assertive">
+								<a href="#" ng-show="locationKey.length > 0" class="item item-icon-left">
+									<i class="ion-clipboard"></i> 
+                  Cidade: {{locationKey}}
+								</a>
+								<a href="#" ng-show="universityKey.length > 0" class="item item-icon-left">
+									<i class="ion-university"></i> 
+                  Universidade: {{universityKey}}
+								</a>
+								<a href="#" ng-show="republicKey.length > 0" class="item item-icon-left">
+									<i class="ion-ios-home-outline"></i> 
+                  República: {{republicKey}}
+								</a>
+								<a href="#" ng-show="description.length > 0" class="item item-icon-left">
+									<i class="ion-edit"></i> 
+                  Descrição: {{description}}
+								</a>
+								<a href="#" ng-show="price.length > 0" class="item item-icon-left">
+									<i class="ion-cash"></i> 
+                  Preço: {{price}}
+								</a>
+							</div>
+							<button ng-click="deleteRoom(data)" class="button button-full icon-right button-assertive">
                    Excluir <i class="ion-android-checkbox-outline"></i>
                  </button>
-               </div>
-                <br />
-              </form>
-           </div>
-         </ion-content>
-       </ion-view>
-    </ion-tab>
-  </ion-tabs>
+						</div>
+						<br />
+					</form>
+				</div>
+			</ion-content>
+		</ion-view>
+	</ion-tab>
+</ion-tabs>

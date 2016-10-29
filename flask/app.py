@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-from flask import Flask
+from flask import Flask, request
 from base import base
 from users import user_functions
 from locations import location_functions
@@ -22,39 +22,57 @@ room = room_functions.Room(base, location, university, republic)
 def login(email, password):
     return user.login(email, password)
 
-@app.route('/createUser/<email>/<password>/<name>/<phone>', methods =["POST"])
-def new_user(email ,password, name, phone):
-    return user.new_user(email, password, name, phone)
+@app.route('/createUser', methods=["POST"])
+def new_user():
+    allowed_keys = ['email','password','name','phone']
+    keys = base.check_request_params(allowed_keys, request.json)
+    return user.new_user(keys['email'], keys['password'], keys['name'], keys['phone'])
 
-@app.route('/updateUser/<email>/<name>/<phone>/<int:id_usu>', methods =["POST"])
-def update_user(name, email, phone, id_usu):
-    return user.update_user(name, email, phone, id_usu)
+@app.route('/updateUser', methods=["PUT"])
+def update_user():
+    allowed_keys = ['name','email','phone','id_usu']
+    keys = base.check_request_params(allowed_keys, request.json)
+    return user.update_user(keys['name'], keys['email'], keys['phone'], keys['id_usu'])
 
-@app.route('/deleteUser/<int:id_usu>', methods =["POST"])
+@app.route('/deleteUser/<int:id_usu>', methods=["DELETE"])
 def delete_user(id_usu):
     return user.delete_user(id_usu)
 
-@app.route('/updatePassword/<password>/<int:id_usu>', methods =["POST"])
-def update_password_user(password, id_usu):
-    return user.update_password_user(password, id_usu)
+@app.route('/updatePassword', methods=["PUT"])
+def update_password_user():
+    allowed_keys = ['password','id_usu']
+    keys = base.check_request_params(allowed_keys, request.json)
+    return user.update_password_user(keys['password'], keys['id_usu'])
 
-@app.route('/resetPassword/<email_usu>', methods = ["POST"])
-def reset_password(email_usu):
-    return user.reset_password(email_usu)
+@app.route('/resetPassword', methods=["POST"])
+def reset_password():
+    allowed_keys = ['email']
+    keys = base.check_request_params(allowed_keys, request.json)
+    return user.reset_password(keys['email'])
 
-@app.route('/createLocation/<city_locat>/<state_locat>/<adress_locat>/<int:id_usu>', methods = ["POST"])
-def create_location(city_locat, state_locat, adress_locat, id_usu):
-    return location.create_location(city_locat, state_locat, adress_locat, id_usu)
+@app.route('/createLocation', methods=["POST"])
+def create_location():
+    allowed_keys = ['city_locat', 'state_locat', 'id_usu']
+    keys = base.check_request_params(allowed_keys, request.json)
+    extra_locat = None
+    if 'extra_locat' in keys:
+        extra_locat = keys['extra_locat']
+    return location.create_location(keys['city_locat'], keys['state_locat'], extra_locat, keys['id_usu'])
 
 @app.route('/getLocationsById/<int:id_usu>')
 def get_locations(id_usu):
     return location.get_locations_by_id_user(id_usu)
 
-@app.route('/updateLocation/<city_locat>/<state_locat>/<address_locat>/<int:id_locat>/<int:id_usu>', methods = ["POST"])
-def update_location(city_locat, state_locat, address_locat, id_locat, id_usu):
-    return location.update_location(city_locat, state_locat, address_locat, id_locat, id_usu)
+@app.route('/updateLocation', methods=["PUT"])
+def update_location():
+    allowed_keys = ['city_locat', 'state_locat', 'id_locat', 'id_usu']
+    keys = base.check_request_params(allowed_keys, request.json)
+    extra_locat = None
+    if 'extra_locat' in keys:
+        extra_locat = keys['extra_locat']
+    return location.update_location(keys['city_locat'], keys['state_locat'], extra_locat, keys['id_locat'], keys['id_usu'])
 
-@app.route('/deleteLocation/<int:id_locat>', methods=["POST"])
+@app.route('/deleteLocation/<int:id_locat>', methods=["DELETE"])
 def delete_location(id_locat):
     return location.delete_location(id_locat)
 
@@ -62,19 +80,23 @@ def delete_location(id_locat):
 def get_location_keys():
     return location.get_location_keys()
 
-@app.route('/createUniversity/<name>/<key_locat>/<int:id_usu>', methods=["POST"])
-def new_university(name, key_locat, id_usu):
-    return university.new_university(name, key_locat, id_usu)
+@app.route('/createUniversity', methods=["POST"])
+def new_university():
+    allowed_keys = ['name', 'key_locat', 'id_usu']
+    keys = base.check_request_params(allowed_keys, request.json)
+    return university.new_university(keys['name'], keys['key_locat'], keys['id_usu'])
 
 @app.route('/getUniversitiesById/<int:id_usu>')
 def get_universities_by_id(id_usu):
     return university.get_universities_by_id(id_usu)
 
-@app.route('/updateUniversity/<name_uni>/<key_locat_uni>/<int:id_uni>/<int:id_usu>', methods=["POST"])
-def update_university(name_uni, key_locat_uni, id_uni, id_usu):
-    return university.update_university(name_uni, key_locat_uni, id_uni, id_usu)
+@app.route('/updateUniversity', methods=["PUT"])
+def update_university():
+    allowed_keys = ['name', 'key_locat', 'id_uni', 'id_usu']
+    keys = base.check_request_params(allowed_keys, request.json)
+    return university.update_university(keys['name'], keys['key_locat'], keys['id_uni'], keys['id_usu'])
 
-@app.route('/deleteUniversity/<key_locat>/<int:id_usu>', methods=["POST"])
+@app.route('/deleteUniversity/<key_locat>/<int:id_usu>', methods=["DELETE"])
 def delte_university(key_locat, id_usu):
     return university.delete_university(key_locat, id_usu)
 
@@ -82,19 +104,23 @@ def delte_university(key_locat, id_usu):
 def get_university_keys():
     return university.get_university_keys()
 
-@app.route('/createRepublic/<name>/<key_locat>/<int:id_usu>', methods=["POST"])
-def new_republic(name, key_locat, id_usu):
-    return republic.new_republic(name, key_locat, id_usu)
+@app.route('/createRepublic', methods=["POST"])
+def new_republic():
+    allowed_keys = ['name', 'key_locat', 'id_usu']
+    keys = base.check_request_params(allowed_keys, request.json)
+    return republic.new_republic(keys['name'], keys['key_locat'], keys['id_usu'])
 
 @app.route('/getRepublicsById/<int:id_usu>')
 def get_republics_by_id(id_usu):
     return republic.get_republics_by_id(id_usu)
 
-@app.route('/updateRepublic/<name>/<key_locat>/<int:id_rep>/<int:id_usu>', methods=["POST"])
-def update_republic(name, key_locat, id_rep, id_usu):
-    return republic.update_republic(name, key_locat, id_rep, id_usu)
+@app.route('/updateRepublic', methods=["PUT"])
+def update_republic():
+    allowed_keys = ['name', 'key_locat', 'id_usu', 'id_rep']
+    keys = base.check_request_params(allowed_keys, request.json)
+    return republic.update_republic(keys['name'], keys['key_locat'], keys['id_rep'], keys['id_usu'])
 
-@app.route('/deleteRepublic/<int:id_rep>/<int:id_usu>', methods=["POST"])
+@app.route('/deleteRepublic/<int:id_rep>/<int:id_usu>', methods=["DELETE"])
 def delete_republic(id_rep, id_usu):
     return republic.delete_republic(id_rep, id_usu)
 
@@ -102,19 +128,23 @@ def delete_republic(id_rep, id_usu):
 def get_republic_keys():
     return republic.get_republic_keys()
 
-@app.route('/createRoom/<locat_key>/<university_key>/<republic_key>/<description>/<title>/<int:id_usu>/<price>', methods=["POST"])
-def new_room(locat_key,university_key,republic_key,description, title, id_usu, price):
-    return room.new_room(locat_key, university_key, republic_key, description, title, id_usu, price)
+@app.route('/createRoom', methods=["POST"])
+def new_room():
+    allowed_keys = ['locat_key', 'university_key', 'republic_key', 'description', 'title', 'id_usu', 'price']
+    keys = base.check_request_params(allowed_keys, request.json)
+    return room.new_room(keys['locat_key'], keys['university_key'], keys['republic_key'], keys['description'], keys['title'], keys['id_usu'], keys['price'])
 
 @app.route('/getRoomsByUser/<int:id_usu>')
 def get_rooms_by_user(id_usu):
     return room.get_rooms_by_user(id_usu)
 
-@app.route('/updateRoom/<locat_key>/<university_key>/<republic_key>/<description>/<title>/<price>/<int:id_usu>/<int:id_room>', methods=["POST"])
-def update_room(locat_key,university_key,republic_key,description, title, price, id_usu, id_room):
-    return room.update_room(locat_key, university_key, republic_key, description, title, price, id_usu, id_room)
+@app.route('/updateRoom', methods=["PUT"])
+def update_room():
+    allowed_keys = ['locat_key', 'university_key', 'republic_key', 'description', 'title', 'id_usu', 'price', 'id_room']
+    keys = base.check_request_params(allowed_keys, request.json)
+    return room.update_room(keys['locat_key'], keys['university_key'], keys['republic_key'], keys['description'], keys['title'], keys['price'], keys['id_usu'], keys['id_room'])
 
-@app.route('/deleteRoom/<int:id_room>/<int:id_usu>', methods=["POST"])
+@app.route('/deleteRoom/<int:id_room>/<int:id_usu>', methods=["DELETE"])
 def delete_room(id_room, id_usu):
     return room.delete_room(id_room, id_usu)
 
@@ -126,9 +156,11 @@ def get_rooms():
 def get_room_by_id(id_room):
     return room.get_room_by_id(id_room)
 
-@app.route('/sendRoomInterested/<email_owner>/<email_usu>/<subject>/<message>', methods=["POST"])
-def send_email_interested(email_owner, email_usu, subject, message):
-    return room.send_email_interested(email_owner, email_usu, subject, message)
+@app.route('/sendRoomInterested', methods=["POST"])
+def send_email_interested():
+    allowed_keys = ['email_owner', 'email_usu', 'subject', 'message']
+    keys = base.check_request_params(allowed_keys, request.json)
+    return room.send_email_interested(keys['email_owner'], keys['email_usu'], keys['subject'], keys['message'])
 
 @app.route('/getSearchRooms/<location>/<republic>/<university>/<int:price>')
 def get_search_rooms(location, republic, university, price):

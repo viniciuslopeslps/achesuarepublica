@@ -18,7 +18,7 @@
                    updateUserForm.name.$pristine || updateUserForm.name.$invalid" class="error">*</span>
                  </span>
                  </span>
-                 <input name="name" ng-model="data.name" placeholder={{name}} type="text" required maxlength="20" ng-pattern="/^[a-zA-Z0-9]*$/">
+                 <input name="name" ng-model="data.name" placeholder={{name}} type="text" required maxlength="60" ng-pattern="/^[a-zA-Z0-9]*$/">
 
                </label>
                <label class="item item-input">
@@ -33,7 +33,7 @@
                    <span ng-show="updateUserForm.phone.$error.required || updateUserForm.phone.$pristine"
                    class="error">*</span>
                  </span>
-                 <input name="phone" ng-model="data.phone" placeholder={{phone}} type="tel" required maxlength="15">
+                 <input name="phone" ng-model="data.phone" placeholder={{phone}} type="tel" required maxlength="20">
                </label>
                <br />
                <h7>Para os campos em branco serão mantidos as informações.</h7>

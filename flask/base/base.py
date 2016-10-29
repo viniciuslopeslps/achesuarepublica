@@ -4,7 +4,7 @@ from flask.ext.cors import CORS
 from flaskext.mysql import MySQL
 from email.mime.text import MIMEText
 from datetime import timedelta, datetime
-from flask import Flask, request, redirect, render_template, jsonify
+from flask import Flask, request, redirect, render_template, jsonify, abort
 
 class Base():
 
@@ -52,3 +52,8 @@ class Base():
         #fecha a conexão
         gm.close()
         return 'email enviado com sucesso!'
+    
+    def check_request_params(self, allowed_keys, received_keys):    
+        if not set(allowed_keys) <= set(received_keys.keys()):
+            abort(400)
+        return received_keys

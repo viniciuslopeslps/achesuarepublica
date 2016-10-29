@@ -41,7 +41,7 @@ class Republic():
 
     def update_republic(self, name_rep, key_locat, id_rep, id_usu):
         location = self.location.get_id_and_city_by_key(key_locat)
-
+        
         key_rep = name_rep.lower() + ' - ' + location[0][1].lower()
         id_locat = location[0][0]
 

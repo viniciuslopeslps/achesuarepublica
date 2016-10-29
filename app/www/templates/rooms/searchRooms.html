@@ -1,43 +1,43 @@
 <ion-view view-title="Procurar quarto" align-title="left">
-  <ion-content class="back-color padding">
-    <br />
-    <h1 class="text-center">Procurar quartos <i class="icon ion-ios-home-outline"></i></h1>
-    <br />
-    <div ng-controller="searchRoomsCtrl">
-      <form name="searchRoomForm" novalidate="novalidate">
-        <div class="list list-inset">
-          <label class="item item-input">
+	<ion-content class="back-color padding">
+		<br />
+		<h1 class="text-center">Procurar quartos <i class="icon ion-ios-home-outline"></i></h1>
+		<br />
+		<div ng-controller="searchRoomsCtrl">
+			<form name="searchRoomForm" novalidate="novalidate">
+				<div class="list list-inset">
+					<label class="item item-input">
             <span class="input-label">Endereço</span>
             <span ng-show="searchRoomForm.location.$pristine || searchRoomForm.location.$invalid" class="error">*</span>
             <input type="text" name="location" ng-model="data.location" ng-pattern="/^[\w -]*$/">
           </label>
-          <label class="item item-input">
+					<label class="item item-input">
             <span class="input-label">Universidade</span>
             <span ng-show="searchRoomForm.university.$pristine || searchRoomForm.university.$invalid" class="error">*</span>
             <input type="text" name="university" ng-model="data.university" ng-pattern="/^[\w -]*$/">
           </label>
-          <label class="item item-input">
+					<label class="item item-input">
             <span class="input-label">República</span>
             <span ng-show="searchRoomForm.republic.$pristine || searchRoomForm.republic.$invalid" class="error">*</span>
             <input type="text" name="republic" ng-model="data.republic" ng-pattern="/^[\w -]*$/">
           </label>
-          <div class="item range range-energized">
-            <div class="input-label">
-               Preço até: <br />
-                <h7 class="balanced"> {{price}} R$</h7>
-             </div>
-            <i class="icon ion-social-usd-outline"></i>
-            <h7>20</h7>
-            <input type="range" name="price" ng-model="price" min="20" max="1000" value="25">
-            <h7>1000</h7>
-            <i class="icon ion-social-usd"></i>
-            <br />
-          </div>
-        </div>
-        <button ng-click="searchRoom(data)" class="button button-outline button-block button-dark icon-right ion-ios-search-strong">
+					<div class="item range range-energized">
+						<div class="input-label">
+							Preço até: <br />
+							<h7 class="balanced"> {{price}} R$</h7>
+						</div>
+						<i class="icon ion-social-usd-outline"></i>
+						<h7>20</h7>
+						<input type="range" name="price" ng-model="price" min="20" max="1000" value="25">
+						<h7>1000</h7>
+						<i class="icon ion-social-usd"></i>
+						<br />
+					</div>
+				</div>
+				<button ng-click="searchRoom(data)" class="button button-outline button-block button-dark icon-right ion-ios-search-strong">
           Encontre meu quarto
         </button>
-      </form>
-    </div>
-  </ion-content>
+			</form>
+		</div>
+	</ion-content>
 </ion-view>

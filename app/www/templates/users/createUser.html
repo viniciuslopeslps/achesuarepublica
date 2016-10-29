@@ -18,7 +18,7 @@
                 <span ng-show="createUserForm.email.$error.required ||
                  createUserForm.email.$pristine || createUserForm.email.$error.email" class="error">*</span>
               </span>
-              <input name="email" ng-model="data.email" type="email" required maxlength="60">
+              <input name="email" ng-model="data.email" type="email" required maxlength="254">
             </label>
             <label class="item item-input">
               <span class="input-label">Senha:
@@ -40,7 +40,7 @@
                 <span ng-show="createUserForm.phone.$error.required || createUserForm.phone.$pristine"
                 class="error">*</span>
               </span>
-              <input name="phone" ng-model="data.phone" type="tel" required maxlength="25">
+              <input name="phone" ng-model="data.phone" type="tel" required maxlength="20">
             </label>
             <br /><br />
             <button ng-click="createUser(data)" class="bluedark-color button button-block button-positive">

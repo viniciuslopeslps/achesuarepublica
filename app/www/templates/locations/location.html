@@ -3,16 +3,16 @@
 
 <ion-tabs class="tabs-striped tabs-top tabs-background-positive tabs-color-light">
 
-  <ion-tab title="Home" class="bar-options" icon="icon ion-map">
-    <ion-view>
-       <ion-content>
-         <div ng-controller="locationCtrl">
-           <form name="createLocation" novalidate="novalidate">
-             <br />
-             <h1 class="text-center">Novo Endereço</h1>
-             <br />
-             <div class="list padding">
-               <label class="item item-input">
+	<ion-tab title="Home" class="bar-options" icon="icon ion-map">
+		<ion-view>
+			<ion-content>
+				<div ng-controller="locationCtrl">
+					<form name="createLocation" novalidate="novalidate">
+						<br />
+						<h1 class="text-center">Novo Endereço</h1>
+						<br />
+						<div class="list padding">
+							<label class="item item-input">
                  <span class="input-label">Cidade:
                    <span ng-show="createLocation.city.$error.required ||
                    createLocation.city.$pristine || createLocation.city.$invalid" class="error">*</span>
@@ -20,7 +20,7 @@
                  </span>
                  <input name="city" ng-model="data.city" type="text" required maxlength="40" ng-pattern="/^[\w -]*$/">
                </label>
-               <label class="item item-input item-select">
+							<label class="item item-input item-select">
                  <div class="input-label">
                    Estado:
                    <span ng-show="createLocation.state.$error.required ||
@@ -31,41 +31,41 @@
                       <option ng-repeat="item in states" >{{item}}</option>
                  </select>
                </label>
-               <label class="item item-input">
+							<label class="item item-input">
                  <span class="input-label">Adicional:
                    <span ng-show="createLocation.address.$invalid" class="error">*</span>
                  </span>
                  </span>
                  <input name="address" ng-model="data.address" type="text" maxlength="40" ng-pattern="/^[\w -]*$/">
                </label>
-               <br /><br />
-               <button ng-click="createNewLocation(data)" class="bluedark-color button button-block button-positive">
+							<br /><br />
+							<button ng-click="createNewLocation(data)" class="bluedark-color button button-block button-positive">
                  Cadastrar <i class="ion-android-checkbox-outline"></i>
                </button>
-               <br />
-           </div>
-         </form>
-         </div>
-       </ion-content>
-     </ion-view>
-  </ion-tab>
+							<br />
+						</div>
+					</form>
+				</div>
+			</ion-content>
+		</ion-view>
+	</ion-tab>
 
-  <ion-tab title="Settings" class="bar-options" icon="icon ion-gear-a">
-    <ion-view>
-       <ion-content>
-         <div on-swipe-down="getLocations()" ng-controller="locationCtrl">
-           <form name="updateLocation" novalidate="novalidate">
-             <br />
-             <h1 class="text-center">Alterar Endereços</h1>
-             <br />
-              <div class="col text-center">
-               <button ng-click="getLocations()" class="button icon ion-refresh">
+	<ion-tab title="Settings" class="bar-options" icon="icon ion-gear-a">
+		<ion-view>
+			<ion-content>
+				<div on-swipe-down="getLocations()" ng-controller="locationCtrl">
+					<form name="updateLocation" novalidate="novalidate">
+						<br />
+						<h1 class="text-center">Alterar Endereços</h1>
+						<br />
+						<div class="col text-center">
+							<button ng-click="getLocations()" class="button icon ion-refresh">
                   Carregar Localizações
                 </button>
-              </div>
-              <br />
-              <div class="list padding" ng-show="locationsArray.length > 0">
-                <label  class="item item-input item-select">
+						</div>
+						<br />
+						<div class="list padding" ng-show="locationsArray.length > 0">
+							<label class="item item-input item-select">
                   <div class="input-label">
                     Localização:
                   </div>
@@ -73,62 +73,59 @@
                        <option ng-repeat="item in locationsArray">{{item}}</option>
                   </select>
                 </label>
-                <label class="item item-input">
+							<label class="item item-input">
                   <span class="input-label">Cidade:
-                    <span ng-show="updateLocation.city.$error.required ||
-                    updateLocation.city.$pristine || updateLocation.city.$invalid" class="error">*</span>
+                    <span ng-show="updateLocation.city.$invalid" class="error">*</span>
                    </span>
                   </span>
                   <input name="city" ng-model="data.city" placeholder="{{city}}" type="text" required maxlength="40" ng-pattern="/^[\w -]*$/">
                 </label>
-                <label class="item item-input item-select">
+							<label class="item item-input item-select">
                   <div class="input-label">
                     Estado:
-                    <span ng-show="updateLocation.state.$error.required ||
-                    updateLocation.state.$pristine || updateLocation.state.$invalid" class="error">*</span>
-                     </span>
+                    <span ng-show="updateLocation.state.$invalid" class="error">*</span>
                   </div>
                   <select name="state" ng-model="data.state" ng-options="item for item in states">
                     <option value="">{{state}}</option>
                   </select>
                 </label>
-                <label class="item item-input">
+							<label class="item item-input">
                   <span class="input-label">Adicional:
                     <span ng-show="updateLocation.address.$invalid" class="error">*</span>
                   </span>
                   <input name="address" ng-model="data.address" placeholder="{{address}}" type="text" maxlength="40" ng-pattern="/^[\w -]*$/">
                 </label>
-                <br /><br />
-                <button ng-click="updateLocalization(data)" class="bluedark-color button button-block button-positive">
+							<br /><br />
+							<button ng-click="updateLocalization(data)" class="bluedark-color button button-block button-positive">
                   Cadastrar <i class="ion-android-checkbox-outline"></i>
                 </button>
-                <br />
-              </div>
-           </div>
-          </form>
-         </div>
-       </ion-content>
-     </ion-view>
-  </ion-tab>
+							<br />
+						</div>
+				</div>
+				</form>
+				</div>
+			</ion-content>
+		</ion-view>
+	</ion-tab>
 
-  <ion-tab title="Home" class="bar-options" icon="icon ion-trash-b">
-    <ion-view>
-       <ion-content>
-         <div ng-controller="locationCtrl">
-           <form name="updateLocation" novalidate="novalidate">
-             <br />
-             <h1 class="text-center">Excluir Localização</h1>
-             <br />
-              <div class="col text-center">
-               <button ng-click="getLocations()" class="button icon ion-refresh">
+	<ion-tab title="Home" class="bar-options" icon="icon ion-trash-b">
+		<ion-view>
+			<ion-content>
+				<div ng-controller="locationCtrl">
+					<form name="updateLocation" novalidate="novalidate">
+						<br />
+						<h1 class="text-center">Excluir Localização</h1>
+						<br />
+						<div class="col text-center">
+							<button ng-click="getLocations()" class="button icon ion-refresh">
                   Carregar Localizações
                 </button>
-              </div>
-              <br />
-              <div class="row">
-                <div class="col">
-                  <div class="list padding" ng-show="locationsArray.length > 0">
-                    <label  class="item item-input item-select">
+						</div>
+						<br />
+						<div class="row">
+							<div class="col">
+								<div class="list padding" ng-show="locationsArray.length > 0">
+									<label class="item item-input item-select">
                       <div class="input-label">
                         Localização:
                       </div>
@@ -136,31 +133,31 @@
                            <option ng-repeat="item in locationsArray">{{item}}</option>
                       </select>
                     </label>
-                    <div ng-show="city.length > 0 || address.length > 0 || state.length > 0" class="list card">
-                       <span ng-show="city.length > 0" class="item item-icon-left">
+									<div ng-show="city.length > 0 || address.length > 0 || state.length > 0" class="list card">
+										<span ng-show="city.length > 0" class="item item-icon-left">
                          <i class="ion-map"></i>
                           Cidade: {{city}}
                        </span>
-                       <span ng-show="address.length > 0" class="item item-icon-left">
+										<span ng-show="state.length > 0" class="item item-icon-left">
                          <i class="ion-map"></i>
                          Estado: {{state}}
                        </span>
-                     <span ng-show="state.length > 0" class="item item-icon-left">
-                       <i class="ion-ios-home"></i>
+										<span ng-show="address.length > 0" class="item item-icon-left">
+                       <i class="ion-pin"></i>
                        Adicional: {{address}}
                      </span>
-                     </div>
-                     <button ng-click="deleteLocation(data)" class="button button-full icon-right button-assertive">
+									</div>
+									<button ng-click="deleteLocation(data)" class="button button-full icon-right button-assertive">
                        Deletar localização <i class="ion-android-checkbox-outline"></i>
                      </button>
-                   </div>
-                 </div>
-               </div>
-              </div>
-           </div>
-          </form>
-         </div>
-       </ion-content>
-     </ion-view>
-  </ion-tab>
+								</div>
+							</div>
+						</div>
+				</div>
+				</div>
+				</form>
+				</div>
+			</ion-content>
+		</ion-view>
+	</ion-tab>
 </ion-tabs>
