@@ -130,9 +130,12 @@ def get_republic_keys():
 
 @app.route('/createRoom', methods=["POST"])
 def new_room():
-    allowed_keys = ['locat_key', 'university_key', 'republic_key', 'description', 'title', 'id_usu', 'price']
+    allowed_keys = ['locat_key', 'university_key', 'description', 'title', 'id_usu', 'price']
     keys = base.check_request_params(allowed_keys, request.json)
-    return room.new_room(keys['locat_key'], keys['university_key'], keys['republic_key'], keys['description'], keys['title'], keys['id_usu'], keys['price'])
+    republic_key = None
+    if 'republic_key' in keys:
+        republic_key = keys['republic_key']
+    return room.new_room(keys['locat_key'], keys['university_key'], republic_key, keys['description'], keys['title'], keys['id_usu'], keys['price'])
 
 @app.route('/getRoomsByUser/<int:id_usu>')
 def get_rooms_by_user(id_usu):
@@ -140,9 +143,12 @@ def get_rooms_by_user(id_usu):
 
 @app.route('/updateRoom', methods=["PUT"])
 def update_room():
-    allowed_keys = ['locat_key', 'university_key', 'republic_key', 'description', 'title', 'id_usu', 'price', 'id_room']
+    allowed_keys = ['locat_key', 'university_key', 'description', 'title', 'id_usu', 'price', 'id_room']
     keys = base.check_request_params(allowed_keys, request.json)
-    return room.update_room(keys['locat_key'], keys['university_key'], keys['republic_key'], keys['description'], keys['title'], keys['price'], keys['id_usu'], keys['id_room'])
+    republic_key = None
+    if 'republic_key' in keys:
+        republic_key = keys['republic_key']
+    return room.update_room(keys['locat_key'], keys['university_key'], republic_key, keys['description'], keys['title'], keys['price'], keys['id_usu'], keys['id_room'])
 
 @app.route('/deleteRoom/<int:id_room>/<int:id_usu>', methods=["DELETE"])
 def delete_room(id_room, id_usu):
@@ -168,4 +174,4 @@ def get_search_rooms(location, republic, university, price):
 
 #mudar o ip para testar
 if __name__ == "__main__":
-    app.run(host="192.168.1.106", debug=True, use_reloader=True)
+    app.run(host="192.168.1.110", debug=True, use_reloader=True)

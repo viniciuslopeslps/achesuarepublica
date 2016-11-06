@@ -682,7 +682,7 @@ angular.module('starter.controllers', ['starter.services', 'ion-autocomplete'])
             $scope.name = republicAnswer[i][a]["name_rep"];
             $scope.locationKey = republicAnswer[i][a]["key_locat"];
             $scope.idRep = republicAnswer[i][a]["id_rep"];
-            republic.saveData($scope.idRep, $scope.republicName, $scope.locationKey);
+            republic.saveData($scope.idRep, $scope.name, $scope.locationKey);
           }
         };
       };
@@ -699,7 +699,7 @@ angular.module('starter.controllers', ['starter.services', 'ion-autocomplete'])
         if (name === undefined || name.length === 0) {
           var name = window.localStorage['name_rep'];
         }
-        if (keyLocatRep === undefined) {
+        if (keyLocatRep === undefined || keyLocatRep.length === 0) {
           var keyLocatRep = window.localStorage['key_locat_rep'];
         }
 
@@ -1046,17 +1046,20 @@ angular.module('starter.controllers', ['starter.services', 'ion-autocomplete'])
     $scope.rooms = [];
 
     $scope.searchRoom = function (data) {
-      if (data === undefined || data['location'] === undefined &&
-        data['university'] === undefined && data['republic'] === undefined) {
-        alertService.alertPopup('ERRO', 'É preciso no minimo um campo para buscar');
+      if (data !== undefined && data['location'] !== undefined) {
+        var location = $scope.data.location;
       }
-      else {
-        window.localStorage["search_room_price"] = $scope.price;
-        window.localStorage["search_room_location"] = $scope.data.location;
-        window.localStorage["search_room_republic"] = $scope.data.republic;
-        window.localStorage["search_room_university"] = $scope.data.university;
-        redirect.go('navUser.searchedRoom');
+      if (data !== undefined && data['university'] !== undefined) {
+        var university = $scope.data.university;
       }
+      if (data !== undefined && data['republic'] !== undefined) {
+        var republic = $scope.data.republic;
+      }
+      window.localStorage["search_room_price"] = $scope.price;
+      window.localStorage["search_room_location"] = location;
+      window.localStorage["search_room_republic"] = republic;
+      window.localStorage["search_room_university"] = university;
+      redirect.go('navUser.searchedRoom');
     };
   })
 

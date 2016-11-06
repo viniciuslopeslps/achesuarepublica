@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-import os, time, json, uuid, smtplib
+import os, time, json, uuid, smtplib, datetime
 from flask.ext.cors import CORS
 from flaskext.mysql import MySQL
 from email.mime.text import MIMEText
@@ -19,15 +19,13 @@ class Room():
         id_locat = self.location.get_id_by_key(key_locat)
         id_uni = self.university.get_id_by_key(key_uni)
 
-        if(key_rep != 'null'):
+        if(key_rep != 'null' and key_rep != None):
             id_rep = self.republic.get_id_by_key(key_rep)
             query = '''insert into room (description, id_locat, id_rep, id_uni, id_usu, title, price, created_at)
             values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}', NOW()); '''.format(description, id_locat, id_rep, id_uni, id_usu, title, price)
-
         else:
             query = '''insert into room (description, id_locat, id_uni, id_usu, title, price, created_at)
             values ('{0}','{1}','{2}','{3}','{4}','{5}', NOW()); '''.format(description, id_locat, id_uni, id_usu, title, price)
-
         self.cursor.execute(query)
         self.conn.commit()
         return 'SUCCESS'
@@ -57,7 +55,7 @@ class Room():
         id_locat = self.location.get_id_by_key(key_locat)
         id_uni = self.university.get_id_by_key(key_uni)
 
-        if(key_rep != 'null'):
+        if(key_rep != 'null' and key_rep != None):
             id_rep = self.republic.get_id_by_key(key_rep)
             query = '''update room set description='{0}', id_locat='{1}', id_rep='{2}', id_uni='{3}', title='{4}', price='{5}'
              where id_usu='{6}' and id_room='{7}' ;'''.format(description, id_locat, id_rep, id_uni, title, price, id_usu, id_room)
@@ -77,7 +75,7 @@ class Room():
         return 'SUCCESS'
 
     def get_rooms(self):
-        query = '''select ro.id_room, ro.title,ro.price,lo.key_locat
+        query = '''select ro.id_room, ro.title, ro.price, lo.key_locat, ro.created_at
          from room ro inner join location lo on (lo.id_locat = ro.id_locat)
           group by ro.id_room, ro.created_at asc; '''
 
@@ -89,7 +87,8 @@ class Room():
 
         array = []
         for x in rooms:
-            dic = {'id_room':x[0],'title':x[1],'price': str(x[2]), 'key_locat':x[3]}
+            date = x[4].strftime('%d/%m/%Y') 
+            dic = {'id_room':x[0],'title':x[1],'price': str(x[2]), 'key_locat':x[3],'created_at':date}
             array.append(dic)
 
         return jsonify(rooms = array)
@@ -112,28 +111,30 @@ class Room():
 
         array = []
         for x in room:
-            dic = {'id_room':x[0],'title':x[1], 'created_at':x[2],'description':x[3],
+            date = x[2].strftime('%d/%m/%Y') 
+            dic = {'id_room':x[0],'title':x[1], 'created_at':date,'description':x[3],
              'key_locat':x[4],'key_uni':x[5], 'key_rep':x[6], 'price': str(x[7]),
              'name_owner': x[8], 'email_owner': x[9], 'extra_locat': x[10]}
             array.append(dic)
         return jsonify(room = array)
 
     def send_email_interested(self, email_owner, email_usu, subject, message):
-        assunto = 'Contato ache sua república - usuário interessado enviou: {0}'.format(subject)
-        mensagem = 'Olá senhor(a), foi solicitado uma mensagem do senhor dono do email: {0} , enviou a seguinte mensagem: {1}'.format(email_usu, message)
-        self.base.send_email(email_usu, assunto, mensagem)
+        assunto = 'Contato ache sua república - usuário interessado enviou: {0}'.format(subject.encode('utf-8'))
+        mensagem = 'Olá senhor(a), foi solicitado uma mensagem do senhor dono do email: {0} , enviou a seguinte mensagem: {1}'.format(email_usu, message.encode('utf-8'))
+        print email_owner
+        self.base.send_email(email_owner, assunto, mensagem)
         dic = {"answer": "SUCCESS"}
         return jsonify(answer = dic)
 
     def get_search_rooms(self, location, republic, university, price):
         query = '''
-            select distinct ro.id_room, ro.title, ro.price, ro.description, ro.created_at
+            select distinct ro.id_room, ro.title, ro.price, ro.description, ro.created_at, lo.key_locat
             FROM room ro inner join location lo on(ro.id_locat=lo.id_locat)
             inner join republic re on(re.id_rep=ro.id_rep or ro.id_rep is null)
             inner join university uni on (uni.id_uni=ro.id_uni)
-            where (ro.price <={3}) and (lo.key_locat like '%{0}%')
+            where (ro.price <={3}) and ((lo.key_locat like '%{0}%')
             or (uni.key_uni like '%{1}%' )
-            or (ro.id_rep is not null and re.key_rep like '%{2}%')
+            or (ro.id_rep is not null and re.key_rep like '%{2}%'))
             order by ro.created_at desc; '''.format(location, university, republic, price)
 
         self.cursor.execute(query)
@@ -141,6 +142,7 @@ class Room():
 
         array = []
         for x in rooms:
-            dic = {'id_room':x[0],'title':x[1],'price': str(x[2]), 'description':x[3]}
+            date = x[4].strftime('%d/%m/%Y') 
+            dic = {'id_room':x[0],'title':x[1],'price': str(x[2]), 'description':x[3], 'created_at':date, 'key_locat':x[5]}
             array.append(dic)
         return jsonify(rooms = array)

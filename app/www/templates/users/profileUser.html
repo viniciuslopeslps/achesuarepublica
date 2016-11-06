@@ -3,61 +3,59 @@
 
 <ion-tabs class="tabs-striped tabs-top tabs-background-positive tabs-color-light">
 
-  <ion-tab title="Home" class="bar-options" icon="icon ion-person">
-    <ion-view>
-       <ion-content>
-         <div class="back-color padding" ng-controller="profileCtrl">
-           <form name="updateUserForm" novalidate="novalidate">
-             <br />
-             <h2 class="text-center">Alteração de usuário</h2>
-             <br />
-             <div class="list padding">
-               <label class="item item-input">
-                 <span class="input-label">Nome:
-                   <span ng-show="updateUserForm.name.$error.required ||
-                   updateUserForm.name.$pristine || updateUserForm.name.$invalid" class="error">*</span>
-                 </span>
-                 </span>
-                 <input name="name" ng-model="data.name" placeholder={{name}} type="text" required maxlength="60" ng-pattern="/^[a-zA-Z0-9]*$/">
-
-               </label>
-               <label class="item item-input">
+	<ion-tab title="Home" class="bar-options" icon="icon ion-person">
+		<ion-view>
+			<ion-content>
+				<div class="back-color padding" ng-controller="profileCtrl">
+					<form name="updateUserForm" novalidate="novalidate">
+						<br />
+						<h2 class="text-center">Alteração de usuário</h2>
+						<br />
+						<div class="list padding">
+							<label class="item item-input">
+                <span class="input-label">Nome:
+                  <span ng-show="updateUserForm.name.$error.required ||
+                  updateUserForm.name.$pristine || updateUserForm.name.$invalid" class="error">*</span>
+                </span>
+                <input name="name" ng-model="data.name" type="text"  placeholder={{name}} required maxlength="60" ng-pattern="/^[\w -]*$/">
+              </label>
+							<label class="item item-input">
                  <span class="input-label">Email:
                    <span ng-show="updateUserForm.email.$error.required ||
                     updateUserForm.email.$pristine || updateUserForm.email.$error.email" class="error">*</span>
                  </span>
                  <input name="email" ng-model="data.email" placeholder={{email}} type="email">
                </label>
-               <label class="item item-input">
+							<label class="item item-input">
                  <span class="input-label">Telefone:
                    <span ng-show="updateUserForm.phone.$error.required || updateUserForm.phone.$pristine"
                    class="error">*</span>
                  </span>
                  <input name="phone" ng-model="data.phone" placeholder={{phone}} type="tel" required maxlength="20">
                </label>
-               <br />
-               <h7>Para os campos em branco serão mantidos as informações.</h7>
-               <br /><br />
-               <button ng-click="updateUser(data)" class="bluedark-color button button-block button-positive">
+							<br />
+							<h7>Para os campos em branco serão mantidos as informações.</h7>
+							<br /><br />
+							<button ng-click="updateUser(data)" class="bluedark-color button button-block button-positive">
                  Atualizar <i class="ion-android-checkbox-outline"></i>
                </button>
-           </div>
-         </form>
-         </div>
-       </ion-content>
-     </ion-view>
-  </ion-tab>
+						</div>
+					</form>
+				</div>
+			</ion-content>
+		</ion-view>
+	</ion-tab>
 
-  <ion-tab title="Settings" class="bar-options" icon="icon ion-locked">
-    <ion-view>
-       <ion-content>
-         <div class="back-color padding" ng-controller="profileCtrl">
-           <form name="passwordForm">
-             <br />
-             <h2 class="text-center">Atualizar Senha</h2>
-             <br />
-             <div class="list padding">
-               <label class="item item-input">
+	<ion-tab title="Settings" class="bar-options" icon="icon ion-locked">
+		<ion-view>
+			<ion-content>
+				<div class="back-color padding" ng-controller="profileCtrl">
+					<form name="passwordForm">
+						<br />
+						<h2 class="text-center">Atualizar Senha</h2>
+						<br />
+						<div class="list padding">
+							<label class="item item-input">
                  <span class="input-label">Senha:
                    <span ng-show="passwordForm.password.$error.required ||
                     passwordForm.password.$pristine || passwordForm.password.$invalid" class="error">*</span>
@@ -65,7 +63,7 @@
                  </span>
                  <input name="password" ng-model="data.password" type="password" required maxlength="20" ng-pattern="/^[a-zA-Z0-9]*$/">
                </label>
-               <label class="item item-input">
+							<label class="item item-input">
                  <span class="input-label">Confirmação de senha:
                    <span ng-show="passwordForm.passwordConfirm.$error.required ||
                     passwordForm.passwordConfirm.$pristine || passwordForm.passwordConfirm.$invalid" class="error">*</span>
@@ -73,50 +71,50 @@
                  </span>
                  <input name="passwordConfirm" ng-model="data.passwordConfirm" type="password" required maxlength="20" ng-pattern="/^[a-zA-Z0-9]*$/">
                </label>
-               <br /><br />
-               <button ng-click="passwordUpdate(data)" class="bluedark-color button button-block button-positive">
+							<br /><br />
+							<button ng-click="passwordUpdate(data)" class="bluedark-color button button-block button-positive">
                  Atualizar <i class="ion-android-checkbox-outline"></i>
                </button>
-           </div>
-         </form>
-         </div>
-       </ion-content>
-     </ion-view>
-  </ion-tab>
+						</div>
+					</form>
+				</div>
+			</ion-content>
+		</ion-view>
+	</ion-tab>
 
-  <ion-tab title="Home" class="bar-options" icon="icon ion-trash-b">
-    <ion-view>
-       <ion-content>
-         <div class="back-color padding" ng-controller="profileCtrl">
-           <form name="updateUserForm" novalidate="novalidate">
-             <br />
-             <h2 class="text-center">Excluir conta</h2>
-             <div>
-               <div class="row">
-                <div class="col">
-                  <div ng-show="email.length > 0 || name.length > 0 || phone.length > 0" class="list card">
-                     <span href="#" ng-show="email.length > 0" class="item item-icon-left">
+	<ion-tab title="Home" class="bar-options" icon="icon ion-trash-b">
+		<ion-view>
+			<ion-content>
+				<div class="back-color padding" ng-controller="profileCtrl">
+					<form name="updateUserForm" novalidate="novalidate">
+						<br />
+						<h2 class="text-center">Excluir conta</h2>
+						<div>
+							<div class="row">
+								<div class="col">
+									<div ng-show="email.length > 0 || name.length > 0 || phone.length > 0" class="list card">
+										<span href="#" ng-show="email.length > 0" class="item item-icon-left">
                        <i class="ion-email"></i>
                         Email: {{email}}
                      </span>
-                     <span href="#" ng-show="name.length > 0" class="item item-icon-left">
+										<span href="#" ng-show="name.length > 0" class="item item-icon-left">
                        <i class="ion-person"></i>
                         Nome: {{name}}
                      </span>
-                     <span href="#" ng-show="phone.length > 0" class="item item-icon-left">
+										<span href="#" ng-show="phone.length > 0" class="item item-icon-left">
                        <i class="ion-ios-telephone"></i>
                         Telefone: {{phone}}
                      </span>
-                   </div>
-                   <button ng-click="deleteUser()" class="button button-full icon-right button-assertive">
+									</div>
+									<button ng-click="deleteUser()" class="button button-full icon-right button-assertive">
                      Deletar Conta <i class="ion-android-checkbox-outline"></i>
                    </button>
-                </div>
-             </div>
-           </div>
-         </form>
-         </div>
-       </ion-content>
-     </ion-view>
-  </ion-tab>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</ion-content>
+		</ion-view>
+	</ion-tab>
 </ion-tabs>

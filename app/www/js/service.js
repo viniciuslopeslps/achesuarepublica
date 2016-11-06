@@ -31,7 +31,7 @@ angular.module('starter.services', [])
   })
   .factory('ip', function () {
     //pc-local
-    return 'http://192.168.1.106:5000';
+    return 'http://192.168.1.110:5000';
     //cloud9
     //return 'http://flask-viniciuslopeslps.c9users.io:8080';
     //amazon webservices

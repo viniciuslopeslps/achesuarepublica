@@ -5,8 +5,8 @@
 		<div ng-controller="selectedRoomCtrl">
 			<div class="list">
 				<div class="item item-divider item-icon-left">
-					<i class="icon ion-ios-home-outline"></i>
-           Quarto
+					<i class="icon ion-ios-home-outline"></i> 
+					Quarto
 				</div>
 				<div class="item">
 					Titulo: {{room.title}}
@@ -17,9 +17,12 @@
 				<div href="#" class="item">
 					Preço: {{room.price}}
 				</div>
+				<div href="#" class="item">
+					Criado em: {{room.created_at}}
+				</div>
 				<div class="item item-divider item-icon-left">
-					<i class="icon ion-map"></i> 
-          Localização
+					<i class="icon ion-map"></i>
+					 Localização
 				</div>
 				<div class="item">
 					Localização: {{room.key_locat}}
@@ -34,8 +37,8 @@
 					República: {{room.key_rep}}
 				</div>
 				<div class="item item-divider item-icon-left">
-					<i class="icon ion-ios-person-outline"></i> 
-          Proprietário
+					<i class="icon ion-ios-person-outline"></i>
+					 Proprietário
 				</div>
 				<div class="item">
 					Proprietário: {{room.name_owner}}
@@ -49,8 +52,8 @@
 	</ion-content>
 	<div class="tabs tabs-icon-top tabs-color-positive">
 		<a ng-click="openModal()" class="tab-item active">
-			<i class="icon ion-android-chat"></i> 
-      Entrar em contato
+			<i class="icon ion-android-chat"></i>
+			 Entrar em contato
 		</a>
 	</div>
 </ion-view>
@@ -73,14 +76,14 @@
               <span ng-show="selectedRoomFrm.subject.$error.required || selectedRoomFrm.subject.$pristine || selectedRoomFrm.subject.$invalid" class="error">*</span>
              </span>
             </span>
-            <input name="subject" ng-model="data.subject" type="text" required maxlength="40" ng-pattern="/^[\w -]*$/">
+            <input name="subject" ng-model="data.subject" type="text" required maxlength="40">
           </label>
           <label class="item item-input">
             <span class="input-label">Mensagem:
               <span ng-show="selectedRoomFrm.message.$error.required || selectedRoomFrm.message.$pristine || selectedRoomFrm.message.$invalid" class="error">*</span>
              </span>
             </span>
-            <textarea name="message" ng-model="data.message" required maxlength="400" ng-pattern="/^[\w -]*$/"></textarea>
+            <input type="text" name="message" ng-model="data.message" required maxlength="400" />
           </label>
           <br /><br />
           <div class="row">
